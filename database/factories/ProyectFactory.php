@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\Education;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +16,13 @@ class ProyectFactory extends Factory
      */
     public function definition(): array
     {
+        $education = Education::all();
         return [
             'name'=> $this->faker->name(),
-            'description'=> $this->faker->text()
+            'description'=> $this->faker->text(),
+            'repository'=> $this->faker->text(),
+            'education_id' => $this->faker->numberBetween(1, $education->count())
+            
         ];
     }
 }

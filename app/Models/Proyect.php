@@ -14,4 +14,9 @@ class Proyect extends Model
     {
         return $this->belongsToMany(Tags::class,'proyect_tags');
     }
+
+    public function education(): BelongsTo
+    {
+        return $this->belongsTo(Education::class);
+    }
 }

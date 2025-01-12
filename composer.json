@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "Juan/Portfolio",
+    "name": "juan/portfolio",
     "type": "project",
     "description": "Portfolio Backend Proyect",
     "keywords": [

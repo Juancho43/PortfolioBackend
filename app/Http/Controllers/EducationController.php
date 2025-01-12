@@ -25,6 +25,13 @@ class EducationController extends Controller
         ]);
     }
 
+    public function AllEducation($id){
+        
+        return response()->json([
+            'Data' => Education::with('proyect')->find($id)
+        ]);
+    }
+
     public function store(Request $request)
     {
         $education = new Education;

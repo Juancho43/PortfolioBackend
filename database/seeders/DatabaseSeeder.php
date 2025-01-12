@@ -37,7 +37,11 @@ class DatabaseSeeder extends Seeder
         // Asociar aleatoriamente proyectos con tags
         $proyectos = Proyect::all();
         $tags = Tags::all();
-
+        foreach ($proyectos as $proyect) {
+            $proyect->tags()->attach(
+                $tags->random(rand(1, 3)) // Asignar de 1 a 3 etiquetas aleatorias a cada proyecto
+            );
+        }
        
     }
 }

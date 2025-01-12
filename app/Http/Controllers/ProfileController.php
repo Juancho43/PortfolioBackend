@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\User;
+use App\Repository\ProfileRepository;
 
 class ProfileController extends Controller
 {
+
+    protected $profileRepository;
+
+    public function __construct(ProfileRepository $profileRepository)
+    {
+        $this->profileRepository = $profileRepository;
+    }
+
+
     public function index()
     {
-        $Profile = User::with("profile")->get();
+        $Profile = $this->profileRepository->all();
 
         return response()->json([
             'Profile' => $Profile
@@ -19,8 +29,7 @@ class ProfileController extends Controller
 
     public function show($id)
     {
-        // $Profile = Profile::find($id);
-        $Profile = User::with("profile")->find($id);
+        $Profile = $this->profileRepository->find($id);
         return response()->json([
             'Profile' => $Profile
         ]);

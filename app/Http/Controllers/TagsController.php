@@ -12,7 +12,7 @@ class TagsController extends Controller
         $Proyect = Tags::all();
 
         return response()->json([
-            'Proyect' => $Proyect
+            'Tags' => $Proyect
         ]);
     }
 

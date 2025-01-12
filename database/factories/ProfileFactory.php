@@ -20,9 +20,9 @@ class ProfileFactory extends Factory
         return [
             'publicMail' => fake()->unique()->safeEmail(),
             'description'=> $this->faker->text(),
-            'github'=> $this->faker->sentence() . 'com',
-            'rol'=> $this->faker->sentence(),
-            'linkedin'=> $this->faker->sentence() . 'com',
+            'github'=> $this->faker->url(),
+            'rol'=> $this->faker->word(),
+            'linkedin'=> $this->faker->url() ,
             'user_id' => $this->faker->unique()->numberBetween(1, $users->count())
         ];
     }

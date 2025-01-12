@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proyect;
+use App\Models\Tags;
+use App\Models\Education;
 use Illuminate\Http\Request;
 
 class ProyectController extends Controller
@@ -24,6 +26,32 @@ class ProyectController extends Controller
             'Proyect' => $Proyect
         ]);
     }
+
+    public function showByTag($id)
+    {
+        $tag = Tags::find($id);
+
+        // Obtener todos los proyectos asociados a la etiqueta
+        $proyectos = $tag->proyectos()->with('tags')->get();
+
+        return response()->json([
+            'Proyect' => $proyectos
+        ]);
+    }
+    public function showByEducation($id)
+    {
+        $educacion = Education::find($id);
+
+        $proyectos = $educacion->proyect()->with('tags')->get();
+
+        return response()->json([
+            'Proyect' => $proyectos
+        ]);
+    }
+    
+    
+    
+
 
     public function store(Request $request)
     {

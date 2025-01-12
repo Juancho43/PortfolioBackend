@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,13 +16,15 @@ class EducationFactory extends Factory
      */
     public function definition(): array
     {
+
+        $profiles = Profile::all();
         return [
             'name'=> $this->faker->name(),
             'description'=> $this->faker->text(),
             'startDate'=> $this->faker->date(),
             'endDate'=> $this->faker->date(),
-            'type' => $this->faker->randomElement(['Formal Education','Course'])
-
+            'type' => $this->faker->randomElement(['Formal Education','Course']),
+            'profile_id' => $this->faker->numberBetween(1, $profiles->count())
         ];
     }
 }
