@@ -14,7 +14,7 @@ class ProyectController extends Controller
         $Proyect = Proyect::with('tags')->get();
 
         return response()->json([
-            'Proyect' => $Proyect
+            'Projects' => $Proyect
         ]);
     }
 
