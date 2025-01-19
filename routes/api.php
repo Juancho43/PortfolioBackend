@@ -12,11 +12,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('register',[AuthController::class,'register']);
-Route::post('login',[AuthController::class,'login'])->name('login');
 
 // Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
-Route::prefix('v1')->group(function () {
+    Route::prefix('v1')->group(function () {
+    Route::post('register',[AuthController::class,'register']);
+    Route::post('login',[AuthController::class,'login'])->name('login');
     Route::get('/education/proyects/{id}',[EducationController::class,'AllEducation']);
     Route::get('/project/tag/{id}',[ProyectController::class,'showByTag']);
     Route::get('/project/education/{id}',[ProyectController::class,'showByEducation']);

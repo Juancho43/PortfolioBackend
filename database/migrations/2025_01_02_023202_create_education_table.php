@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->date("startDate");
             $table->date("endDate");
-            $table->enum('type', ['Formal Education', 'Course']);
+            $table->enum('type', ['Educacion Formal', 'Curso']);
             $table->unsignedBigInteger('profile_id');
             $table->foreign('profile_id')->references('id')->on('profiles'); 
             $table->timestamps();

@@ -19,14 +19,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+    
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'bravojuan43@gmail.com',
+            'password' => 'cody',
         ]);
-        User::factory(10)->create();
-        Profile::factory(10)->create();
+        
+
+        Profile::factory()->create([
+           'user_id' =>1,
+           'name' => 'Bravo, Juan Alé',
+           'publicMail' =>'bravojuan@bravojuan.site',
+           'rol' => 'Profesional IT',
+           'description' => 'Analista programador y técnico informatico profesional y personal.',
+           'linkedin' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/',
+           'github' => 'https://github.com/Juancho43',
+           'publicMail' =>'bravojuan@bravojuan.site'
+
+        ]);
+        
         Education::factory()->count(5)->create();
 
         Proyect::factory()->count(5)->create();
@@ -39,7 +50,7 @@ class DatabaseSeeder extends Seeder
         $tags = Tags::all();
         foreach ($proyectos as $proyect) {
             $proyect->tags()->attach(
-                $tags->random(rand(1, 3)) // Asignar de 1 a 3 etiquetas aleatorias a cada proyecto
+                $tags->random(rand(1, 5)) // Asignar de 1 a 3 etiquetas aleatorias a cada proyecto
             );
         }
        

@@ -41,6 +41,7 @@ class EducationController extends Controller
         $education->startDate = $request->input('startDate');
         $education->endDate = $request->input('endDate');
         $education->type = $request->input('type');
+        $education->profile_id = $request->input('profile_id');
         $education->save();
 
         return response()->json([
