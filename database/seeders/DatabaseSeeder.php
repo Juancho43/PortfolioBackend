@@ -34,8 +34,9 @@ class DatabaseSeeder extends Seeder
            'description' => 'Analista programador y técnico informatico profesional y personal.',
            'linkedin' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/',
            'github' => 'https://github.com/Juancho43',
-           'publicMail' =>'bravojuan@bravojuan.site'
-
+           'publicMail' =>'bravojuan@bravojuan.site',
+           'cv' =>'bravojuan@bravojuan.site',
+           'photo_url' =>'bravojuan@bravojuan.site',
         ]);
         
         Education::factory()->count(5)->create();

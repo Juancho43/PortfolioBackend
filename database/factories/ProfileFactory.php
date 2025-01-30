@@ -22,6 +22,8 @@ class ProfileFactory extends Factory
             'description'=> $this->faker->text(),
             'github'=> $this->faker->url(),
             'rol'=> $this->faker->word(),
+            'photo_url'=> $this->faker->word(),
+            'cv'=> $this->faker->word(),
             'linkedin'=> $this->faker->url() ,
             'user_id' => $this->faker->unique()->numberBetween(1, $users->count())
         ];

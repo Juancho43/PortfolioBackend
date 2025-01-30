@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('github');
             $table->string('linkedin');
             $table->string('publicMail');
+            $table->string('photo_url');
+            $table->string('cv');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
