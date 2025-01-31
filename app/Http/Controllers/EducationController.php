@@ -9,7 +9,7 @@ class EducationController extends Controller
 {
     public function index()
     {
-        $education = Education::all();
+        $education = Education::orderBy('endDate', 'asc')->get();
 
         return response()->json([
             'education' => $education
@@ -18,7 +18,8 @@ class EducationController extends Controller
 
     public function show($id)
     {
-        $education = Education::find($id);
+        $education = Education::where('id', $id)
+        ->first();
 
         return response()->json([
             'education' => $education
@@ -30,6 +31,14 @@ class EducationController extends Controller
         return response()->json([
             'Data' => Education::with('proyect')->find($id)
         ]);
+    }
+
+    public function showByType($type){
+        $education = Education::where('type',$type)->orderBy('endDate', 'asc')->get();
+        return response()->json([
+            'education' => $education
+        ]);
+
     }
 
     public function store(Request $request)

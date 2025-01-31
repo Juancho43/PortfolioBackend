@@ -18,10 +18,12 @@ Route::get('/user', function (Request $request) {
     Route::post('register',[AuthController::class,'register']);
     Route::post('login',[AuthController::class,'login'])->name('login');
     Route::post('/profile/img/{id}',[ProfileController::class,'saveImg']);
+    Route::post('/profile/cv/{id}',[ProfileController::class,'saveCv']);
     
     Route::get('/education/proyects/{id}',[EducationController::class,'AllEducation']);
     Route::get('/project/tag/{id}',[ProyectController::class,'showByTag']);
     Route::get('/project/education/{id}',[ProyectController::class,'showByEducation']);
+    Route::get('/education/type/{type}',[EducationController::class,'showByType']);
     Route::resource('/education',EducationController::class);
     Route::resource('/project',ProyectController::class);
     Route::resource('/tag',TagsController::class);

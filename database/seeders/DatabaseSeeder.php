@@ -35,8 +35,8 @@ class DatabaseSeeder extends Seeder
            'linkedin' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/',
            'github' => 'https://github.com/Juancho43',
            'publicMail' =>'bravojuan@bravojuan.site',
-           'cv' =>'bravojuan@bravojuan.site',
-           'photo_url' =>'bravojuan@bravojuan.site',
+           'cv' =>'...',
+           'photo_url' =>'...',
         ]);
         
         Education::factory()->count(5)->create();

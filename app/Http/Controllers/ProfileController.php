@@ -6,15 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\User;
 use App\Repository\ProfileRepository;
+use App\Http\Controllers\FileProcessor;
 use Illuminate\Support\Facades\Storage;
+
 class ProfileController extends Controller
 {
 
     protected $profileRepository;
+    protected $fileProcessor;
 
-    public function __construct(ProfileRepository $profileRepository)
+    public function __construct(ProfileRepository $profileRepository, FileProcessor $fileProcessor)
     {
         $this->profileRepository = $profileRepository;
+        $this->fileProcessor = $fileProcessor;
     }
 
 
@@ -50,11 +54,8 @@ class ProfileController extends Controller
         $Profile->github = $request->input('github');
         $Profile->linkedin = $request->input('linkedin');
         $Profile->publicMail = $request->input('publicMail');
-        $Profile->user_id = 1;
-        $Profile->photo_url = 'photo_url';
+        $Profile->user_id = 1;        
         $Profile->save();
-        
-        
 
         return response()->json([
             'message' => 'Profile created successfully',
@@ -64,33 +65,32 @@ class ProfileController extends Controller
 
 
     public function saveImg(Request $request, $id){
+        echo $request->hasFile('photo_url');
         $Profile = Profile::find($id);
         if($request->hasFile('photo_url')){
-            $oldImagePath = $Profile->photo_url;
-
-            // 2. Borrar la imagen antigua (si existe)
-            if ($oldImagePath) {
-                // Extraer la parte de la ruta relativa al disco publico, eliminando "storage/"
-                $path_to_delete = str_replace(asset('storage/'), '', $oldImagePath);
-                if (Storage::disk('public')->exists($path_to_delete)) {
-                    Storage::disk('public')->delete($path_to_delete);
-                } else {
-                    // Log or report the error: the file does not exist
-                    \Log::warning("Old image not found: " . $path_to_delete);
-                }
-            }
-    
-            // Guardar archivo en el directorio 'images'
-            $name = 'profile_image_' . time() .'.'. $request->file('photo_url')->getClientOriginalExtension();
-            $file = $request->file('photo_url')->storeAs('images',$name,'public');
-
+            $file = $this->fileProcessor->saveFile($request, 'images', $Profile->photo_url, 'photo_url');
             $Profile->photo_url = Storage::url($file);
             $Profile->save();    
-        };
-
+        }
+        
         return response()->json([
             'message' => 'Image created successfully',
             'IMG' => $file
+        ]);
+    }
+
+
+    public function saveCv(Request $request, $id){
+        $Profile = Profile::find($id);
+        if($request->hasFile('cv')){      
+            $file = $this->fileProcessor->saveFile($request, 'files', $Profile->cv, 'cv');
+            $Profile->cv = Storage::url($file);
+            $Profile->save();    
+        }
+        
+        return response()->json([
+            'message' => 'Cv saved successfully',
+            'CV' => $file
         ]);
     }
 

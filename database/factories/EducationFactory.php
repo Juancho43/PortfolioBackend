@@ -24,7 +24,7 @@ class EducationFactory extends Factory
             'startDate'=> $this->faker->date(),
             'endDate'=> $this->faker->date(),
             
-            'type' => $this->faker->randomElement(['Educacion Formal','Curso']),
+            'type' => $this->faker->randomElement(['Academico','Curso']),
             'profile_id' => $this->faker->numberBetween(1, $profiles->count())
         ];
     }
