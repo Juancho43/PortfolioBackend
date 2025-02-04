@@ -4,13 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\HasMany;
+
 
 class Education extends Model
 {
-    /** @use HasFactory<\Database\Factories\EducationFactory> */
+    
     use HasFactory;
-    public function profile(): BelongsTo
+
+    protected $fillable = [
+        'name',
+        'description', 
+        'startDate', 
+        'endDate', 
+        'type', 
+        'profile_id'
+    ];
+    
+
+    public function profile()
     {
         return $this->belongsTo(Profile::class);
     }

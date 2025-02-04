@@ -25,7 +25,7 @@ class ProfileController extends Controller
     public function index()
     {
         $Profile = $this->profileRepository->all();
-        // $Profile = Profile::all();
+        
         return response()->json([
             'Profile' => $Profile
         ]);

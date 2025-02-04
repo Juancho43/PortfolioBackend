@@ -10,19 +10,19 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', // Add 'name' here
+        'name',
         'rol', 
         'description', 
         'github', 
         'linkedin', 
         'publicMail', 
-        // Add other attributes as needed
     ];
+    
     public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function education(): HasMany
+    public function education()
     {
         return $this->hasMany(Education::class);
     }
