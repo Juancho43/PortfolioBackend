@@ -16,14 +16,13 @@ class EducationController extends Controller
     public function __construct(EducationRepository $EducationRepository, )
     {
         $this->EducationRepository = $EducationRepository;
-        
+
     }
 
 
     public function index()
     {
         $education = $this->EducationRepository->all();
-
         return response()->json([
             'education' => $education
         ]);
@@ -39,7 +38,7 @@ class EducationController extends Controller
     }
 
     public function AllEducation($id){
-        
+
         $data = $this->EducationRepository->findWithProjects($id);
         return response()->json([
             'Data' => $data
@@ -66,7 +65,7 @@ class EducationController extends Controller
         // $education->profile_id = $request->input('profile_id');
         // $education->save();
 
-        
+
 
         return response()->json([
             'message' => 'Education created successfully',
@@ -76,7 +75,7 @@ class EducationController extends Controller
 
     public function update(EducationRequest $request, $id)
     {
-        
+
         $education = $this->EducationRepository->update($id,$request->validated());
 
         // $education->name = $request->input('name');

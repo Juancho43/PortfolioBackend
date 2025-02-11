@@ -2,29 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proyect;
+use App\Models\Project;
 use App\Models\Tags;
 use App\Models\Education;
 use Illuminate\Http\Request;
+use App\Repository\ProjectRepository;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\ProjectResourceCollection;
 
 class ProyectController extends Controller
 {
+
+
+    protected $repository;
+
+
+    public function __construct(ProjectRepository $repository, )
+    {
+        $this->repository = $repository;
+
+    }
+
     public function index()
     {
-        $Proyect = Proyect::with('tags')->get();
 
-        return response()->json([
-            'Projects' => $Proyect
-        ]);
+        return new ProjectResourceCollection($this->repository->all());
+
     }
 
     public function show($id)
     {
-        $Proyect = Proyect::with('tags')->find($id);
-
-        return response()->json([
-            'Proyect' => $Proyect
-        ]);
+        return new ProjectResource($this->repository->find($id));
     }
 
     public function showByTag($id)
@@ -48,26 +56,26 @@ class ProyectController extends Controller
             'Proyect' => $proyectos
         ]);
     }
-    
-    
-    
+
+
+
 
 
     public function store(Request $request)
     {
-        $Proyect = new Proyect;
+        $Proyect = new Project;
 
         $Proyect->name = $request->input('name');
         $Proyect->description = $request->input('description');
-        
+
         $Proyect->save();
 
    // Retrieve the tags from the request
-        $tags = $request->input('tags'); 
+        $tags = $request->input('tags');
 
         // Attach the tags to the project
         if ($tags) {
-            $Proyect->tags()->sync($tags); 
+            $Proyect->tags()->sync($tags);
         }
 
 
@@ -79,11 +87,11 @@ class ProyectController extends Controller
 
     public function update(Request $request, $id)
     {
-        $Proyect = Proyect::with('tags:id,name')->find($id);
-        
+        $Proyect = Project::with('tags:id,name')->find($id);
+
         $Proyect->name = $request->input('name');
         $Proyect->description = $request->input('description');
-        
+
         $Proyect->save();
 
         return response()->json([
@@ -94,7 +102,7 @@ class ProyectController extends Controller
 
     public function destroy($id)
     {
-        $task = Proyect::find($id);
+        $task = Project::find($id);
 
         $task->delete();
 

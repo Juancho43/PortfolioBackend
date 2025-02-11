@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Validator;
+
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use \stdClass;
 
 class AuthController extends Controller
@@ -36,32 +37,34 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
+
+
         if ($request->method() !== 'POST') {
             return response()->json(['message' => 'Method Not Allowed'], 405);
         }
-        
+
         if(!Auth::attempt($request->only('email','password'))){
             return response()->
             json(['message'=>'Unauthorized'],401);
+        }else{
+            $users = Auth::user();
         }
-
         $user = User::where('email',$request['email'])->firstOrFail();
-
         $token = $user->createToken('auth_token')->plainTextToken;
+
 
         return response()->json([
             'message' => 'Hi'.$user->name,
             'accessToken' => $token,
             'token_type' => 'Bearer',
-            'user' => $user
+            'user' => $users
 
         ]);
 
     }
 
     public function logout(){
-        auth()->user()->tokens()->delete();
-
+        Auth::user()->tokens->delete();
         return[
             'message' => 'Logout'
         ];

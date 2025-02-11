@@ -5,9 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Education;
-use App\Models\Proyect; 
-use App\Models\Tags; 
-use App\Models\Profile; 
+use App\Models\Project;
+use App\Models\Tags;
+use App\Models\Profile;
 
 
 use Illuminate\Database\Seeder;
@@ -19,12 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-    
+
         User::factory()->create([
             'email' => 'bravojuan43@gmail.com',
             'password' => 'cody',
         ]);
-        
+
 
         Profile::factory()->create([
            'user_id' =>1,
@@ -38,22 +38,33 @@ class DatabaseSeeder extends Seeder
            'cv' =>'...',
            'photo_url' =>'...',
         ]);
-        
+
         Education::factory()->count(5)->create();
 
-        Proyect::factory()->count(5)->create();
+        Project::factory()->count(5)->create();
 
         // Crear 10 tags
         Tags::factory()->count(10)->create();
 
         // Asociar aleatoriamente proyectos con tags
-        $proyectos = Proyect::all();
+        $proyectos = Project::all();
         $tags = Tags::all();
-        foreach ($proyectos as $proyect) {
-            $proyect->tags()->attach(
-                $tags->random(rand(1, 5)) // Asignar de 1 a 3 etiquetas aleatorias a cada proyecto
-            );
+        $tagIds = $tags->pluck('id')->toArray(); // Obtener solo los IDs de las etiquetas
+
+        foreach ($proyectos as $proyecto) {
+            // Determinar el número aleatorio de etiquetas a asignar (entre 1 y 5)
+            $numEtiquetas = rand(1, 5);
+
+            // Seleccionar aleatoriamente IDs de etiquetas sin repetición (optimizado)
+            $etiquetasAleatorias = array_rand($tagIds, $numEtiquetas);
+            if (!is_array($etiquetasAleatorias)) {
+                $etiquetasAleatorias = [$etiquetasAleatorias]; // Convertir a array si solo se seleccionó una etiqueta
+            }
+            $etiquetasSeleccionadas = array_intersect_key($tagIds, array_flip($etiquetasAleatorias));
+
+
+            // Sincronizar etiquetas del proyecto (evita duplicados y elimina etiquetas antiguas)
+            $proyecto->tags()->sync($etiquetasSeleccionadas);
         }
-       
     }
 }

@@ -1,26 +1,26 @@
 <?php
 namespace App\Repository;
 
-use App\Models\Education;
+use App\Models\Project;
 use App\Repository\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class EducationRepository implements IRepository
+class ProjectRepository implements IRepository
 {
     public function all(): Collection
     {
-        
-        return  Education::orderBy('endDate', 'asc')->get();
+
+        return Project::with('tags')->get();
     }
 
     public function find(int $id)
     {
-        return Education::where('id', $id)->first();
+        return Project::where('id', $id)->first();
     }
 
     public function create(array $data)
     {
-        return Education::create($data);
+        return Project::create($data);
     }
 
     public function update(int $id, array $data): bool
@@ -41,12 +41,6 @@ class EducationRepository implements IRepository
         return $Education->delete();
     }
 
-    public function findWithProjects($id){
-        return Education::with('proyect')->find($id);
-    }
 
-    public function whereType($type){
-        return Education::where('type',$type)->orderBy('endDate', 'asc')->get();
-    }
 
 }

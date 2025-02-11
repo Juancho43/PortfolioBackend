@@ -15,6 +15,7 @@ class ProfileRepository implements IRepository
 
     public function find(int $id)
     {
+        
         return User::with("profile")->find($id);
     }
 

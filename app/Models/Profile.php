@@ -26,4 +26,8 @@ class Profile extends Model
     {
         return $this->hasMany(Education::class);
     }
+    public function professional()
+    {
+        return $this->hasMany(Professional::class);
+    }
 }

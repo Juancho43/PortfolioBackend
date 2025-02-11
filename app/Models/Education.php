@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Education extends Model
 {
-    
+
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'description', 
-        'startDate', 
-        'endDate', 
-        'type', 
+        'description',
+        'startDate',
+        'endDate',
+        'type',
         'profile_id'
     ];
-    
+
 
     public function profile()
     {
@@ -28,6 +28,6 @@ class Education extends Model
 
     public function proyect()
     {
-        return $this->hasMany(Proyect::class);
+        return $this->hasMany(Project::class);
     }
 }

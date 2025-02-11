@@ -10,8 +10,8 @@ class Tags extends Model
     /** @use HasFactory<\Database\Factories\TagsFactory> */
     use HasFactory;
 
-    public function proyectos()
+    public function projects()
     {
-        return $this->belongsToMany(Proyect::class,'proyect_tags');
+        return $this->belongsToMany(Proyect::class,'project_tags');
     }
 }

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Proyect extends Model
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+class Project extends Model
 {
     /** @use HasFactory<\Database\Factories\ProyectFactory> */
     use HasFactory;
 
     public function tags()
     {
-        return $this->belongsToMany(Tags::class,'proyect_tags');
+        return $this->belongsToMany(Tags::class,'project_tags');
     }
 
     public function education(): BelongsTo
