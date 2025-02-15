@@ -2,63 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tags;
+use App\Http\Requests\TagRequest;
+use App\Http\Resources\TagResource;
+use App\Http\Resources\TagResourceCollection;
+use App\Repository\TagRepository;
 use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
+
+    protected $repository;
+
+
+    public function __construct(TagRepository $repository, )
+    {
+        $this->repository = $repository;
+
+    }
+
     public function index()
     {
-        $Proyect = Tags::all();
-
-        return response()->json([
-            'Tags' => $Proyect
-        ]);
+        return new TagResourceCollection($this->repository->all());
     }
 
     public function show($id)
     {
-        $Tags = Tags::find($id);
-
-        return response()->json([
-            'Tags' => $Tags
-        ]);
+       return new TagResource($this->repository->find($id));
     }
 
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $Tags = new Tags;
-
-        $Tags->name = $request->input('name');
-   
-        
-        $Tags->save();
-
-        return response()->json([
-            'message' => 'Tag created successfully',
-            'Tags' => $Tags
-        ]);
+        return new TagResource($this->repository->create($request->validated()));
     }
 
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, $id)
     {
-        $Tags = Tags::find($id);
-        
-        $Tags->name = $request->input('name');
-        
-        $Tags->save();
-
-        return response()->json([
-            'message' => 'Tag edited successfully',
-            'Tags' => $Tags
-        ]);
+        return new TagResource($this->repository->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        $Tags = Tags::find($id);
-
-        $Tags->delete();
+        $this->repository->delete($id);
 
         return response()->json([
             'message' => 'Tag deleted successfully'

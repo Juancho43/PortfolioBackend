@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\EducationRepository;
 use App\Http\Requests\EducationRequest;
+use App\Http\Resources\EducationResourceColletion;
+use App\Http\Resources\EducationResource;
 
 class EducationController extends Controller
 {
@@ -22,19 +24,12 @@ class EducationController extends Controller
 
     public function index()
     {
-        $education = $this->EducationRepository->all();
-        return response()->json([
-            'education' => $education
-        ]);
+        return new EducationResourceColletion($this->EducationRepository->all());
     }
 
     public function show($id)
     {
-        $education = $this->EducationRepository->find($id);
-
-        return response()->json([
-            'education' => $education
-        ]);
+        return new EducationResource($this->EducationRepository->find($id));
     }
 
     public function AllEducation($id){
@@ -46,10 +41,7 @@ class EducationController extends Controller
     }
 
     public function showByType($type){
-        $education = $this->EducationRepository->whereType($type);
-        return response()->json([
-            'education' => $education
-        ]);
+        return new EducationResourceColletion( $this->EducationRepository->whereType($type));
 
     }
 
