@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->integer('idProjects', true);
-            $table->string('name', 100)->nullable();
+            $table->string('name', 100);
             $table->text('description')->nullable();
             $table->timestamps();
             $table->date('delete_at')->nullable();

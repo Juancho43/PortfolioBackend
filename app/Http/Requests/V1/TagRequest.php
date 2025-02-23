@@ -22,7 +22,8 @@ class TagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|max:50'
+            'name'=>'required|max:50',
+            'delete_at' => 'nullable|date'
         ];
     }
 }

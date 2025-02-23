@@ -25,12 +25,9 @@ class EducationRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:255',
-            'startDate' => 'required|date', 
-            'endDate' => 'nullable|date|after:startDate', 
-            'delete_at' => 'nullable|date', 
-            'type' => ['required', Rule::in(['Academico', 'Curso'])], 
-            'profile_id' => 'required|exists:users,id', 
-            
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after:start_date',
+            'delete_at' => 'nullable|date',
         ];
     }
 
@@ -44,9 +41,8 @@ class EducationRequest extends FormRequest
         return [
             'name.required' => "El nombre es requerido.",
             'description.required' => "La descripción es requerida.",
-            'startDate.required' => "La fecha de inicio es requerida.",
+            'start_date.required' => "La fecha de inicio es requerida.",
             'type.required' => "El tipo es requerido.",
-            'profile_id.required' => "El usuario es requerido.",
         ];
     }
 }

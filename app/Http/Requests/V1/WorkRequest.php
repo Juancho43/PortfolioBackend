@@ -23,6 +23,13 @@ class WorkRequest extends FormRequest
     {
         return [
             //
+            'company' => 'required|string|max:45',
+            'position' => 'required|string|max:45',
+            'responsabilities' => 'nullable|string|max:65535',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after:start_date',
+            'delete_at' => 'nullable|date'
+
         ];
     }
 }
