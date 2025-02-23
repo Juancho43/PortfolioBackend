@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->integer('idTags', true);
+            $table->string('name', 45)->nullable();
             $table->timestamps();
+            $table->date('delete_at')->nullable();
         });
     }
 

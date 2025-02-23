@@ -1,13 +1,13 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\Education;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Proyect>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ProjectFactory extends Factory
+class LinkFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=> $this->faker->name(),
-            'description'=> $this->faker->text(),
-
+            'name'=> $this->faker->word(),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Console\View\Components\Warn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,23 +12,23 @@ class Profile extends Model
 
     protected $fillable = [
         'name',
-        'rol', 
-        'description', 
-        'github', 
-        'linkedin', 
-        'publicMail', 
+        'rol',
+        'description',
     ];
-    
+
     public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function education()
-    {
-        return $this->hasMany(Education::class);
+    public function education(){
+        return $this->belongsToMany(Education::class,'profiles_has_education');
     }
-    public function professional()
-    {
-        return $this->hasMany(Professional::class);
+    public function work(){
+        return $this->belongsToMany(Works::class,'profiles_has_works');
     }
+    public function link(){
+        return $this->belongsToMany(Link::class,'profiles_has_links');
+    }
+
+
 }

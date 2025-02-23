@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->text('repository');
-            $table->unsignedBigInteger('education_id');
-            $table->foreign('education_id')->references('id')->on('education'); 
+            $table->integer('idProjects', true);
+            $table->string('name', 100)->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->date('delete_at')->nullable();
         });
     }
 

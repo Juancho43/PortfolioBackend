@@ -14,20 +14,23 @@ class Education extends Model
     protected $fillable = [
         'name',
         'description',
-        'startDate',
-        'endDate',
-        'type',
-        'profile_id'
+        'start_date',
+        'end_date',
     ];
 
 
     public function profile()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsToMany(Profile::class,'profiles_has_education');
+    }
+    public function project()
+    {
+        return $this->belongsToMany(Project::class,'education_has_projects');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tags::class,'education_has_tags');
     }
 
-    public function proyect()
-    {
-        return $this->hasMany(Project::class);
-    }
+
 }

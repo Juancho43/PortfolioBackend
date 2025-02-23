@@ -17,15 +17,11 @@ class EducationFactory extends Factory
     public function definition(): array
     {
 
-        $profiles = Profile::all();
         return [
             'name'=> $this->faker->name(),
             'description'=> $this->faker->text(),
-            'startDate'=> $this->faker->date(),
-            'endDate'=> $this->faker->date(),
-            
-            'type' => $this->faker->randomElement(['Academico','Curso']),
-            'profile_id' => $this->faker->numberBetween(1, $profiles->count())
+            'start_date'=> $this->faker->date(),
+            'end_date'=> $this->faker->date(),
         ];
     }
 }

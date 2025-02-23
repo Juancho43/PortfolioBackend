@@ -16,18 +16,12 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::all();
         return [
-            'publicMail' => fake()->unique()->safeEmail(),
-            'description'=> $this->faker->text(),
-            'github'=> $this->faker->url(),
+            'name'=> $this->faker->word(),
             'rol'=> $this->faker->word(),
-            'photo_url'=> $this->faker->word(),
-            'cv'=> $this->faker->word(),
-            'linkedin'=> $this->faker->url() ,
-            'user_id' => $this->faker->unique()->numberBetween(1, $users->count())
+            'description'=> $this->faker->text(),
         ];
     }
 }
-            
-    
+
+

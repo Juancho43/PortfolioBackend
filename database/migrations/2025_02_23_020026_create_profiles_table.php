@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('education', function (Blueprint $table) {
-            $table->id();
+        Schema::create('profiles', function (Blueprint $table) {
+            $table->integer('idProfile', true);
             $table->string('name');
+            $table->string('rol');
             $table->text('description');
-            $table->date("startDate");
-            $table->date("endDate");
-            $table->enum('type', ['Academico', 'Curso']);
-            $table->unsignedBigInteger('profile_id');
-            $table->foreign('profile_id')->references('id')->on('profiles'); 
+            $table->integer('Users_idUsers')->index('fk_profiles_users1_idx');
             $table->timestamps();
-            $table->softDeletes('deleted_at', precision: 0);
+            $table->date('delete_at')->nullable();
+
+            $table->primary(['idProfile', 'Users_idUsers']);
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('education');
+        Schema::dropIfExists('profiles');
     }
 };

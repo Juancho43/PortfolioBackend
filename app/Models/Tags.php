@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tags extends Model
 {
-    /** @use HasFactory<\Database\Factories\TagsFactory> */
+
     use HasFactory;
 
-    public function projects()
+    public function project()
     {
-        return $this->belongsToMany(Proyect::class,'project_tags');
+        return $this->belongsToMany(Project::class,'projects_has_tags');
+    }
+    public function education()
+    {
+        return $this->belongsToMany(Education::class,'education_has_tags');
+    }
+    public function work()
+    {
+        return $this->belongsToMany(Works::class,'works_has_tags');
     }
 }

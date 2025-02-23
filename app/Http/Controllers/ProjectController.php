@@ -10,7 +10,7 @@ use App\Repository\ProjectRepository;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectResourceCollection;
 
-class ProyectController extends Controller
+class ProjectController extends Controller
 {
 
 
@@ -37,10 +37,10 @@ class ProyectController extends Controller
 
     public function showByTag($id)
     {
-        $tag = Tags::find($id);
+        $tag = Tags::where('idTags',$id)->first();
 
         // Obtener todos los proyectos asociados a la etiqueta
-        $proyectos = $tag->proyectos()->with('tags')->get();
+        $proyectos = $tag;
 
         return response()->json([
             'Proyect' => $proyectos
@@ -50,7 +50,7 @@ class ProyectController extends Controller
     {
         $educacion = Education::find($id);
 
-        $proyectos = $educacion->proyect()->with('tags')->get();
+        $proyectos = $educacion->project()->with('tags')->get();
 
         return response()->json([
             'Proyect' => $proyectos
