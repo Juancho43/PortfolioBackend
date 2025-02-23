@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\EducationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TagsController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\V1\EducationController;
+use App\Http\Controllers\V1\ProfileController;
+use App\Http\Controllers\V1\ProjectController;
+use App\Http\Controllers\V1\TagsController;
+use App\Http\Controllers\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

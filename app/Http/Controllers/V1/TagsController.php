@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
-use App\Http\Requests\TagRequest;
-use App\Http\Resources\TagResource;
-use App\Http\Resources\TagResourceCollection;
-use App\Repository\TagRepository;
-use Illuminate\Http\Request;
+use App\Http\Requests\V1\TagRequest;
+use App\Http\Resources\V1\TagResource;
+use App\Http\Resources\V1\TagResourceCollection;
+use App\Repository\V1\TagRepository;
 
 class TagsController extends Controller
 {

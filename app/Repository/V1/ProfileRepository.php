@@ -1,9 +1,9 @@
 <?php
-namespace App\Repository;
+namespace App\Repository\V1;
 
 use App\Models\Profile;
 use App\Models\User;
-use App\Repository\IRepository;
+use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProfileRepository implements IRepository
@@ -15,7 +15,7 @@ class ProfileRepository implements IRepository
 
     public function find(int $id)
     {
-        
+
         return User::with("profile")->find($id);
     }
 

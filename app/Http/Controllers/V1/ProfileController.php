@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
-use App\Models\User;
-use App\Repository\ProfileRepository;
-use App\Http\Controllers\FileProcessor;
+use App\Repository\V1\ProfileRepository;
+use App\Http\Controllers\V1\FileProcessor;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -25,7 +24,7 @@ class ProfileController extends Controller
     public function index()
     {
         $Profile = $this->profileRepository->all();
-        
+
         return response()->json([
             'Profile' => $Profile
         ]);
@@ -35,7 +34,7 @@ class ProfileController extends Controller
     {
         $Profile = $this->profileRepository->find($id);
 
-        
+
         // $Profile = Profile::find($id);
         return response()->json([
             'Profile' => $Profile
@@ -43,7 +42,7 @@ class ProfileController extends Controller
     }
 
 
-    
+
     public function store(Request $request)
     {
         $Profile = new Profile;
@@ -54,7 +53,7 @@ class ProfileController extends Controller
         $Profile->github = $request->input('github');
         $Profile->linkedin = $request->input('linkedin');
         $Profile->publicMail = $request->input('publicMail');
-        $Profile->user_id = 1;        
+        $Profile->user_id = 1;
         $Profile->save();
 
         return response()->json([
@@ -70,9 +69,9 @@ class ProfileController extends Controller
         if($request->hasFile('photo_url')){
             $file = $this->fileProcessor->saveFile($request, 'images', $Profile->photo_url, 'photo_url');
             $Profile->photo_url = Storage::url($file);
-            $Profile->save();    
+            $Profile->save();
         }
-        
+
         return response()->json([
             'message' => 'Image created successfully',
             'IMG' => $file
@@ -82,12 +81,12 @@ class ProfileController extends Controller
 
     public function saveCv(Request $request, $id){
         $Profile = Profile::find($id);
-        if($request->hasFile('cv')){      
+        if($request->hasFile('cv')){
             $file = $this->fileProcessor->saveFile($request, 'files', $Profile->cv, 'cv');
             $Profile->cv = Storage::url($file);
-            $Profile->save();    
+            $Profile->save();
         }
-        
+
         return response()->json([
             'message' => 'Cv saved successfully',
             'CV' => $file
@@ -100,32 +99,32 @@ class ProfileController extends Controller
 
 
         $Profile = Profile::find($id);
-        
+
         $Profile->update($request->validate([
-            'name' => 'required|string', 
+            'name' => 'required|string',
             'rol' => 'required|string',
             'description' => 'required|string',
-            'github' => 'nullable|string', 
-            'linkedin' => 'nullable|string', 
-            'publicMail' => 'nullable|string', 
+            'github' => 'nullable|string',
+            'linkedin' => 'nullable|string',
+            'publicMail' => 'nullable|string',
         ]));
-    
-        // 3. (Optional) Handle Image Upload 
-        if ($request->hasFile('photo_url')) { 
+
+        // 3. (Optional) Handle Image Upload
+        if ($request->hasFile('photo_url')) {
             // ... (Your image upload logic here, as shown in previous examples) ...
         }
-        
-        
+
+
         // $Profile->save();
         // if($request->hasFile('photo_url')){
         //     $name = $Profile->id . '.' . $request->file('photo_url')->getClientOriginalExtension();
         //     $img = $request->file('photo_url')->storeAs('public/img/profile/',$name);
         //     $Profile->photo_url = "/img/".$name;
-        //     // $Profile->save();    
+        //     // $Profile->save();
         // }
-        
 
-        
+
+
 
         return response()->json([
             'message' => 'Profile edited successfully',

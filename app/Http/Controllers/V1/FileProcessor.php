@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;    
-class FileProcessor 
+use Illuminate\Support\Facades\Log;
+class FileProcessor
 {
     public function saveFile(Request $request, $path, $oldPath, $attribute)
     {
-        
+
         if ($oldPath) {
             // Extraer la parte de la ruta relativa al disco publico, eliminando "storage/"
             $path_to_delete = str_replace(asset('storage/'), '', $oldPath);
@@ -20,10 +20,10 @@ class FileProcessor
             }
         }
         $name = 'file_' . time() .'.'. $request->file($attribute)->getClientOriginalExtension();
-        
+
         $file = $request->file($attribute)->storeAs($path,$name,'public');
 
         return $file;
-        
+
     }
 }

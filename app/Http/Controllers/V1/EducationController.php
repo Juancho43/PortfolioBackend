@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 
-use App\Repository\EducationRepository;
-use App\Http\Requests\EducationRequest;
-use App\Http\Resources\EducationResourceColletion;
-use App\Http\Resources\EducationResource;
+use App\Repository\V1\EducationRepository;
+use App\Http\Requests\V1\EducationRequest;
+use App\Http\Resources\V1\EducationResourceColletion;
+use App\Http\Resources\V1\EducationResource;
 
 class EducationController extends Controller
 {

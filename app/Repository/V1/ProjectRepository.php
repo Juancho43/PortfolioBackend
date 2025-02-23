@@ -1,8 +1,8 @@
 <?php
-namespace App\Repository;
+namespace App\Repository\V1;
 
 use App\Models\Project;
-use App\Repository\IRepository;
+use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProjectRepository implements IRepository

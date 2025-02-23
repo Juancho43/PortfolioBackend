@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Models\Project;
 use App\Models\Tags;
 use App\Models\Education;
 use Illuminate\Http\Request;
-use App\Repository\ProjectRepository;
+use App\Repository\V1\ProjectRepository;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectResourceCollection;
 

@@ -1,15 +1,15 @@
 <?php
-namespace App\Repository;
+namespace App\Repository\V1;
 
 use App\Models\Education;
-use App\Repository\IRepository;
+use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class EducationRepository implements IRepository
 {
     public function all(): Collection
     {
-        
+
         return  Education::orderBy('endDate', 'asc')->get();
     }
 
