@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Repository\V1\ProfileRepository;
 use App\Http\Controllers\V1\FileProcessor;
+use App\Http\Resources\V1\ProfileResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -32,13 +33,9 @@ class ProfileController extends Controller
 
     public function show($id)
     {
-        $Profile = $this->profileRepository->find($id);
+        $profile = $this->profileRepository->find($id);
 
-
-        // $Profile = Profile::find($id);
-        return response()->json([
-            'Profile' => $Profile
-        ]);
+        return new ProfileResource($profile);
     }
 
 

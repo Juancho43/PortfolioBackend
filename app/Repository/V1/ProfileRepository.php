@@ -16,7 +16,7 @@ class ProfileRepository implements IRepository
     public function find(int $id)
     {
 
-        return User::with("profile")->find($id);
+        return Profile::where('idProfile',$id)->with(['links'])->firstOrFail();
     }
 
     public function create(array $data)
@@ -40,5 +40,12 @@ class ProfileRepository implements IRepository
             return false;
         }
         return $Profile->delete();
+    }
+
+
+    public function attachLinkToProfile(int $profile_id, int $link_id)
+    {
+        // $profile = $this->find($profile_id);
+        // $profile->links()->t($link_id);
     }
 }

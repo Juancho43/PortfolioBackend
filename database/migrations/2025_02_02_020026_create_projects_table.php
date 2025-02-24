@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
-            $table->integer('idLinks', true);
-            $table->string('name', 45)->nullable();
-            $table->tinyText('link')->nullable();
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100);
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->date('delete_at')->nullable();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::dropIfExists('projects');
     }
 };

@@ -22,4 +22,9 @@ class Link extends Model
         return $this->belongsToMany(Works::class,'works_has_links');
     }
 
+    // public function education()
+    // {
+    //     return $this->belongsToMany(Education::class,'education_has_links');
+    // }
+
 }

@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profiles_has_works', function (Blueprint $table) {
-            $table->integer('Profiles_idProfile')->index('fk_profiles_has_works_profiles1_idx');
-            $table->integer('Works_idWorks')->index('fk_profiles_has_works_works1_idx');
-
-            $table->primary(['Profiles_idProfile', 'Works_idWorks']);
+            $table->unsignedBigInteger('profiles_id')->index('fk_profiles_has_works_profiles1_idx');
+            $table->unsignedBigInteger('works_id')->index('fk_profiles_has_works_works1_idx');
+            $table->foreign('profiles_id')->references('id')->on('profiles')->onUpdate('no action')->onDelete('no action');
+            $table->foreign('works_id')->references('id')->on('works')->onUpdate('no action')->onDelete('no action');
+            $table->primary(['profiles_id', 'works_id']);
         });
     }
 

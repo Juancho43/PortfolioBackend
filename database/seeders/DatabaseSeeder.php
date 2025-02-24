@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
 
         $profile = Profile::factory()->create([
-           'Users_idUsers' =>1,
+           'user_id' =>1,
            'name' => 'Bravo, Juan Alé',
         //    'publicMail' =>'bravojuan@bravojuan.site',
             'rol' => 'Profesional IT',
@@ -48,8 +48,11 @@ class DatabaseSeeder extends Seeder
 
         // Crear 10 tags
         Tags::factory()->count(10)->create();
+       $links= Link::all();
+        $profile = Profile::find(1);
 
 
+        $profile->links()->attach([$links[0],$links[1]]);
 
         // // Asociar aleatoriamente proyectos con tags
         // $proyectos = Project::all();

@@ -16,16 +16,11 @@ class ProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'name' => $this->name,
-            'rol' => $this->rol,
-            'description' => $this->description,
-            'github' => $this->github,
-            'linkedin' => $this->linkedin,
-            'publicMail' => $this->publicMail,
-            'photo_url' => $this->photo_url,
-            'cv' => $this->cv,
+            'idProfile' => $this->resource->idProfile,
+            'name' => $this->resource->name,
+            'rol' => $this->resource->rol,
+            'description' => $this->resource->description,
+            'links' => new LinkResourceCollection($this->resource->links)
         ];
     }
 }

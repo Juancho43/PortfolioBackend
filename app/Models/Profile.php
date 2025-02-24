@@ -23,12 +23,13 @@ class Profile extends Model
     public function education(){
         return $this->belongsToMany(Education::class,'profiles_has_education');
     }
-    public function work(){
+    public function works(){
         return $this->belongsToMany(Works::class,'profiles_has_works');
     }
-    public function link(){
-        return $this->belongsToMany(Link::class,'profiles_has_links');
-    }
+    public function links()
+{
+    return $this->belongsToMany(Link::class, 'profiles_has_links');
+}
 
 
 }

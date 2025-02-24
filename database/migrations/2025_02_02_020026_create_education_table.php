@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->integer('idTags', true);
-            $table->string('name', 45)->nullable();
+        Schema::create('education', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100);
+            $table->text('description');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->timestamps();
             $table->date('delete_at')->nullable();
         });
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('education');
     }
 };
