@@ -7,11 +7,14 @@ use App\Repository\V1\EducationRepository;
 use App\Http\Requests\V1\EducationRequest;
 use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\EducationResource;
+use App\Http\Controllers\V1\ApiResponseTrait;
+use Exception;
+
 
 class EducationController extends Controller
 {
 
-
+    use ApiResponseTrait;
     protected $EducationRepository;
 
 
@@ -24,7 +27,11 @@ class EducationController extends Controller
 
     public function index()
     {
-        return new EducationResourceColletion($this->EducationRepository->all());
+        try{
+            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->all()));
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),500);
+        }
     }
 
     public function show($id)

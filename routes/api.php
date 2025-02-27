@@ -5,35 +5,47 @@ use App\Http\Controllers\V1\ProfileController;
 use App\Http\Controllers\V1\ProjectController;
 use App\Http\Controllers\V1\TagsController;
 use App\Http\Controllers\V1\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\V1\LinkController;
+use App\Http\Controllers\V1\WorkController;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
-    Route::resource('/education/private',EducationController::class)->except(['index','show']);
-    Route::resource('/project/private',ProjectController::class)->except(['index','show']);;
-    Route::resource('/tag/private',TagsController::class)->except(['index','show']);;
-    Route::resource('/profile/private',ProfileController::class)->except(['index','show']);;
-    Route::post('/profile/img/{id}',[ProfileController::class,'saveImg']);
-    Route::post('/profile/cv/{id}',[ProfileController::class,'saveCv']);
-});
-
 Route::prefix('v1')->group(function () {
-    Route::post('register',[AuthController::class,'register']);
-    Route::post('login',[AuthController::class,'login'])->name('login');
+    // Rutas de autenticación
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('auth.logout');
 
+    // Rutas públicas
+    Route::group(['as' => 'public.'], function() {
+        Route::resource('/profile', ProfileController::class)->names('profile');
+        Route::resource('/education', EducationController::class)->names('education');
+        Route::resource('/project', ProjectController::class)->names('project');
+        Route::resource('/work', WorkController::class)->names('work');
+        Route::resource('/tag', TagsController::class)->names('tag');
+        Route::resource('/link', LinkController::class)->names('link');
 
-    Route::get('/education/proyects/{id}',[EducationController::class,'AllEducation']);
-    Route::get('/project/tag/{id}',[ProjectController::class,'showByTag']);
-    Route::get('/project/education/{id}',[ProjectController::class,'showByEducation']);
-    Route::get('/education/type/{type}',[EducationController::class,'showByType']);
+        // Relaciones y filtros
+        Route::get('/project/education/{id}', [ProjectController::class, 'showByEducation'])->name('project.byEducation');
+        Route::get('/project/tag/{id}', [ProjectController::class, 'showByTag'])->name('project.byTag');
+        Route::get('/education/tag/{type}', [EducationController::class, 'showByType'])->name('education.byTag');
+        Route::get('/work/tag/{id}', [WorkController::class, 'showByTag'])->name('work.byTag');
+    });
 
-    Route::resource('/education',EducationController::class);
-    Route::resource('/project',ProjectController::class);;
-    Route::resource('/tag',TagsController::class);;
-    Route::resource('/profile',ProfileController::class);;
+    // Rutas privadas (requieren autenticación)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::group(['as' => 'private.'], function() {
+            Route::resource('/profile/private', ProfileController::class)->except(['index', 'show'])->names('profile');
+            Route::resource('/education/private', EducationController::class)->except(['index', 'show'])->names('education');
+            Route::resource('/project/private', ProjectController::class)->except(['index', 'show'])->names('project');
+            Route::resource('/work/private', WorkController::class)->except(['index', 'show'])->names('work');
+            Route::resource('/tag/private', TagsController::class)->except(['index', 'show'])->names('tag');
+            Route::resource('/link/private', LinkController::class)->except(['index', 'show'])->names('link');
+
+            // Gestión de archivos
+            Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
+            Route::post('/profile/cv/{id}', [ProfileController::class, 'saveCv'])->name('profile.saveCV');
+        });
+    });
 });
 
