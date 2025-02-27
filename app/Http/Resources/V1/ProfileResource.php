@@ -4,6 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileResource extends JsonResource
 {
@@ -20,7 +21,10 @@ class ProfileResource extends JsonResource
             'name' => $this->resource->name,
             'rol' => $this->resource->rol,
             'description' => $this->resource->description,
-            'links' => new LinkResourceCollection($this->resource->links)
+            'links' => new LinkResourceCollection($this->resource->links),
+            'created_at' => $this->when(Auth::check(),$this->created_at, null),
+            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
+            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Facades\Auth;
 class TagResource extends JsonResource
 {
     public static $wrap = 'tag';
@@ -18,6 +18,9 @@ class TagResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'created_at' => $this->when(Auth::check(),$this->created_at, null),
+            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
+            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
         ];
     }
 }

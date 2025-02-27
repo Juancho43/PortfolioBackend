@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tags extends Model
+class Tag extends Model
 {
 
     use HasFactory;
@@ -20,6 +20,6 @@ class Tags extends Model
     }
     public function work()
     {
-        return $this->belongsToMany(Works::class,'works_has_tags');
+        return $this->belongsToMany(Work::class,'works_has_tags');
     }
 }

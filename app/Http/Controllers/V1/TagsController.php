@@ -6,14 +6,15 @@ use App\Http\Requests\V1\TagRequest;
 use App\Http\Resources\V1\TagResource;
 use App\Http\Resources\V1\TagResourceCollection;
 use App\Repository\V1\TagRepository;
+use Exception;
 
 class TagsController extends Controller
 {
-
+    use ApiResponseTrait;
     protected $repository;
 
 
-    public function __construct(TagRepository $repository, )
+    public function __construct(TagRepository $repository)
     {
         $this->repository = $repository;
 
@@ -21,7 +22,14 @@ class TagsController extends Controller
 
     public function index()
     {
-        return new TagResourceCollection($this->repository->all());
+
+        try{
+            return $this->successResponse(new TagResourceCollection($this->repository->all()));
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de tags",$e->getMessage(),500);
+        }
+
+
     }
 
     public function show($id)

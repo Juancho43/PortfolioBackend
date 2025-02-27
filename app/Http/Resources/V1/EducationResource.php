@@ -22,12 +22,11 @@ class EducationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'startDate' => $this->startDate,
-            'endDate' => $this->endDate,
-            'type' => $this->type,
-
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'created_at' => $this->when(Auth::check(),$this->created_at, null),
-            'updated_at' => $this->when(Auth::check(),$this->created_at, null)
+            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
+            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
         ];
     }
 }

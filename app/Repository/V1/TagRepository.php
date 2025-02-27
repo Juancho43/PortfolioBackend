@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository\V1;
 
-use App\Models\Tags;
+use App\Models\Tag;
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -9,17 +9,17 @@ class TagRepository implements IRepository
 {
     public function all(): Collection
     {
-        return  Tags::all();
+        return  Tag::all();
     }
 
     public function find(int $id)
     {
-        return Tags::find($id);
+        return Tag::find($id);
     }
 
     public function create(array $data)
     {
-        return Tags::create($data);
+        return Tag::create($data);
     }
 
     public function update(int $id, array $data): bool

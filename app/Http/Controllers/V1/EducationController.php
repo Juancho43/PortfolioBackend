@@ -9,6 +9,7 @@ use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\EducationResource;
 use App\Http\Controllers\V1\ApiResponseTrait;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class EducationController extends Controller
@@ -28,18 +29,23 @@ class EducationController extends Controller
     public function index()
     {
         try{
-            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->all()));
+            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->all()), null, Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),500);
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function show($id)
     {
-        return new EducationResource($this->EducationRepository->find($id));
+        try{
+            return $this->successResponse(new EducationResource($this->EducationRepository->find($id)), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public function AllEducation($id){
+    public function AllEducation($id)
+    {
 
         $data = $this->EducationRepository->findWithProjects($id);
         return response()->json([
@@ -47,9 +53,13 @@ class EducationController extends Controller
         ]);
     }
 
-    public function showByType($type){
-        return new EducationResourceColletion( $this->EducationRepository->whereType($type));
-
+    public function showByType($type)
+    {
+        try{
+            return $this->successResponse(new EducationResourceColletion( $this->EducationRepository->whereType($type)), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function store(EducationRequest $request)
@@ -92,10 +102,12 @@ class EducationController extends Controller
 
     public function destroy($id)
     {
-        $education = $this->EducationRepository->delete($id);
+        try{
+            $this->EducationRepository->delete($id);
+            return $this->successResponse(null, "Datos eliminados correctamente", Response::HTTP_NO_CONTENT);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al eliminar los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json([
-            'message' => 'Education deleted successfully'
-        ]);
     }
 }
