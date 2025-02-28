@@ -64,40 +64,25 @@ class EducationController extends Controller
 
     public function store(EducationRequest $request)
     {
-        $education = $this->EducationRepository->create($request->validated());
 
-        // $education->name = $request->input('name');
-        // $education->description = $request->input('description');
-        // $education->startDate = $request->input('startDate');
-        // $education->endDate = $request->input('endDate');
-        // $education->type = $request->input('type');
-        // $education->profile_id = $request->input('profile_id');
-        // $education->save();
+        try{
+            $education = $this->EducationRepository->create($request);
+            return $this->successResponse(new EducationResource($education),"Educación cargada correctamente" , Response::HTTP_CREATED);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-
-
-        return response()->json([
-            'message' => 'Education created successfully',
-            'education' => $education
-        ]);
     }
 
     public function update(EducationRequest $request, $id)
     {
+        try{
+            $education = $this->EducationRepository->update($id,$request->validated());
+            return $this->successResponse(new EducationResource($education),"Educación actualizada correctamente" , Response::HTTP_CREATED);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        $education = $this->EducationRepository->update($id,$request->validated());
-
-        // $education->name = $request->input('name');
-        // $education->description = $request->input('description');
-        // $education->startDate = $request->input('startDate');
-        // $education->endDate = $request->input('endDate');
-        // $education->type = $request->input('type');
-        // $education->save();
-
-        return response()->json([
-            'message' => 'Education updated successfully',
-            'education' => $education
-        ]);
     }
 
     public function destroy($id)

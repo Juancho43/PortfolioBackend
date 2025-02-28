@@ -4,7 +4,7 @@ namespace App\Repository\V1;
 use App\Models\Link;
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Foundation\Http\FormRequest;
 class LinkRepository implements IRepository
 {
     public function all(): Collection
@@ -18,12 +18,12 @@ class LinkRepository implements IRepository
         return Link::where('idLinks', $id)->first();
     }
 
-    public function create(array $data)
+    public function create(FormRequest $data)
     {
         return Link::create($data);
     }
 
-    public function update(int $id, array $data): bool
+    public function update(int $id, FormRequest $data): bool
     {
         $Education = $this->find($id);
         if (!$Education) {

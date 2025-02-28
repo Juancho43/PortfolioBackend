@@ -7,13 +7,14 @@ use App\Models\Tags;
 use App\Models\Education;
 use Illuminate\Http\Request;
 use App\Repository\V1\ProjectRepository;
-use App\Http\Resources\ProjectResource;
-use App\Http\Resources\ProjectResourceCollection;
-
+use App\Http\Resources\V1\ProjectResource;
+use App\Http\Resources\V1\ProjectResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
+use Exception;
 class ProjectController extends Controller
 {
 
-
+    use ApiResponseTrait;
     protected $repository;
 
 
@@ -25,14 +26,22 @@ class ProjectController extends Controller
 
     public function index()
     {
-
-        return new ProjectResourceCollection($this->repository->all());
+        try{
+            return $this->successResponse(new ProjectResourceCollection($this->repository->all()), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de projecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return ;
 
     }
 
     public function show($id)
     {
-        return new ProjectResource($this->repository->find($id));
+        try{
+            return $this->successResponse(new ProjectResource($this->repository->find($id)), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de projecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function showByTag($id)
@@ -57,57 +66,34 @@ class ProjectController extends Controller
         ]);
     }
 
-
-
-
-
     public function store(Request $request)
     {
-        $Proyect = new Project;
-
-        $Proyect->name = $request->input('name');
-        $Proyect->description = $request->input('description');
-
-        $Proyect->save();
-
-   // Retrieve the tags from the request
-        $tags = $request->input('tags');
-
-        // Attach the tags to the project
-        if ($tags) {
-            $Proyect->tags()->sync($tags);
+        try{
+            $Project = $this->repository->create($request);
+            return $this->successResponse(new ProjectResource($Project),"Proyecto cargado correctamente" , Response::HTTP_CREATED);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de proyecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-
-        return response()->json([
-            'message' => 'Proyect created successfully',
-            'Proyect' => $Proyect
-        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $Proyect = Project::with('tags:id,name')->find($id);
-
-        $Proyect->name = $request->input('name');
-        $Proyect->description = $request->input('description');
-
-        $Proyect->save();
-
-        return response()->json([
-            'message' => 'Proyect created successfully',
-            'Proyect' => $Proyect
-        ]);
+        try{
+            $proyecto = $this->repository->update($id,$request->validated());
+            return $this->successResponse(new ProjectResource($proyecto),"Proyecto actualizado correctamente" , Response::HTTP_CREATED);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de proyecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function destroy($id)
     {
-        $task = Project::find($id);
 
-        $task->delete();
-
-        return response()->json([
-            'message' => 'Proyect deleted successfully'
-        ]);
+        try{
+            $this->repository->delete($id);
+            return $this->successResponse(null, "Datos eliminados correctamente", Response::HTTP_NO_CONTENT);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al eliminar los datos de projecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

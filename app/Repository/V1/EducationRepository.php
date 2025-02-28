@@ -5,6 +5,8 @@ use App\Models\Education;
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
+use Illuminate\Foundation\Http\FormRequest;
+
 class EducationRepository implements IRepository
 {
     public function all(): Collection
@@ -15,28 +17,40 @@ class EducationRepository implements IRepository
 
     public function find(int $id)
     {
-        return Education::where('id', $id)->first();
-    }
-
-    public function create(array $data)
-    {
-        return Education::create($data);
-    }
-
-    public function update(int $id, array $data): bool
-    {
-        $Education = $this->find($id);
-        if (!$Education) {
-            return false;
+        $education = Education::where('id', $id)->first();
+        if (!$education) {
+            throw new Exception('Error al encontrar al recurso ID: ' . $id);
         }
-        return $Education->update($data);
+        return $education;
+    }
+
+    public function create(FormRequest $data)
+    {
+        $data->validated();
+        // Crear el registro Education
+        $education = Education::create([
+            'name' => $data->name,
+            'description' => $data->description,
+            'start_date' => $data->start_date,
+            'end_date' => $data->end_date,
+        ]);
+
+
+        // Asociar los tags si se proporcionan
+        if ($data->has('tags') && is_array($data->tags)) {
+            $education->tags()->attach($data->tags);
+        }
+
+        return $education;
+    }
+
+    public function update(int $id, FormRequest $data): bool
+    {
+        return $this->find($id)->update($data->all());
     }
 
     public function delete(int $id): bool
     {
-        if (!$this->find($id)) {
-            throw new Exception('Error al encontrar el recurso');
-        }
         return $this->find($id)->delete();
     }
 

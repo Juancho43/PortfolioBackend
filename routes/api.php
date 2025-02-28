@@ -9,6 +9,7 @@ use App\Http\Controllers\V1\LinkController;
 use App\Http\Controllers\V1\WorkController;
 
 use Illuminate\Support\Facades\Route;
+use Pest\Plugins\Only;
 
 Route::prefix('v1')->group(function () {
     // Rutas de autenticación
@@ -19,11 +20,12 @@ Route::prefix('v1')->group(function () {
     // Rutas públicas
     Route::group(['as' => 'public.'], function() {
         Route::resource('/profile', ProfileController::class)->names('profile');
+        // Route::resource('/education', EducationController::class)->only(['index','show'])->names('education');
         Route::resource('/education', EducationController::class)->names('education');
-        Route::resource('/project', ProjectController::class)->names('project');
-        Route::resource('/work', WorkController::class)->names('work');
-        Route::resource('/tag', TagsController::class)->names('tag');
-        Route::resource('/link', LinkController::class)->names('link');
+        Route::resource('/project', ProjectController::class)->only(['index','show'])->names('project');
+        Route::resource('/work', WorkController::class)->only(['index','show'])->names('work');
+        Route::resource('/tag', TagsController::class)->only(['index','show'])->names('tag');
+        Route::resource('/link', LinkController::class)->only(['index','show'])->names('link');
 
         // Relaciones y filtros
         Route::get('/project/education/{id}', [ProjectController::class, 'showByEducation'])->name('project.byEducation');

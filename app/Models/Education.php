@@ -29,7 +29,7 @@ class Education extends Model
     }
     public function tags()
     {
-        return $this->belongsToMany(Tags::class,'education_has_tags');
+        return $this->belongsToMany(Tag::class,'education_has_tags');
     }
 
 
