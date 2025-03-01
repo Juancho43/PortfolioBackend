@@ -16,7 +16,12 @@ class WorkResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
+            'id' => $this->id,
+            'company' => $this->company,
+            'position' => $this->position,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'responsibilities' => $this->responsibilities,
             'created_at' => $this->when(Auth::check(),$this->created_at, null),
             'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
             'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)

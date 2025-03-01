@@ -24,7 +24,7 @@ class Profile extends Model
         return $this->belongsToMany(Education::class,'profiles_has_education');
     }
     public function works(){
-        return $this->belongsToMany(Works::class,'profiles_has_works');
+        return $this->belongsToMany(Work::class,'profiles_has_works');
     }
     public function links()
     {

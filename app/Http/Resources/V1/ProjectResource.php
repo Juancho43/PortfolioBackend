@@ -22,6 +22,7 @@ class ProjectResource extends JsonResource
             'name' => $this->name,
             'description' => $this->name,
             'tags' => TagResource::collection($this->tags),
+            'links' => LinkResource::collection($this->links),
             'created_at' => $this->when(Auth::check(),$this->created_at, null),
             'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
             'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)

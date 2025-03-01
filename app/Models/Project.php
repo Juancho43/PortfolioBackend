@@ -20,7 +20,7 @@ class Project extends Model
         return $this->belongsToMany(Tag::class,'projects_has_tags');
     }
 
-    public function link()
+    public function links()
     {
         return $this->belongsToMany(Link::class,'projects_has_links');
     }

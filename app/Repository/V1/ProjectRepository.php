@@ -11,7 +11,7 @@ class ProjectRepository implements IRepository
     public function all(): Collection
     {
 
-        return Project::with(['tags','link'])->get();
+        return Project::with(['tags','links'])->get();
     }
 
     public function find(int $id)
