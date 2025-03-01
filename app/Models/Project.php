@@ -17,7 +17,7 @@ class Project extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tags::class,'projects_has_tags');
+        return $this->belongsToMany(Tag::class,'projects_has_tags');
     }
 
     public function link()

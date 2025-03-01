@@ -31,7 +31,6 @@ class ProjectController extends Controller
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de projecto",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        return ;
 
     }
 

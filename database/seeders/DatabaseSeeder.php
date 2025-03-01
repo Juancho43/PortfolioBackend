@@ -5,10 +5,11 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Education;
 use App\Models\Project;
-use App\Models\Tags;
+use App\Models\Tag;
 use App\Models\Link;
-use App\Models\Works;
+use App\Models\Work;
 use App\Models\Profile;
+use DB;
 
 use Illuminate\Database\Seeder;
 
@@ -19,13 +20,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
+        DB::table('users')->truncate();
         User::factory()->create([
             'email' => 'bravojuan43@gmail.com',
             'password' => 'cody',
         ]);
-
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=0'); // Desactivar restricciones
+    DB::table('education_has_projects')->truncate();
+        DB::table('projects')->truncate();
+        DB::table('education')->truncate();
+        DB::table('profiles')->truncate();
         $profile = Profile::factory()->create([
            'user_id' =>1,
            'name' => 'Bravo, Juan Alé',
@@ -42,12 +46,12 @@ class DatabaseSeeder extends Seeder
        Education::factory()->count(5)->create();
        $educations = Education::inRandomOrder()->take(rand(1, 3))->get();
     //    $profile->education()->attach($educations);
-        Works::factory()->count(3)->create();
+        Work::factory()->count(3)->create();
         Project::factory()->count(5)->create();
         Link::factory()->count(12)->create();
 
         // Crear 10 tags
-        Tags::factory()->count(10)->create();
+        Tag::factory()->count(10)->create();
        $links= Link::all();
         $profile = Profile::find(1);
 

@@ -7,35 +7,39 @@ use App\Models\Profile;
 use App\Repository\V1\ProfileRepository;
 use App\Http\Controllers\V1\FileProcessor;
 use App\Http\Resources\V1\ProfileResource;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-
-    protected $profileRepository;
+    use ApiResponseTrait;
+    protected $repository;
     protected $fileProcessor;
 
     public function __construct(ProfileRepository $profileRepository, FileProcessor $fileProcessor)
     {
-        $this->profileRepository = $profileRepository;
+        $this->repository = $profileRepository;
         $this->fileProcessor = $fileProcessor;
     }
 
 
     public function index()
     {
-        $Profile = $this->profileRepository->all();
+        try{
+            return $this->successResponse($this->repository->all(), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de los perfiles",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json([
-            'Profile' => $Profile
-        ]);
     }
 
     public function show($id)
     {
-        $profile = $this->profileRepository->find($id);
-
-        return new ProfileResource($profile);
+        try{
+            return $this->successResponse(new ProfileResource($this->repository->find($id)), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos del perfil",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 
@@ -131,12 +135,11 @@ class ProfileController extends Controller
 
     public function destroy($id)
     {
-        $task = Profile::find($id);
-
-        $task->delete();
-
-        return response()->json([
-            'message' => 'Profile deleted successfully'
-        ]);
+        try{
+            $this->repository->delete($id);
+            return $this->successResponse(null, "Datos eliminados correctamente", Response::HTTP_NO_CONTENT);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al eliminar los datos del perfil",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

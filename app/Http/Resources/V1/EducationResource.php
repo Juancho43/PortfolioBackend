@@ -24,9 +24,9 @@ class EducationResource extends JsonResource
             'description' => $this->description,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'created_at' => $this->when(Auth::check(),$this->created_at, null),
-            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
-            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
+            'created_at' => $this->when($request->user(),$this->created_at, null),
+            'updated_at' => $this->when($request->user(),$this->updated_at, null),
+            'deleted_at' => $this->when($request->user(),$this->deleted_at, null)
         ];
     }
 }

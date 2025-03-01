@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Link extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'link'
+    ] ;
 
     public function profile()
     {
@@ -19,7 +23,7 @@ class Link extends Model
     }
     public function work()
     {
-        return $this->belongsToMany(Works::class,'works_has_links');
+        return $this->belongsToMany(Work::class,'works_has_links');
     }
 
     // public function education()

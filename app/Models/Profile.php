@@ -27,9 +27,9 @@ class Profile extends Model
         return $this->belongsToMany(Works::class,'profiles_has_works');
     }
     public function links()
-{
-    return $this->belongsToMany(Link::class, 'profiles_has_links');
-}
+    {
+        return $this->belongsToMany(Link::class, 'profiles_has_links');
+    }
 
 
 }
