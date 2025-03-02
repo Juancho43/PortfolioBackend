@@ -9,7 +9,7 @@ use App\Http\Controllers\V1\FileProcessor;
 use App\Http\Resources\V1\ProfileResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
-
+use Exception;
 class ProfileController extends Controller
 {
     use ApiResponseTrait;

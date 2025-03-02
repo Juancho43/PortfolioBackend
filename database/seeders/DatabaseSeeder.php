@@ -9,7 +9,7 @@ use App\Models\Tag;
 use App\Models\Link;
 use App\Models\Work;
 use App\Models\Profile;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Seeder;
 
@@ -52,18 +52,18 @@ class DatabaseSeeder extends Seeder
         Project::factory()->count(5)->create();
         Link::factory()->count(12)->create();
 
-        
+
         Tag::factory()->count(10)->create();
         $links= Link::all();
         $profile = Profile::find(1);
         $works = Work::all();
         $education = Education::all();
-        
+
         $profile->links()->attach([$links[0],$links[1]]);
         $profile->works()->attach($works);
         $profile->education()->attach($education);
-     
-        
+
+
 
 
 
