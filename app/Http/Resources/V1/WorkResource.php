@@ -22,9 +22,9 @@ class WorkResource extends JsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'responsibilities' => $this->responsibilities,
-            'created_at' => $this->when(Auth::check(),$this->created_at, null),
-            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
-            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
+            'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
+            'updated_at' => $this->when($request->bearerToken(),$this->updated_at, null),
+            'deleted_at' => $this->when($request->bearerToken(),$this->deleted_at, null)
         ];
     }
 }

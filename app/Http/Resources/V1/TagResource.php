@@ -18,9 +18,9 @@ class TagResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->when(Auth::check(),$this->created_at, null),
-            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
-            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
+            'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
+            'updated_at' => $this->when($request->bearerToken(),$this->updated_at, null),
+            'deleted_at' => $this->when($request->bearerToken(),$this->deleted_at, null)
         ];
     }
 }
