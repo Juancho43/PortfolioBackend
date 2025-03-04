@@ -17,7 +17,7 @@ class ProfileRepository implements IRepository
 
     public function find(int $id)
     {
-        $Profile = Profile::where('id',$id)->with(['links'])->firstOrFail();
+        $Profile = Profile::where('id',$id)->with('links')->firstOrFail();
         if (!$Profile) {
             throw new Exception('Error al encontrar al recurso ID: ' . $id);
         }

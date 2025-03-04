@@ -4,11 +4,13 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
+use App\Models\Link;
 use App\Repository\V1\ProfileRepository;
 use App\Http\Controllers\V1\FileProcessor;
 use App\Http\Resources\V1\ProfileResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
+
 use Exception;
 class ProfileController extends Controller
 {
@@ -32,7 +34,6 @@ class ProfileController extends Controller
         }
 
     }
-
     public function show($id)
     {
         try{
@@ -41,8 +42,6 @@ class ProfileController extends Controller
             return $this->errorResponse("Error al obtener los datos del perfil",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     public function store(Request $request)
     {
@@ -64,33 +63,75 @@ class ProfileController extends Controller
     }
 
 
-    public function saveImg(Request $request, $id){
-        echo $request->hasFile('photo_url');
-        $Profile = Profile::find($id);
-        if($request->hasFile('photo_url')){
-            $file = $this->fileProcessor->saveFile($request, 'images', $Profile->photo_url, 'photo_url');
-            $Profile->photo_url = Storage::url($file);
-            $Profile->save();
+    public function saveImg(Request $request, $id)
+    {
+        $profile = Profile::findOrFail($id);
+
+        if ($request->hasFile('photo_url')) {
+            // Buscar si ya existe un link de imagen
+            $imageLink = $profile->links()->where('name', 'photo_url')->first();
+            $oldPath = $imageLink ? $imageLink->link : null;
+
+            // Guardar el nuevo archivo
+            $file = $this->fileProcessor->saveFile($request, 'images', 'photo_url');
+            $fileUrl = Storage::url($file);
+
+            if ($imageLink) {
+                // Actualizar el link existente
+                $imageLink->link = $fileUrl;
+                $imageLink->save();
+            } else {
+                // Crear un nuevo link
+                $newLink = Link::create([
+                    'name' => 'photo_url',
+                    'link' => $fileUrl
+                ]);
+                $profile->links()->attach($newLink->id);
+            }
         }
 
         return response()->json([
             'message' => 'Image created successfully',
-            'IMG' => $file
+            'IMG' => $imageLink->link ?? $fileUrl ?? null
         ]);
     }
 
+    /**
+     * Guardar o actualizar el CV del perfil
+     */
+    public function saveCv(Request $request, $id)
+    {
+        $profile = Profile::findOrFail($id);
 
-    public function saveCv(Request $request, $id){
-        $Profile = Profile::find($id);
-        if($request->hasFile('cv')){
-            $file = $this->fileProcessor->saveFile($request, 'files', $Profile->cv, 'cv');
-            $Profile->cv = Storage::url($file);
-            $Profile->save();
+        if ($request->hasFile('cv')) {
+            // Buscar si ya existe un link de CV
+            $cvLink = $profile->links()->where('name', 'cv')->first();
+
+            // Guardar el nuevo archivo
+            $file = $this->fileProcessor->saveFile($request, 'files', 'cv');
+            $fileUrl = Storage::url($file);
+
+            if ($cvLink) {
+                // Actualizar el link existente
+                dump($cvLink->link);
+                $this->fileProcessor->deleteFile($cvLink->link);
+
+                $cvLink->link = $fileUrl;
+                dump($cvLink->link);
+                $cvLink->save();
+            } else {
+                // Crear un nuevo link
+                $newLink = Link::create([
+                    'name' => 'cv',
+                    'link' => $fileUrl
+                ]);
+                $profile->links()->attach($newLink->id);
+            }
         }
 
         return response()->json([
             'message' => 'Cv saved successfully',
-            'CV' => $file
+            'CV' => $cvLink->link ?? $fileUrl ?? null
         ]);
     }
 
@@ -132,7 +173,6 @@ class ProfileController extends Controller
             'Profile' => $Profile
         ]);
     }
-
     public function destroy($id)
     {
         try{
