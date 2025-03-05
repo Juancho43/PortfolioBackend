@@ -2,7 +2,7 @@
 namespace App\Repository\V1;
 
 use App\Models\Education;
-use App\Models\Tag;
+
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;

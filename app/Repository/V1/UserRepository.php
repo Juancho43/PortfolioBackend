@@ -1,44 +1,41 @@
 <?php
 namespace App\Repository\V1;
 
-use App\Models\Education;
+use App\Models\User;
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
+use Exception;
 class UserRepository implements IRepository
 {
     public function all(): Collection
     {
 
-        return  Education::orderBy('endDate', 'asc')->get();
+        return  User::all();
     }
 
     public function find(int $id)
     {
-        return Education::where('id', $id)->first();
+        $user = User::where('id', $id)->first();
+        if (!$user) {
+            throw new Exception('Error al encontrar al recurso user ID: ' . $id);
+        }
+        return $user;
     }
 
     public function create(FormRequest $data)
     {
-        return Education::create($data);
+        return User::create($data);
     }
 
     public function update(int $id, FormRequest $data): bool
     {
-        $Education = $this->find($id);
-        if (!$Education) {
-            return false;
-        }
-        return $Education->update($data->all());
+        return $this->find($id)->update($data->all());
     }
 
     public function delete(int $id): bool
     {
-        $Education = $this->find($id);
-        if (!$Education) {
-            return false;
-        }
-        return $Education->delete();
+        return $this->find($id)->delete();
     }
 
 
