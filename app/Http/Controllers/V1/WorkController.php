@@ -8,21 +8,37 @@ use App\Http\Resources\V1\WorkResource;
 use App\Repository\V1\WorkRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * Class WorkController
+ * @package App\Http\Controllers\V1
+ *
+ * Controlador para gestionar las operaciones CRUD de los trabajos.
+ */
 class WorkController
 {
 
     use ApiResponseTrait;
-    protected $repository;
+     /**
+     * @var WorkRepository
+     */
+    protected WorkRepository $repository;
 
-
+    /**
+     * WorkController constructor.
+     *
+     * @param WorkRepository $repository
+     */
     public function __construct(WorkRepository $repository)
     {
         $this->repository = $repository;
 
     }
 
-
+    /**
+     * Muestra una lista de todos los trabajos.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try{
@@ -34,6 +50,12 @@ class WorkController
     }
 
 
+    /**
+     * Almacena un nuevo trabajo en la base de datos.
+     *
+     * @param WorkRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(WorkRequest $request)
     {
         try{
@@ -44,7 +66,12 @@ class WorkController
         }
     }
 
-
+    /**
+     * Muestra los detalles de un trabajo específico.
+     *
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(string $id)
     {
         try{
@@ -56,7 +83,13 @@ class WorkController
 
 
 
-
+    /**
+     * Actualiza un trabajo específico en la base de datos.
+     *
+     * @param WorkRequest $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(WorkRequest $request, string $id)
     {
         try{
@@ -67,7 +100,12 @@ class WorkController
         }
     }
 
-
+    /**
+     * Elimina un trabajo específico de la base de datos.
+     *
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(string $id)
     {
         try{
