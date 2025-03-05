@@ -8,11 +8,9 @@ use App\Http\Requests\V1\EducationRequest;
 use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\EducationResource;
 use App\Http\Controllers\V1\ApiResponseTrait;
-use App\Models\Education;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-use function Pest\Laravel\json;
 
 class EducationController extends Controller
 {
