@@ -22,9 +22,9 @@ class ProfileResource extends JsonResource
             'rol' => $this->resource->rol,
             'description' => $this->resource->description,
             'links' => new LinkResourceCollection($this->resource->links),
-            'created_at' => $this->when(Auth::check(),$this->created_at, null),
-            'updated_at' => $this->when(Auth::check(),$this->updated_at, null),
-            'deleted_at' => $this->when(Auth::check(),$this->deleted_at, null)
+            'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
+            'updated_at' => $this->when($request->bearerToken(),$this->updated_at, null),
+            'deleted_at' => $this->when($request->bearerToken(),$this->deleted_at, null)
         ];
     }
 }

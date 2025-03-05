@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Console\View\Components\Warn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

@@ -16,8 +16,7 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->name('auth.register');
     Route::post('login', [AuthController::class, 'login'])->name('auth.login');
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('auth.logout');
-    Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
-    Route::post('/profile/cv/{id}', [ProfileController::class, 'saveCv'])->name('profile.saveCV');
+  
     // Rutas públicas
     Route::group(['as' => 'public.'], function() {
         Route::resource('/profile', ProfileController::class)->names('profile');
@@ -31,7 +30,7 @@ Route::prefix('v1')->group(function () {
         // Relaciones y filtros
         Route::get('/project/education/{id}', [ProjectController::class, 'showByEducation'])->name('project.byEducation');
         Route::get('/project/tag/{id}', [ProjectController::class, 'showByTag'])->name('project.byTag');
-        Route::get('/education/tag/{type}', [EducationController::class, 'showByType'])->name('education.byTag');
+        Route::get('/education/tag/{id}', [EducationController::class, 'showByTag'])->name('education.byTag');
         Route::get('/work/tag/{id}', [WorkController::class, 'showByTag'])->name('work.byTag');
     });
 
@@ -46,7 +45,8 @@ Route::prefix('v1')->group(function () {
             Route::resource('/link/private', LinkController::class)->except(['index', 'show'])->names('link');
 
             // Gestión de archivos
-
+            Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
+            Route::post('/profile/cv/{id}', [ProfileController::class, 'saveCv'])->name('profile.saveCV');
         });
     });
 });

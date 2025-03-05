@@ -33,17 +33,14 @@ class FileProcessor
     {
         $flag = false;
         try {
-            $path_to_delete = str_replace(asset('storage/'), '', $oldPath);
+            $path_to_delete = str_replace('storage/', '', $oldPath);
 
             if (!Storage::disk('public')->exists($path_to_delete)) {
-                throw new Exception("File not found: " . $path_to_delete);
+                throw new Exception("Failed to find file: " . $oldPath);
+            }else{
+                $flag =Storage::disk('public')->delete($path_to_delete);
             }
 
-            if (!Storage::disk('public')->delete($path_to_delete)) {
-                throw new Exception("Failed to delete file: " . $path_to_delete);
-            }
-
-            $flag = true;
         } catch (Exception $e) {
             Log::error("File delete error: " . $e->getMessage());
         }

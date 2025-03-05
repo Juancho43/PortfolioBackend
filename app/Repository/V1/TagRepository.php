@@ -5,6 +5,7 @@ use App\Models\Tag;
 use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
+use Exception;
 class TagRepository implements IRepository
 {
     public function all(): Collection
@@ -14,7 +15,11 @@ class TagRepository implements IRepository
 
     public function find(int $id)
     {
-        return Tag::find($id);
+        $tag = Tag::where('id', $id)->first();
+        if (!$tag) {
+            throw new Exception('Error al encontrar al recurso tag con ID: ' . $id);
+        }
+        return $tag;
     }
 
     public function create(FormRequest $data)
@@ -24,20 +29,12 @@ class TagRepository implements IRepository
 
     public function update(int $id, FormRequest $data): bool
     {
-        $tag = $this->find($id);
-        if (!$tag) {
-            return false;
-        }
-        return $tag->update($data);
+        return $this->find($id)->update($data->all());
     }
 
     public function delete(int $id): bool
     {
-        $tag = $this->find($id);
-        if (!$tag) {
-            return false;
-        }
-        return $tag->delete();
+        return $this->find($id)->delete();
     }
 
 

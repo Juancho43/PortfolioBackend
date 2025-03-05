@@ -37,7 +37,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         try{
-            return $this->successResponse(new ProfileResource($this->repository->find($id)), null, Response::HTTP_OK);
+            return $this->successResponse(new ProfileResource($this->repository->find((int)$id)), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos del perfil",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -65,8 +65,8 @@ class ProfileController extends Controller
 
     public function saveImg(Request $request, $id)
     {
-        $profile = Profile::findOrFail($id);
-
+        $profile = $this->repository->find($id);
+        
         if ($request->hasFile('photo_url')) {
             // Buscar si ya existe un link de imagen
             $imageLink = $profile->links()->where('name', 'photo_url')->first();
@@ -77,9 +77,11 @@ class ProfileController extends Controller
             $fileUrl = Storage::url($file);
 
             if ($imageLink) {
+                $this->fileProcessor->deleteFile($oldPath);
                 // Actualizar el link existente
                 $imageLink->link = $fileUrl;
                 $imageLink->save();
+                
             } else {
                 // Crear un nuevo link
                 $newLink = Link::create([
@@ -87,13 +89,14 @@ class ProfileController extends Controller
                     'link' => $fileUrl
                 ]);
                 $profile->links()->attach($newLink->id);
+                
             }
+            return $this->successResponse($fileUrl, "Post successfully", Response::HTTP_OK);
         }
 
-        return response()->json([
-            'message' => 'Image created successfully',
-            'IMG' => $imageLink->link ?? $fileUrl ?? null
-        ]);
+        return $this->errorResponse("Error al cargar la imagen", 'No hay un archivo',Response::HTTP_BAD_REQUEST);
+            
+        
     }
 
     /**
@@ -101,24 +104,21 @@ class ProfileController extends Controller
      */
     public function saveCv(Request $request, $id)
     {
-        $profile = Profile::findOrFail($id);
-
+        $profile = $this->repository->find($id);
         if ($request->hasFile('cv')) {
             // Buscar si ya existe un link de CV
             $cvLink = $profile->links()->where('name', 'cv')->first();
-
+            $oldPath = $cvLink ? $cvLink->link : null;
             // Guardar el nuevo archivo
             $file = $this->fileProcessor->saveFile($request, 'files', 'cv');
             $fileUrl = Storage::url($file);
 
             if ($cvLink) {
                 // Actualizar el link existente
-                dump($cvLink->link);
-                $this->fileProcessor->deleteFile($cvLink->link);
-
+                $this->fileProcessor->deleteFile($oldPath);
                 $cvLink->link = $fileUrl;
-                dump($cvLink->link);
                 $cvLink->save();
+
             } else {
                 // Crear un nuevo link
                 $newLink = Link::create([
@@ -127,12 +127,10 @@ class ProfileController extends Controller
                 ]);
                 $profile->links()->attach($newLink->id);
             }
+            return $this->successResponse($fileUrl, "Post successfully", Response::HTTP_OK);
         }
-
-        return response()->json([
-            'message' => 'Cv saved successfully',
-            'CV' => $cvLink->link ?? $fileUrl ?? null
-        ]);
+        return $this->errorResponse("Error al cargar el cv", 'No hay un archivo',Response::HTTP_BAD_REQUEST);
+        
     }
 
     public function update(Request $request, $id)
@@ -151,28 +149,12 @@ class ProfileController extends Controller
             'publicMail' => 'nullable|string',
         ]));
 
-        // 3. (Optional) Handle Image Upload
-        if ($request->hasFile('photo_url')) {
-            // ... (Your image upload logic here, as shown in previous examples) ...
-        }
-
-
-        // $Profile->save();
-        // if($request->hasFile('photo_url')){
-        //     $name = $Profile->id . '.' . $request->file('photo_url')->getClientOriginalExtension();
-        //     $img = $request->file('photo_url')->storeAs('public/img/profile/',$name);
-        //     $Profile->photo_url = "/img/".$name;
-        //     // $Profile->save();
-        // }
-
-
-
-
         return response()->json([
             'message' => 'Profile edited successfully',
             'Profile' => $Profile
         ]);
     }
+
     public function destroy($id)
     {
         try{

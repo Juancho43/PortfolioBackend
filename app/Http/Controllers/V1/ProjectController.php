@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Models\Project;
-use App\Models\Tags;
+use App\Models\Tag;
 use App\Models\Education;
 use Illuminate\Http\Request;
 use App\Repository\V1\ProjectRepository;
@@ -45,7 +44,7 @@ class ProjectController extends Controller
 
     public function showByTag($id)
     {
-        $tag = Tags::where('idTags',$id)->first();
+        $tag = Tag::where('idTags',$id)->first();
 
         // Obtener todos los proyectos asociados a la etiqueta
         $proyectos = $tag;
