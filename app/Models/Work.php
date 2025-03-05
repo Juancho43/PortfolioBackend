@@ -17,7 +17,7 @@ class Work extends Model
         'end_date',
         'responsibilities',
     ];
-    public function link()
+    public function links()
     {
         return $this->belongsToMany(Link::class,'works_has_links');
     }

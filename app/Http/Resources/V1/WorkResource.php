@@ -21,7 +21,9 @@ class WorkResource extends JsonResource
             'position' => $this->position,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'responsibilities' => $this->responsibilities,
+            'responsabilities' => $this->responsabilities,
+            'links' =>LinkResource::collection($this->links),
+            'tags' => TagResource::collection($this->tags),
             'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
             'updated_at' => $this->when($request->bearerToken(),$this->updated_at, null),
             'deleted_at' => $this->when($request->bearerToken(),$this->deleted_at, null)

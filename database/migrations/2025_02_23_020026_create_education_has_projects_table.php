@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('education_has_projects', function (Blueprint $table) {
             $table->unsignedBigInteger('education_id')->index('fk_education_has_projects_education_idx');
-            $table->unsignedBigInteger('projects_id')->index('fk_education_has_projects_projects1_idx');
+            $table->unsignedBigInteger('project_id')->index('fk_education_has_projects_projects1_idx');
             $table->foreign('education_id')->references('id')->on('education')->onUpdate('no action')->onDelete('no action');
-            $table->foreign('projects_id')->references('id')->on('projects')->onUpdate('no action')->onDelete('no action');
-            $table->primary(['education_id', 'projects_id']);
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('no action')->onDelete('no action');
+            $table->primary(['education_id', 'project_id']);
         });
     }
 
