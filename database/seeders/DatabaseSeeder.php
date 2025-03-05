@@ -33,18 +33,12 @@ class DatabaseSeeder extends Seeder
         DB::table('projects')->truncate();
         DB::table('education')->truncate();
         DB::table('profiles')->truncate();
-        DB::table('link')->truncate();
+        DB::table('links')->truncate();
         $profile = Profile::factory()->create([
            'user_id' =>1,
            'name' => 'Bravo, Juan Alé',
-        //    'publicMail' =>'bravojuan@bravojuan.site',
             'rol' => 'Profesional IT',
             'description' => 'Analista programador y técnico informatico profesional y personal.',
-        //    'linkedin' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/',
-        //    'github' => 'https://github.com/Juancho43',
-        //    'publicMail' =>'bravojuan@bravojuan.site',
-        //    'cv' =>'...',
-        //    'photo_url' =>'...',
        ]);
 
         Education::factory()->count(5)->create();
@@ -59,7 +53,22 @@ class DatabaseSeeder extends Seeder
         $works = Work::all();
         $education = Education::all();
 
-        $profile->links()->attach([$links[0],$links[1]]);
+
+        $link = Link::create([
+             'name' => 'github',
+            'link' => 'https://github.com/Juancho43'
+        ]);
+        
+        $link2 = Link::create([
+            'name' => 'mail',
+           'link' => 'bravojuan@bravojuan.site'
+       ]);
+       $link3 = Link::create([
+        'name' => 'linkedin',
+       'link' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/'
+    ]);
+       
+        $profile->links()->attach([$link,$link2,$link3]);
         $profile->works()->attach($works);
         $profile->education()->attach($education);
 

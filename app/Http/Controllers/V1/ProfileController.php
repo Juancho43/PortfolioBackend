@@ -37,7 +37,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         try{
-            return $this->successResponse(new ProfileResource($this->repository->find($id)), null, Response::HTTP_OK);
+            return $this->successResponse(new ProfileResource($this->repository->find((int)$id)), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos del perfil",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
