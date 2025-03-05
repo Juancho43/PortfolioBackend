@@ -30,7 +30,7 @@ Route::prefix('v1')->group(function () {
         // Relaciones y filtros
         Route::get('/project/education/{id}', [ProjectController::class, 'showByEducation'])->name('project.byEducation');
         Route::get('/project/tag/{id}', [ProjectController::class, 'showByTag'])->name('project.byTag');
-        Route::get('/education/tag/{type}', [EducationController::class, 'showByType'])->name('education.byTag');
+        Route::get('/education/tag/{id}', [EducationController::class, 'showByTag'])->name('education.byTag');
         Route::get('/work/tag/{id}', [WorkController::class, 'showByTag'])->name('work.byTag');
     });
 

@@ -8,16 +8,17 @@ use App\Http\Requests\V1\EducationRequest;
 use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\EducationResource;
 use App\Http\Controllers\V1\ApiResponseTrait;
+use App\Models\Education;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Pest\Laravel\json;
 
 class EducationController extends Controller
 {
 
     use ApiResponseTrait;
-    protected $EducationRepository;
-
+    protected EducationRepository $EducationRepository;
 
     public function __construct(EducationRepository $EducationRepository, )
     {
@@ -39,24 +40,6 @@ class EducationController extends Controller
     {
         try{
             return $this->successResponse(new EducationResource($this->EducationRepository->find($id)), null, Response::HTTP_OK);
-        }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public function AllEducation($id)
-    {
-
-        $data = $this->EducationRepository->findWithProjects($id);
-        return response()->json([
-            'Data' => $data
-        ]);
-    }
-
-    public function showByType($type)
-    {
-        try{
-            return $this->successResponse(new EducationResourceColletion( $this->EducationRepository->whereType($type)), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -94,5 +77,14 @@ class EducationController extends Controller
             return $this->errorResponse("Error al eliminar los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function showByTag($id)
+    {
+        try{
+            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->findWhereTag((int)$id)), null, Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

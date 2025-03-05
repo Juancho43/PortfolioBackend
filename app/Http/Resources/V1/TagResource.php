@@ -4,11 +4,11 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 class TagResource extends JsonResource
 {
     public static $wrap = 'tag';
-    /**
+    /*1
+    
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
