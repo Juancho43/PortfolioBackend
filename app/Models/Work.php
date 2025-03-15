@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Work extends Model
 {
@@ -15,19 +16,19 @@ class Work extends Model
         'position',
         'start_date',
         'end_date',
-        'responsibilities',
+        'responsabilities',
     ];
-    public function links()
+    public function links() : BelongsToMany
     {
         return $this->belongsToMany(Link::class,'works_has_links');
     }
 
-    public function tags()
+    public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class,'works_has_tags');
     }
 
-    public function profile()
+    public function profile() : BelongsToMany
     {
         return $this->belongsToMany(Profile::class,'profile_has_works');
     }

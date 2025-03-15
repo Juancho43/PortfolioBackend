@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Http\Exceptions\AuthenticationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use \stdClass;
 
 class AuthController extends Controller
 {
-    //
+    use ApiResponseTrait;
     public function register(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
@@ -36,30 +40,24 @@ class AuthController extends Controller
         json(['data'=>$user,'access_token' => $token, 'token_type'=>'Bearer']);
     }
 
-    public function login(Request $request){
+    public function login(Request $request) : JsonResponse
+    {
 
 
         if ($request->method() !== 'POST') {
             return response()->json(['message' => 'Method Not Allowed'], 405);
         }
 
-        if(!Auth::attempt($request->only('email','password'))){
-            return response()->
-            json(['message'=>'Unauthorized'],401);
-        }else{
-            $users = Auth::user();
+        try{
+            if (!Auth::attempt($request->only('email', 'password'))) {
+                throw new AuthenticationException();
+            }
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return $this->successResponse($token,'Hi'.$user->name,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error al iniciar sesion",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        $user = User::where('email',$request['email'])->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-
-        return response()->json([
-            'message' => 'Hi'.$user->name,
-            'accessToken' => $token,
-            'token_type' => 'Bearer',
-            'user' => $users
-
-        ]);
 
     }
 

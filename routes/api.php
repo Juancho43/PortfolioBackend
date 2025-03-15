@@ -13,10 +13,10 @@ use Pest\Plugins\Only;
 
 Route::prefix('v1')->group(function () {
     // Rutas de autenticación
-    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
-    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('auth.logout');
-  
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+
     // Rutas públicas
     Route::group(['as' => 'public.'], function() {
         Route::resource('/profile', ProfileController::class)->names('profile');
@@ -38,9 +38,9 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::group(['as' => 'private.'], function() {
             Route::resource('/profile/private', ProfileController::class)->except(['index', 'show'])->names('profile');
+            Route::resource('/work/private',    WorkController::class)->except(['index', 'show'])->names('work');
             Route::resource('/education/private', EducationController::class)->except(['index', 'show'])->names('education');
             Route::resource('/project/private', ProjectController::class)->except(['index', 'show'])->names('project');
-            Route::resource('/work/private', WorkController::class)->except(['index', 'show'])->names('work');
             Route::resource('/tag/private', TagsController::class)->except(['index', 'show'])->names('tag');
             Route::resource('/link/private', LinkController::class)->except(['index', 'show'])->names('link');
 

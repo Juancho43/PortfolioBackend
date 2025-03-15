@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1;
 
+use App\Http\Exceptions\AuthenticationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EducationRequest extends FormRequest
@@ -11,6 +12,9 @@ class EducationRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (!auth()->check()) {
+            throw new AuthenticationException();
+        }
         return true;
     }
 

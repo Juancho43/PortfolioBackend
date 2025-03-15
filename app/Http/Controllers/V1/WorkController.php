@@ -7,6 +7,7 @@ use App\Http\Resources\V1\WorkResourceCollection;
 use App\Http\Resources\V1\WorkResource;
 use App\Repository\V1\WorkRepository;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 /**
  * Class WorkController
@@ -37,12 +38,12 @@ class WorkController
     /**
      * Muestra una lista de todos los trabajos.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index() : JsonResponse
     {
         try{
-            return $this->successResponse(new WorkResourceCollection($this->repository->all()),null,Response::HTTP_CREATED);
+            return $this->successResponse(new WorkResourceCollection($this->repository->all()),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de trabajos",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -54,9 +55,9 @@ class WorkController
      * Almacena un nuevo trabajo en la base de datos.
      *
      * @param WorkRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function store(WorkRequest $request)
+    public function store(WorkRequest $request) : JsonResponse
     {
         try{
             $work = $this->repository->create($request);
@@ -70,12 +71,12 @@ class WorkController
      * Muestra los detalles de un trabajo específico.
      *
      * @param string $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show(string $id)
+    public function show(string $id) : JsonResponse
     {
         try{
-            return $this->successResponse(new WorkResource($this->repository->find($id)),null,Response::HTTP_CREATED);
+            return $this->successResponse(new WorkResource($this->repository->find($id)),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -88,13 +89,13 @@ class WorkController
      *
      * @param WorkRequest $request
      * @param string $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(WorkRequest $request, string $id)
+    public function update(WorkRequest $request, string $id) : JsonResponse
     {
         try{
             $work = $this->repository->update($id,$request);
-            return $this->successResponse(new WorkResource($work),'Recurso actualizado correctamente',Response::HTTP_CREATED);
+            return $this->successResponse(new WorkResource($work),'Recurso actualizado correctamente',Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al actualizar el trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -104,9 +105,9 @@ class WorkController
      * Elimina un trabajo específico de la base de datos.
      *
      * @param string $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id) : JsonResponse
     {
         try{
             $this->repository->delete($id);

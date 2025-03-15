@@ -10,7 +10,7 @@ use App\Models\Link;
 use App\Models\Work;
 use App\Models\Profile;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         User::factory()->create([
             'email' => 'bravojuan43@gmail.com',
-            'password' => 'cody',
+            'password' =>  Hash::make('cody')
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=0'); // Desactivar restricciones
         DB::table('profiles_has_education')->truncate();
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
         'name' => 'linkedin',
        'link' => 'https://www.linkedin.com/in/juan-bravo-1995b61a0/'
         ]);
-       
+
         $profile->links()->attach([$link,$link2,$link3]);
         $profile->works()->attach($works);
         $profile->education()->attach($education);

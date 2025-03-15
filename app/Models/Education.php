@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Education extends Model
 {
 
     use HasFactory;
-
     protected $fillable = [
         'name',
         'description',
@@ -19,15 +18,15 @@ class Education extends Model
     ];
 
 
-    public function profile()
+    public function profile() : BelongsToMany
     {
         return $this->belongsToMany(Profile::class,'profiles_has_education');
     }
-    public function project()
+    public function project() : BelongsToMany
     {
         return $this->belongsToMany(Project::class,'education_has_projects');
     }
-    public function tags()
+    public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class,'education_has_tags');
     }
