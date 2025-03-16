@@ -91,10 +91,10 @@ class WorkController
      * @param string $id
      * @return JsonResponse
      */
-    public function update(WorkRequest $request, string $id) : JsonResponse
+    public function update(WorkRequest $request) : JsonResponse
     {
         try{
-            $work = $this->repository->update($id,$request);
+            $work = $this->repository->update($request->id,$request);
             return $this->successResponse(new WorkResource($work),'Recurso actualizado correctamente',Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al actualizar el trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);

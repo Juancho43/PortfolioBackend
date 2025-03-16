@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Models\Work;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 
@@ -26,10 +26,10 @@ class WorkControllerTest extends TestCase
 
         $response = $this->getJson('/api/v1/work');
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'company', 'position', 'start_date', 'end_date','responsabilities','links','tags','created_at','updated_at','deleted_at']
+                    '*' => ['id', 'company', 'position', 'start_date', 'end_date','responsibilities','links','tags','created_at','updated_at','deleted_at']
                 ]
             ]);
     }
@@ -42,12 +42,12 @@ class WorkControllerTest extends TestCase
             'position' => 'Test Position',
             'start_date' => '2024-01-01',
             'end_date' => '2024-12-31',
-            'responsabilities' => 'Test responsabilities',
+            'responsibilities' => 'Test responsibilities',
         ];
         $response = $this->actingAs($this->user)->postJson('/api/v1/work/private', $data);
 
 
-        $response->assertStatus(201)
+        $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment($data);
     }
 
@@ -55,28 +55,31 @@ class WorkControllerTest extends TestCase
     {
         $work = Work::factory()->create();
 
-        $response = $this->getJson("/api/v1/works/{$work->id}");
+        $response = $this->getJson("/api/v1/work/{$work->id}");
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment([
                 'id' => $work->id,
-                'name' => $work->name,
-                'description' => $work->description
+                'company' => $work->company,
+                'position' => $work->position,
+                'start_date' =>  $work->start_date->format('Y-m-d'),
             ]);
     }
 
-    public function testUpdate()
+    public function test_update_work_authorized()
     {
-        $work = Work::factory()->create();
-
+        $work = Work::find(1);
         $data = [
-            'name' => 'Updated Work',
-            'description' => 'Updated Description'
+            'company' => 'Test Company',
+            'position' => 'Test Position',
+            'start_date' => '2024-01-01',
+            'end_date' => '2024-12-31',
+            'responsibilities' => 'Test responsibilities',
         ];
 
-        $response = $this->putJson("/api/v1/works/{$work->id}", $data);
-
-        $response->assertStatus(200)
+        $response = $this->actingAs($this->user)
+            ->putJson("/api/v1/work/private/{$work->id}", $data);
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment($data);
     }
 
@@ -84,8 +87,8 @@ class WorkControllerTest extends TestCase
     {
         $work = Work::factory()->create();
 
-        $response = $this->deleteJson("/api/v1/works/{$work->id}");
+        $response = $this->actingAs($this->user)->deleteJson("/api/v1/work/private/{$work->id}");
 
-        $response->assertStatus(204);
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 }

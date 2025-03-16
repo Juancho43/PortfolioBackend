@@ -22,7 +22,7 @@ class WorkRepository implements IRepository
      */
     public function all(): Collection
     {
-        return  Work::all();
+        return Work::with(['links', 'tags'])->get();
     }
     /**
      * Encuentra un trabajo por su ID.
@@ -33,7 +33,7 @@ class WorkRepository implements IRepository
      */
     public function find(int $id)
     {
-        $Work = Work::where('id', $id)->first();
+        $Work = Work::with(['links', 'tags'])->where('id', $id)->first();
         if (!$Work) {
             throw new Exception('Error al encontrar al recurso ID: ' . $id);
         }
@@ -53,9 +53,15 @@ class WorkRepository implements IRepository
             'position' => $data->position,
             'start_date' => $data->start_date,
             'end_date' => $data->end_date,
-            'responsabilities' => $data->responsabilities,
+            'responsibilities' => $data->responsibilities,
         ]);
+        if ($data->has('links')) {
+            $work->links()->sync($data->links);
+        }
 
+        if ($data->has('tags')) {
+            $work->tags()->sync($data->tags);
+        }
         return $work;
     }
     /**
