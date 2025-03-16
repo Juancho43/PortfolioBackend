@@ -19,7 +19,7 @@ class WorkFactory extends Factory
         return [
             'company'=> $this->faker->word(),
             'position'=> $this->faker->word(),
-            'responsabilities'=> $this->faker->text(),
+            'responsibilities'=> $this->faker->text(),
             'start_date' => $this->faker->dateTime(),
             'end_date' => $this->faker->dateTime(),
         ];

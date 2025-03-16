@@ -16,7 +16,7 @@ class Work extends Model
         'position',
         'start_date',
         'end_date',
-        'responsabilities',
+        'responsibilities',
     ];
     public function links() : BelongsToMany
     {

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('position', 45);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->text('responsabilities')->nullable();
+            $table->text('responsibilities')->nullable();
             $table->timestamps();
             $table->date('delete_at')->nullable();
         });
