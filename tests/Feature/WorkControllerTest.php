@@ -66,21 +66,38 @@ class WorkControllerTest extends TestCase
             ]);
     }
 
-    public function test_update_work_authorized()
+    public function test_update_work()
     {
-        $work = Work::find(1);
-        $data = [
-            'company' => 'Test Company',
-            'position' => 'Test Position',
-            'start_date' => '2024-01-01',
-            'end_date' => '2024-12-31',
-            'responsibilities' => 'Test responsibilities',
+
+
+        // 2. Crear un trabajo para actualizar
+        $work = Work::factory()->create();
+
+        // 3. Datos para actualizar
+        $updateData = [
+            'id' => $work->id, // Importante incluir el ID según tu método
+            'company' => 'Título Actualizado',
+            'position' => 'Descripción Actualizada',
+            'start_date' => '2020-02-01',
+            // Otros campos que necesites actualizar
         ];
 
-        $response = $this->actingAs($this->user)
-            ->putJson("/api/v1/work/private/{$work->id}", $data);
+        // 4. Hacer la petición PUT
+        $response = $this->actingAs($this->user) // Si necesitas autenticación
+        ->putJson(route('private.work.update', $work->id), $updateData);
+
+        // 5. Verificar la respuesta
         $response->assertStatus(Response::HTTP_OK)
-            ->assertJsonFragment($data);
+            ->assertJsonPath('data.title', 'Título Actualizado')
+            ->assertJsonPath('data.description', 'Descripción Actualizada')
+            ->assertJsonPath('message', 'Recurso actualizado correctamente');
+
+        // 6. Verificar que se actualizó en la base de datos
+        $this->assertDatabaseHas('works', [
+            'id' => $work->id,
+            'title' => 'Título Actualizado',
+            'description' => 'Descripción Actualizada',
+        ]);
     }
 
     public function testDestroy()
