@@ -18,14 +18,13 @@ class EducationRepository implements IRepository
 
     public function all(): Collection
     {
-
-        return  Education::orderBy('end_date', 'asc')->get();
+        return  Education::with(['tags', 'links'])->orderBy('end_date', 'asc')->get();
     }
 
     public function find(int $id)
     {
 
-        $education = Education::where('id', $id)->first();
+        $education = Education::with(['tags', 'links'])->where('id', $id)->first();
         if (!$education) {
             throw new Exception('Error al encontrar al recurso education con ID: ' . $id);
         }
@@ -35,7 +34,6 @@ class EducationRepository implements IRepository
     public function create(FormRequest $data)
     {
         $data->validated();
-        // Crear el registro Education
         $education = Education::create([
             'name' => $data->name,
             'description' => $data->description,
@@ -44,11 +42,15 @@ class EducationRepository implements IRepository
         ]);
 
 
-        // Asociar los tags si se proporcionan
-        if ($data->has('tags') && is_array($data->tags)) {
+        if ($data->has('tags')) {
             $education->tags()->attach($data->tags);
         }
-
+        if ($data->has('links')) {
+            $education->tags()->attach($data->links);
+        }
+        if ($data->has('projects')) {
+            $education->tags()->attach($data->projects);
+        }
         return $education;
     }
 
@@ -69,7 +71,7 @@ class EducationRepository implements IRepository
         $educations = Education::whereHas('tags', function ($query) use ($tag) {
             $query->where('name', $tag->name);
         })->with('tags')->orderBy('start_date', 'asc')->get();
-        
+
         if ($educations->isEmpty()) {
             throw new Exception("No educations found for tag: " . $tag->name);
         }

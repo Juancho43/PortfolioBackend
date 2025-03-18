@@ -9,20 +9,22 @@ use App\Repository\V1\WorkRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Class WorkController
  * @package App\Http\Controllers\V1
  *
- * Controlador para gestionar las operaciones CRUD de los trabajos.
+ * Controller to manage CRUD operations for works.
  */
 class WorkController
 {
 
     use ApiResponseTrait;
-     /**
+    /**
      * @var WorkRepository
      */
     protected WorkRepository $repository;
+
 
     /**
      * WorkController constructor.
@@ -36,7 +38,7 @@ class WorkController
     }
 
     /**
-     * Muestra una lista de todos los trabajos.
+     * Displays a list of all works.
      *
      * @return JsonResponse
      */
@@ -45,30 +47,13 @@ class WorkController
         try{
             return $this->successResponse(new WorkResourceCollection($this->repository->all()),null,Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de trabajos",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
 
-
     /**
-     * Almacena un nuevo trabajo en la base de datos.
-     *
-     * @param WorkRequest $request
-     * @return JsonResponse
-     */
-    public function store(WorkRequest $request) : JsonResponse
-    {
-        try{
-            $work = $this->repository->create($request);
-            return $this->successResponse(new WorkResource($work),"Recurso creado correctamente",Response::HTTP_CREATED);
-        }catch(Exception $e){
-            return $this->errorResponse("Error guardar el trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
-     * Muestra los detalles de un trabajo específico.
+     * Displays the details of a specific work.
      *
      * @param string $id
      * @return JsonResponse
@@ -78,31 +63,45 @@ class WorkController
         try{
             return $this->successResponse(new WorkResource($this->repository->find($id)),null,Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
 
-
     /**
-     * Actualiza un trabajo específico en la base de datos.
+     * Stores a new work in the database.
      *
      * @param WorkRequest $request
-     * @param string $id
+     * @return JsonResponse
+     */
+    public function store(WorkRequest $request) : JsonResponse
+    {
+        try{
+            $work = $this->repository->create($request);
+            return $this->successResponse(new WorkResource($work),"Resource created successfully",Response::HTTP_CREATED);
+        }catch(Exception $e){
+            return $this->errorResponse("Error saving the work data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Updates a specific work in the database.
+     *
+     * @param WorkRequest $request
      * @return JsonResponse
      */
     public function update(WorkRequest $request) : JsonResponse
     {
         try{
             $work = $this->repository->update($request->id,$request);
-            return $this->successResponse(new WorkResource($work),'Recurso actualizado correctamente',Response::HTTP_OK);
+            return $this->successResponse(new WorkResource($work),'Resource updated successfully',Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al actualizar el trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Error updating the work",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Elimina un trabajo específico de la base de datos.
+     * Deletes a specific work from the database.
      *
      * @param string $id
      * @return JsonResponse
@@ -111,9 +110,9 @@ class WorkController
     {
         try{
             $this->repository->delete($id);
-            return $this->successResponse(null, "Datos eliminados correctamente", Response::HTTP_NO_CONTENT);
+            return $this->successResponse(null, "Data deleted successfully", Response::HTTP_NO_CONTENT);
         }catch(Exception $e){
-            return $this->errorResponse("Error al eliminar los datos de trabajo",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Error deleting the work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

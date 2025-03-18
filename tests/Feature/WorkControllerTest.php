@@ -88,15 +88,15 @@ class WorkControllerTest extends TestCase
 
         // 5. Verificar la respuesta
         $response->assertStatus(Response::HTTP_OK)
-            ->assertJsonPath('data.title', 'Título Actualizado')
-            ->assertJsonPath('data.description', 'Descripción Actualizada')
+            ->assertJsonPath('data.company', 'Título Actualizado')
+            ->assertJsonPath('data.position', 'Descripción Actualizada')
             ->assertJsonPath('message', 'Recurso actualizado correctamente');
 
         // 6. Verificar que se actualizó en la base de datos
         $this->assertDatabaseHas('works', [
             'id' => $work->id,
-            'title' => 'Título Actualizado',
-            'description' => 'Descripción Actualizada',
+            'company' => 'Título Actualizado',
+            'position' => 'Descripción Actualizada',
         ]);
     }
 

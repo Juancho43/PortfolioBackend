@@ -30,6 +30,10 @@ class EducationResource extends JsonResource
                 isset($this->tags) && !$this->tags->isEmpty(),
                 TagResource::collection($this->tags)
             ),
+            'links' => $this->when(
+                isset($this->links) && !$this->links->isEmpty(),
+                LinkResource::collection($this->links)
+            ),
             'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
             'updated_at' => $this->when($request->bearerToken(),$this->updated_at, null),
             'deleted_at' => $this->when($request->bearerToken(),$this->deleted_at, null)

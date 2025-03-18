@@ -32,6 +32,10 @@ class EducationRequest extends FormRequest
             'end_date' => 'nullable|date|after:start_date',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
+            'projects' => 'nullable|array',
+            'projects.*' => 'exists:projects,id',
+            'links' => 'nullable|array',
+            'links.*' => 'exists:links,id',
             'delete_at' => 'nullable|date',
         ];
     }
@@ -47,7 +51,6 @@ class EducationRequest extends FormRequest
             'name.required' => "El nombre es requerido.",
             'description.required' => "La descripción es requerida.",
             'start_date.required' => "La fecha de inicio es requerida.",
-            'type.required' => "El tipo es requerido.",
         ];
     }
 }

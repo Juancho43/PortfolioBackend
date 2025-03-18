@@ -22,7 +22,7 @@ class Education extends Model
     {
         return $this->belongsToMany(Profile::class,'profiles_has_education');
     }
-    public function project() : BelongsToMany
+    public function projects() : BelongsToMany
     {
         return $this->belongsToMany(Project::class,'education_has_projects');
     }
@@ -30,6 +30,9 @@ class Education extends Model
     {
         return $this->belongsToMany(Tag::class,'education_has_tags');
     }
-
+    public function links() : BelongsToMany
+    {
+        return $this->belongsToMany(Link::class,'education_has_links');
+    }
 
 }

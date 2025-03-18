@@ -1,13 +1,16 @@
 <?php
 namespace App\Repository\V1;
 
+use App\Http\Controllers\V1\ApiResponseTrait;
 use App\Models\Work;
 
-use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
 /**
+ *
  * Class WorkRepository
  * @package App\Repository\V1
  *
@@ -15,6 +18,7 @@ use Exception;
  */
 class WorkRepository implements IRepository
 {
+    use ApiResponseTrait;
     /**
      * Obtiene todos los trabajos.
      *
@@ -69,21 +73,42 @@ class WorkRepository implements IRepository
      *
      * @param int $id
      * @param FormRequest $data
-     * @return bool
+     * @return Work
      */
-    public function update(int $id, FormRequest $data): bool
+    public function update(int $id, FormRequest $data): Work | JsonResponse
     {
-        return $this->find($id)->update($data->all());
+
+        try {
+            $work = $this->find($id);
+            $work->update($data->all());
+
+            if ($data->has('links')) {
+                $work->links()->sync($data->links);
+            }
+
+            if ($data->has('tags')) {
+                $work->tags()->sync($data->tags);
+            }
+
+            return $work->fresh();
+
+        }catch (Exception $e){
+            return $this->errorResponse('Error al actualizar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
     /**
      * Elimina un trabajo por su ID.
      *
      * @param int $id
-     * @return bool
+     * @return bool|JsonResponse
      */
-    public function delete(int $id): bool
+    public function delete(int $id): bool|JsonResponse
     {
-        return $this->find($id)->delete();
+        try {
+            return $this->find($id)->delete();
+        }catch (Exception $e){
+            return $this->errorResponse('Error al eliminar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 
