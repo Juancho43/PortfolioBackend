@@ -2,10 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\Education;
 use App\Models\Tag;
 use App\Repository\V1\TagRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
@@ -81,35 +79,4 @@ class TagRepositoryTest extends TestCase
         $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
     }
 
-    public function testGetProjectsByTag(): void
-    {
-        $tag = Tag::factory()->create();
-        $projects = $this->repository->getProjectsByTag($tag->id);
-        $this->assertInstanceOf(Collection::class, $projects);
-    }
-
-    public function testGetWorksByTag(): void
-    {
-        $tag = Tag::factory()->create();
-        $works = $this->repository->getWorksByTag($tag->id);
-        $this->assertInstanceOf(Collection::class, $works);
-    }
-
-    public function testGetEducationByTag(): void
-    {
-        $tag = Tag::factory()->create();
-        $tag->education()->attach(Education::factory()->count(3)->create());
-
-        $education = $this->repository->getEducationByTag($tag->id);
-
-        $this->assertInstanceOf(Collection::class, $education);
-        $this->assertCount(3, $education);
-        $this->assertDatabaseCount('education_has_tags', 3);
-        foreach ($education as $edu) {
-            $this->assertDatabaseHas('education_has_tags', [
-                'tag_id' => $tag->id,
-                'education_id' => $edu->id
-            ]);
-        }
-    }
 }

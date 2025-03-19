@@ -50,8 +50,8 @@ class ProjectRepository implements IRepository
         if ($data->has('tags')) {
             $project->tags()->sync($data->tags);
         }
-        if ($data->has('link')) {
-            $project->link()->sync($data->link);
+        if ($data->has('links')) {
+            $project->links()->sync($data->links);
         }
         return $project;
     }

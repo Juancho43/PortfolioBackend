@@ -8,15 +8,35 @@ use Illuminate\Foundation\Http\FormRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * Class TagRepository
+ *
+ * Repository class for handling Tag model CRUD operations
+ * Implements IRepository interface and uses ApiResponseTrait
+ *
+ * @package App\Repository\V1
+ */
 class TagRepository implements IRepository
 {
     use ApiResponseTrait;
+
+    /**
+     * Get all tags
+     *
+     * @return Collection Collection of Tag models
+     */
     public function all(): Collection
     {
         return  Tag::all();
     }
 
+    /**
+     * Find a tag by ID
+     *
+     * @param int $id Tag ID to find
+     * @return Tag Found Tag model
+     * @throws Exception When tag is not found
+     */
     public function find(int $id)
     {
         $tag = Tag::where('id', $id)->first();
@@ -26,6 +46,12 @@ class TagRepository implements IRepository
         return $tag;
     }
 
+    /**
+     * Create a new tag
+     *
+     * @param FormRequest $data Request containing tag data
+     * @return Tag Newly created Tag model
+     */
     public function create(FormRequest $data) : Tag
     {
         $data->validated();
@@ -36,6 +62,13 @@ class TagRepository implements IRepository
         return $tag;
     }
 
+    /**
+     * Update an existing tag
+     *
+     * @param int $id Tag ID to update
+     * @param FormRequest $data Request containing updated tag data
+     * @return Tag|JsonResponse Updated Tag model or error response
+     */
     public function update(int $id, FormRequest $data) : Tag|JsonResponse
     {
         try {
@@ -47,9 +80,14 @@ class TagRepository implements IRepository
         }
     }
 
+    /**
+     * Delete a tag
+     *
+     * @param int $id Tag ID to delete
+     * @return bool|JsonResponse True if deleted successfully, error response otherwise
+     */
     public function delete(int $id): bool|JsonResponse
     {
-
         try {
             return $this->find($id)->delete();
         }catch (Exception $e){
