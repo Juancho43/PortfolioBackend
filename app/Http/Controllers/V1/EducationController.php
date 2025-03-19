@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\V1;
 
 
+use App\Http\Resources\V1\ProjectResourceCollection;
 use App\Repository\V1\EducationRepository;
 use App\Http\Requests\V1\EducationRequest;
 use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\EducationResource;
 use App\Http\Controllers\V1\ApiResponseTrait;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -77,12 +79,12 @@ class EducationController extends Controller
 
     }
 
-    public function showByTag($id)
+    public function getProjectsByEducation(int $educationId) : JsonResponse
     {
-        try{
-            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->findWhereTag((int)$id)), null, Response::HTTP_OK);
-        }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        try {
+            return $this->successResponse(new ProjectResourceCollection($this->EducationRepository->getProjectsByEducation($educationId)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

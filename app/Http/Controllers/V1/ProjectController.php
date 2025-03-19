@@ -70,17 +70,6 @@ class ProjectController extends Controller
     }
 
 
-    public function showByEducation($id)
-    {
-        $educacion = Education::find($id);
-
-        $proyectos = $educacion->project()->with('tags')->get();
-
-        return response()->json([
-            'Proyect' => $proyectos
-        ]);
-    }
-
     /**
      * Stores a new project in the database.
      *

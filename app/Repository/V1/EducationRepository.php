@@ -1,20 +1,24 @@
 <?php
 namespace App\Repository\V1;
 
+use App\Http\Controllers\V1\ApiResponseTrait;
 use App\Models\Education;
-
-use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EducationRepository implements IRepository
 {
+    use ApiResponseTrait;
 
-   private TagRepository $tagRepository;
-   public function __construct(TagRepository $tagRepository){
-    $this->tagRepository = $tagRepository;
-   }
+    private TagRepository $tagRepository;
+
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->tagRepository = $tagRepository;
+    }
 
     public function all(): Collection
     {
@@ -65,18 +69,14 @@ class EducationRepository implements IRepository
     }
 
 
-    public function findWhereTag($id)
+
+    public function getEducationByTag(int $id) : Collection|JsonResponse
     {
-        $tag = $this->tagRepository->find($id);
-        $educations = Education::whereHas('tags', function ($query) use ($tag) {
-            $query->where('name', $tag->name);
-        })->with('tags')->orderBy('start_date', 'asc')->get();
-
-        if ($educations->isEmpty()) {
-            throw new Exception("No educations found for tag: " . $tag->name);
+        try {
+            return $this->tagRepository->find($id)->education()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        return $educations;
     }
 
 }

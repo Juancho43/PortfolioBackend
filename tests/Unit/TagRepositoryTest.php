@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Education;
 use App\Models\Tag;
 use App\Repository\V1\TagRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,21 +22,21 @@ class TagRepositoryTest extends TestCase
         $this->repository = new TagRepository();
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         Tag::factory()->count(3)->create();
         $tags = $this->repository->all();
         $this->assertCount(3, $tags);
     }
 
-    public function testFind()
+    public function testFind(): void
     {
         $tag = Tag::factory()->create();
         $foundTag = $this->repository->find($tag->id);
         $this->assertEquals($tag->id, $foundTag->id);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $data = Mockery::mock('Illuminate\Foundation\Http\FormRequest');
         $data->shouldReceive('validated')->andReturn(['name' => 'Test Tag']);
@@ -49,7 +50,7 @@ class TagRepositoryTest extends TestCase
         $this->assertInstanceOf(Tag::class, $tag);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $tag = Tag::factory()->create(['name' => 'Original Tag']);
 
@@ -72,7 +73,7 @@ class TagRepositoryTest extends TestCase
         ]);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $tag = Tag::factory()->create();
         $result = $this->repository->delete($tag->id);
@@ -80,24 +81,35 @@ class TagRepositoryTest extends TestCase
         $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
     }
 
-    public function testGetProjectsByTag()
+    public function testGetProjectsByTag(): void
     {
         $tag = Tag::factory()->create();
         $projects = $this->repository->getProjectsByTag($tag->id);
         $this->assertInstanceOf(Collection::class, $projects);
     }
 
-    public function testGetWorksByTag()
+    public function testGetWorksByTag(): void
     {
         $tag = Tag::factory()->create();
         $works = $this->repository->getWorksByTag($tag->id);
         $this->assertInstanceOf(Collection::class, $works);
     }
 
-    public function testGetEducationByTag()
+    public function testGetEducationByTag(): void
     {
         $tag = Tag::factory()->create();
+        $tag->education()->attach(Education::factory()->count(3)->create());
+
         $education = $this->repository->getEducationByTag($tag->id);
+
         $this->assertInstanceOf(Collection::class, $education);
+        $this->assertCount(3, $education);
+        $this->assertDatabaseCount('education_has_tags', 3);
+        foreach ($education as $edu) {
+            $this->assertDatabaseHas('education_has_tags', [
+                'tag_id' => $tag->id,
+                'education_id' => $edu->id
+            ]);
+        }
     }
 }

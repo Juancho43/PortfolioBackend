@@ -3,7 +3,6 @@ namespace App\Repository\V1;
 
 use App\Http\Controllers\V1\ApiResponseTrait;
 use App\Models\Project;
-use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
 use Exception;
@@ -13,6 +12,16 @@ use Symfony\Component\HttpFoundation\Response;
 class ProjectRepository implements IRepository
 {
     use ApiResponseTrait;
+
+
+    private TagRepository $tagRepository;
+    private EducationRepository $educationRepository;
+
+    public function __construct(TagRepository $tagRepository, EducationRepository $educationRepository)
+    {
+        $this->tagRepository = $tagRepository;
+        $this->educationRepository = $educationRepository;
+    }
     public function all(): Collection
     {
 
@@ -73,6 +82,25 @@ class ProjectRepository implements IRepository
             return $this->find($id)->delete();
         }catch (Exception $e){
             return $this->errorResponse('Error al eliminar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getProjectsByEducation(int $educationId) : Collection | JsonResponse
+    {
+        try {
+            return $this->educationRepository->find($educationId)->projects()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public function getProjectsByTag(int $id) : Collection|JsonResponse
+    {
+        try {
+            return $this->tagRepository->find($id)->projects()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

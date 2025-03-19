@@ -19,6 +19,14 @@ use Illuminate\Http\JsonResponse;
 class WorkRepository implements IRepository
 {
     use ApiResponseTrait;
+
+    private TagRepository $tagRepository;
+
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->tagRepository = $tagRepository;
+    }
+
     /**
      * Obtiene todos los trabajos.
      *
@@ -111,5 +119,13 @@ class WorkRepository implements IRepository
         }
     }
 
+    public function getWorksByTag(int $id) : Collection|JsonResponse
+    {
+        try {
+            return $this->tagRepository->find($id)->works()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
+    }
 }

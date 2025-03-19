@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\V1\TagRequest;
+use App\Http\Resources\V1\EducationResourceColletion;
 use App\Http\Resources\V1\ProjectResourceCollection;
 use App\Http\Resources\V1\TagResource;
 use App\Http\Resources\V1\TagResourceCollection;
+use App\Http\Resources\V1\WorkResourceCollection;
 use App\Repository\V1\TagRepository;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,10 +116,6 @@ class TagsController extends Controller
         }
     }
 
-    public function getEduationByTag() : JsonResponse
-    {
-
-    }
 
     public function getProjectsByTag(int $tagId) : JsonResponse
     {
@@ -131,7 +129,7 @@ class TagsController extends Controller
     public function getWorkByTag(int $tagId) : JsonResponse
     {
         try {
-            return $this->successResponse(new ProjectResourceCollection($this->repository->getWorksByTag($tagId)),null,Response::HTTP_OK);
+            return $this->successResponse(new WorkResourceCollection($this->repository->getWorksByTag($tagId)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -140,7 +138,7 @@ class TagsController extends Controller
     public function getEducationByTag(int $tagId) : JsonResponse
     {
         try {
-            return $this->successResponse(new ProjectResourceCollection($this->repository->getEducationByTag($tagId)),null,Response::HTTP_OK);
+            return $this->successResponse(new EducationResourceColletion($this->repository->getEducationByTag($tagId)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
