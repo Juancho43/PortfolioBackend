@@ -10,7 +10,11 @@ class Tag extends Model
 
     use HasFactory;
 
-    public function project()
+    protected $fillable = [
+        'name',
+    ];
+
+    public function projects()
     {
         return $this->belongsToMany(Project::class,'projects_has_tags');
     }
@@ -18,7 +22,7 @@ class Tag extends Model
     {
         return $this->belongsToMany(Education::class,'education_has_tags');
     }
-    public function work()
+    public function works()
     {
         return $this->belongsToMany(Work::class,'works_has_tags');
     }

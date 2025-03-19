@@ -57,5 +57,31 @@ class TagRepository implements IRepository
         }
     }
 
+    public function getProjectsByTag(int $id) : Collection|JsonResponse
+    {
+        try {
+            return $this->find($id)->projects()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getWorksByTag(int $id) : Collection|JsonResponse
+    {
+        try {
+            return $this->find($id)->works()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getEducationByTag(int $id) : Collection|JsonResponse
+    {
+        try {
+            return $this->find($id)->education()->get();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

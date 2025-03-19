@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\V1\TagRequest;
+use App\Http\Resources\V1\ProjectResourceCollection;
 use App\Http\Resources\V1\TagResource;
 use App\Http\Resources\V1\TagResourceCollection;
 use App\Repository\V1\TagRepository;
@@ -44,7 +45,7 @@ class TagsController extends Controller
     public function index() : JsonResponse
     {
         try{
-            return $this->successResponse(new TagResourceCollection($this->repository->all()),null,Response::HTTP_CREATED);
+            return $this->successResponse(new TagResourceCollection($this->repository->all()),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving tag data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -59,7 +60,7 @@ class TagsController extends Controller
     public function show(int $id) : JsonResponse
     {
         try{
-            return $this->successResponse(new TagResource($this->repository->find($id)),null,Response::HTTP_CREATED);
+            return $this->successResponse(new TagResource($this->repository->find($id)),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving tag data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -112,4 +113,37 @@ class TagsController extends Controller
             return $this->errorResponse("Error deleting tag data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function getEduationByTag() : JsonResponse
+    {
+
+    }
+
+    public function getProjectsByTag(int $tagId) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByTag($tagId)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getWorkByTag(int $tagId) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getWorksByTag($tagId)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getEducationByTag(int $tagId) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getEducationByTag($tagId)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
