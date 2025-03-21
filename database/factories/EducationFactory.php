@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\Profile;
+use App\Models\Education;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EducationFactory extends Factory
 {
+    protected $model = Education::class;
     /**
      * Define the model's default state.
      *

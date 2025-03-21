@@ -54,7 +54,7 @@ class ProjectRepositoryTest extends TestCase
         $data->shouldReceive('all')->andReturn($mockData);
         $data->shouldReceive('name')->andReturn('Test Project');
         $data->shouldReceive('description')->andReturn('Test Description');
-        $data->shouldReceive('has')->with('link')->andReturn(false);
+        $data->shouldReceive('has')->with('links')->andReturn(false);
         $data->shouldReceive('has')->with('tags')->andReturn(false);
 
         $project = $this->repository->create($data);

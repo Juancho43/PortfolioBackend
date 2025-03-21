@@ -58,9 +58,28 @@ class EducationRepository implements IRepository
         return $education;
     }
 
-    public function update(int $id, FormRequest $data): bool
+    public function update(int $id, FormRequest $data): Education | JsonResponse
     {
-        return $this->find($id)->update($data->all());
+        try {
+            $data->validated();
+            $education = $this->find($id);
+            $education->update($data->all());
+
+            if ($data->has('tags')) {
+                $education->tags()->sync($data->tags);
+            }
+            if ($data->has('links')) {
+                $education->links()->sync($data->links);
+            }
+            if ($data->has('projects')) {
+                $education->projects()->sync($data->projects);
+            }
+
+            return $education->fresh();
+
+        }catch (Exception $e){
+            return $this->errorResponse('Error al actualizar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function delete(int $id): bool
