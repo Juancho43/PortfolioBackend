@@ -48,10 +48,10 @@ class ProjectRepository implements IRepository
         ]);
 
         if ($data->has('tags')) {
-            $project->tags()->sync($data->tags);
+            $project->tags()->attach($data->tags);
         }
         if ($data->has('links')) {
-            $project->links()->sync($data->links);
+            $project->links()->attach($data->links);
         }
         return $project;
     }
@@ -59,6 +59,7 @@ class ProjectRepository implements IRepository
     public function update(int $id, FormRequest $data): Project | JsonResponse
     {
         try{
+            $data->validated();
             $project = $this->find($id);
             $project->update($data->all());
 

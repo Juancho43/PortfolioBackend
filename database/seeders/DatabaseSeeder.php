@@ -89,8 +89,8 @@ class DatabaseSeeder extends Seeder
        $projects[0]->tags()->attach([$tags[1],$tags[2],$tags[3]]);
        $projects[1]->tags()->attach([$tags[2],$tags[5],$tags[3]]);
 
-       $education[0]->project()->attach([$projects[0],$projects[1]]);
-       $education[1]->project()->attach([$projects[2],$projects[3],$projects[4]]);
+       $education[0]->projects()->attach([$projects[0],$projects[1]]);
+       $education[1]->projects()->attach([$projects[2],$projects[3],$projects[4]]);
        $education[0]->tags()->attach([$tags[1],$tags[2],$tags[3]]);
        $education[1]->tags()->attach([$tags[2],$tags[5],$tags[3]]);
     }

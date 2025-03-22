@@ -27,7 +27,7 @@ class EducationController extends Controller
     }
 
 
-    public function index()
+    public function index() : JsonResponse
     {
         try{
             return $this->successResponse(new EducationResourceColletion($this->EducationRepository->all()), null, Response::HTTP_OK);
@@ -36,16 +36,17 @@ class EducationController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($id) : false|string
     {
         try{
-            return $this->successResponse(new EducationResource($this->EducationRepository->find($id)), null, Response::HTTP_OK);
+            echo new EducationResource($this->EducationRepository->find($id));
+//            return $this->successResponse(new EducationResource($this->EducationRepository->find($id)), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function store(EducationRequest $request)
+    public function store(EducationRequest $request) : JsonResponse
     {
 
         try{
@@ -57,10 +58,10 @@ class EducationController extends Controller
 
     }
 
-    public function update(EducationRequest $request, $id)
+    public function update(EducationRequest $request) : JsonResponse
     {
         try{
-            $education = $this->EducationRepository->update($id,$request->validated());
+            $education = $this->EducationRepository->update($request->id,$request->validated());
             return $this->successResponse(new EducationResource($education),"Educación actualizada correctamente" , Response::HTTP_CREATED);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -68,7 +69,7 @@ class EducationController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy($id) : JsonResponse
     {
         try{
             $this->EducationRepository->delete($id);

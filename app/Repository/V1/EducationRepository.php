@@ -25,10 +25,9 @@ class EducationRepository implements IRepository
         return  Education::with(['tags', 'links'])->orderBy('end_date', 'asc')->get();
     }
 
-    public function find(int $id)
+    public function find(int $id) : Education | JsonResponse
     {
-
-        $education = Education::with(['tags', 'links'])->where('id', $id)->first();
+        $education = Education::find($id);
         if (!$education) {
             throw new Exception('Error al encontrar al recurso education con ID: ' . $id);
         }
