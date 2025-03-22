@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class EducationRepository implements IRepository
@@ -25,13 +26,16 @@ class EducationRepository implements IRepository
         return  Education::with(['tags', 'links'])->orderBy('end_date', 'asc')->get();
     }
 
+    /**
+     * @throws Exception
+     */
     public function find(int $id) : Education | JsonResponse
     {
-        $education = Education::find($id);
-        if (!$education) {
+        $tag = Education::where('id', $id)->first();
+        if (!$tag) {
             throw new Exception('Error al encontrar al recurso education con ID: ' . $id);
         }
-        return $education;
+        return $tag;
     }
 
     public function create(FormRequest $data)
@@ -62,7 +66,7 @@ class EducationRepository implements IRepository
         try {
             $data->validated();
             $education = $this->find($id);
-            $education->update($data->all());
+//            $education->update($data->all());
 
             if ($data->has('tags')) {
                 $education->tags()->sync($data->tags);
@@ -81,9 +85,13 @@ class EducationRepository implements IRepository
         }
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id): bool | JsonResponse
     {
-        return $this->find($id)->delete();
+        try {
+            return $this->find($id)->delete();
+        }catch (Exception $e){
+            return $this->errorResponse('Error al eliminar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 

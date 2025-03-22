@@ -18,11 +18,11 @@ class EducationController extends Controller
 {
 
     use ApiResponseTrait;
-    protected EducationRepository $EducationRepository;
+    protected EducationRepository $repository;
 
-    public function __construct(EducationRepository $EducationRepository, )
+    public function __construct(EducationRepository $EducationRepository)
     {
-        $this->EducationRepository = $EducationRepository;
+        $this->repository = $EducationRepository;
 
     }
 
@@ -30,19 +30,18 @@ class EducationController extends Controller
     public function index() : JsonResponse
     {
         try{
-            return $this->successResponse(new EducationResourceColletion($this->EducationRepository->all()), null, Response::HTTP_OK);
+            return $this->successResponse(new EducationResourceColletion($this->repository->all()), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function show($id) : false|string
+    public function show(int $id) : JsonResponse
     {
         try{
-            echo new EducationResource($this->EducationRepository->find($id));
-//            return $this->successResponse(new EducationResource($this->EducationRepository->find($id)), null, Response::HTTP_OK);
+            return $this->successResponse(new EducationResource($this->repository->find($id)),null,Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Error retrieving tag data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -50,7 +49,7 @@ class EducationController extends Controller
     {
 
         try{
-            $education = $this->EducationRepository->create($request);
+            $education = $this->repository->create($request);
             return $this->successResponse(new EducationResource($education),"Educación cargada correctamente" , Response::HTTP_CREATED);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -61,7 +60,7 @@ class EducationController extends Controller
     public function update(EducationRequest $request) : JsonResponse
     {
         try{
-            $education = $this->EducationRepository->update($request->id,$request->validated());
+            $education = $this->repository->update($request->id,$request->validated());
             return $this->successResponse(new EducationResource($education),"Educación actualizada correctamente" , Response::HTTP_CREATED);
         }catch(Exception $e){
             return $this->errorResponse("Error al obtener los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -72,7 +71,7 @@ class EducationController extends Controller
     public function destroy($id) : JsonResponse
     {
         try{
-            $this->EducationRepository->delete($id);
+            $this->repository->delete($id);
             return $this->successResponse(null, "Datos eliminados correctamente", Response::HTTP_NO_CONTENT);
         }catch(Exception $e){
             return $this->errorResponse("Error al eliminar los datos de education",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -83,7 +82,7 @@ class EducationController extends Controller
     public function getProjectsByEducation(int $educationId) : JsonResponse
     {
         try {
-            return $this->successResponse(new ProjectResourceCollection($this->EducationRepository->getProjectsByEducation($educationId)),null,Response::HTTP_OK);
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByEducation($educationId)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }

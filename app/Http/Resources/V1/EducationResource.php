@@ -23,15 +23,15 @@ class EducationResource extends JsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'projects' => $this->when(
-                isset($this->project) && !$this->project->isEmpty(),
-                ProjectResource::collection($this->project)
+                isset($this->projects) && $this->projects !== null &&  !$this->projects->isEmpty(),
+                ProjectResource::collection($this->projects)
             ),
             'tags' => $this->when(
-                isset($this->tags) && !$this->tags->isEmpty(),
+                isset($this->tags)&& $this->tags !== null && !$this->tags->isEmpty(),
                 TagResource::collection($this->tags)
             ),
             'links' => $this->when(
-                isset($this->links) && !$this->links->isEmpty(),
+                isset($this->links) && $this->links !== null  && !$this->links->isEmpty(),
                 LinkResource::collection($this->links)
             ),
             'created_at' => $this->when($request->bearerToken(),$this->created_at, null),
