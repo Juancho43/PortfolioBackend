@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\V1\ProjectRequest;
+use App\Http\Resources\V1\WorkResourceCollection;
 use App\Models\Tag;
 use App\Models\Education;
 use Illuminate\Http\JsonResponse;
@@ -48,7 +49,7 @@ class ProjectController extends Controller
     public function index() : JsonResponse
     {
         try{
-            return $this->successResponse(new ProjectResourceCollection($this->repository->all()), null, Response::HTTP_OK);
+            return $this->successResponse(new c($this->repository->all()), null, Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving project data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -115,6 +116,24 @@ class ProjectController extends Controller
             return $this->successResponse(null, "Data deleted successfully", Response::HTTP_NO_CONTENT);
         }catch(Exception $e){
             return $this->errorResponse("Error deleting the project data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getByTag(int $id) : JsonResponse
+    {
+        try{
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByTag($id)),null,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getByEducation(int $id) : JsonResponse
+    {
+        try{
+            return $this->successResponse(new WorkResourceCollection($this->repository->getProjectsByEducation($id)),null,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

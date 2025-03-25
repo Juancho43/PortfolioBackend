@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature\Repository;
 
 use App\Models\Link;
 use App\Models\Tag;
@@ -10,6 +10,7 @@ use App\Repository\V1\WorkRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
+
 class WorkRepositoryTest extends TestCase
 {
     use RefreshDatabase;

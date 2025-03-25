@@ -66,7 +66,7 @@ class EducationRepository implements IRepository
         try {
             $data->validated();
             $education = $this->find($id);
-//            $education->update($data->all());
+            $education->update($data->all());
 
             if ($data->has('tags')) {
                 $education->tags()->sync($data->tags);

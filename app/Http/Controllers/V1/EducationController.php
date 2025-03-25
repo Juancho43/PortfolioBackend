@@ -79,10 +79,10 @@ class EducationController extends Controller
 
     }
 
-    public function getProjectsByEducation(int $educationId) : JsonResponse
+    public function getByTag(int $id) : JsonResponse
     {
         try {
-            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByEducation($educationId)),null,Response::HTTP_OK);
+            return $this->successResponse(new EducationResourceColletion($this->repository->getEducationByTag($id)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }

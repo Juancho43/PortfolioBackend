@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature\Repository;
 
 use App\Models\Link;
 use App\Repository\V1\LinkRepository;

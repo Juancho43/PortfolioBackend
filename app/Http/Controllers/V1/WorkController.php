@@ -55,10 +55,10 @@ class WorkController
     /**
      * Displays the details of a specific work.
      *
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function show(string $id) : JsonResponse
+    public function show(int $id) : JsonResponse
     {
         try{
             return $this->successResponse(new WorkResource($this->repository->find($id)),null,Response::HTTP_OK);
@@ -103,10 +103,10 @@ class WorkController
     /**
      * Deletes a specific work from the database.
      *
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy(string $id) : JsonResponse
+    public function destroy(int $id) : JsonResponse
     {
         try{
             $this->repository->delete($id);
@@ -115,4 +115,13 @@ class WorkController
             return $this->errorResponse("Error deleting the work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function getByTag(int $id) : JsonResponse
+    {
+        try{
+            return $this->successResponse(new WorkResourceCollection($this->repository->getWorksByTag($id)),null,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

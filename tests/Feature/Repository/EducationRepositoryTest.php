@@ -1,17 +1,18 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature\Repository;
 use App\Models\Education;
 use App\Models\Tag;
 use App\Repository\V1\EducationRepository;
 use App\Repository\V1\TagRepository;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class EducationRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected EducationRepository $repository;
     protected TagRepository $tagRepository;
