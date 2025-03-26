@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LinkResource extends JsonResource
 {
+    public static $wrap = 'link';
     /**
      * Transform the resource into an array.
      *

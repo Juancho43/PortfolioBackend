@@ -13,7 +13,7 @@ use Tests\TestCase;
 class WorkControllerTest extends TestCase
 {
     use DatabaseTransactions;
-    protected $user;
+    protected User $user;
 
     protected function setUp(): void
     {
@@ -21,7 +21,7 @@ class WorkControllerTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function testIndex()
+    public function testIndex() : void
     {
         Work::factory()->count(3)->create();
 
@@ -35,7 +35,7 @@ class WorkControllerTest extends TestCase
             ]);
     }
 
-    public function testStore()
+    public function testStore() : void
     {
 
         $data = [
@@ -52,7 +52,7 @@ class WorkControllerTest extends TestCase
             ->assertJsonFragment($data);
     }
 
-    public function testShow()
+    public function testShow() : void
     {
         $work = Work::factory()->create();
 
@@ -67,7 +67,7 @@ class WorkControllerTest extends TestCase
             ]);
     }
 
-    public function test_update_work()
+    public function test_update_work() : void
     {
 
 
@@ -101,12 +101,65 @@ class WorkControllerTest extends TestCase
         ]);
     }
 
-    public function testDestroy()
+    public function testDestroy() : void
     {
         $work = Work::factory()->create();
 
         $response = $this->actingAs($this->user)->deleteJson("/api/v1/work/private/{$work->id}");
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    public function testGetByTag() : void
+    {
+        // Create a tag and works associated with it
+        $tag = \App\Models\Tag::factory()->create();
+        $works = Work::factory()->count(2)->create();
+
+        // Attach the tag to the works
+        foreach ($works as $work) {
+            $work->tags()->attach($tag->id);
+        }
+
+        // Create another work without the tag
+        Work::factory()->create();
+
+        // Make the request
+        $response = $this->getJson("/api/v1/work/tag/{$tag->id}");
+
+        // Assert response
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(2, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'company',
+                        'position',
+                        'start_date',
+                        'end_date',
+                        'responsibilities',
+                        'links',
+                        'tags',
+                        'created_at',
+                        'updated_at',
+                        'deleted_at'
+                    ]
+                ]
+            ]);
+    }
+
+    public function testGetByTagWithInvalidId() : void
+    {
+        // Test with non-existent tag ID
+        $response = $this->getJson('/api/v1/work/tag/99999');
+
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->assertJsonStructure([
+                'message',
+                'success',
+                'errors'
+
+            ]);
     }
 }

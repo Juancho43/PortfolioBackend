@@ -35,7 +35,7 @@ Route::prefix('v1')->group(function () {
 
     // Rutas privadas (requieren autenticación)
     Route::middleware('auth:sanctum')->group(function () {
-        Route::group(['as' => 'private.'], function() {
+        Route::group(['as' => 'private.'], function(){
             Route::resource('/profile/private', ProfileController::class)->only(['store', 'update', 'destroy'])->names('profile');
             Route::resource('/work/private',    WorkController::class)->only(['store', 'update', 'destroy'])->names('work');
             Route::resource('/education/private', EducationController::class)->only(['store', 'update', 'destroy'])->names('education');

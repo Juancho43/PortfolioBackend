@@ -28,7 +28,7 @@ class WorkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
             'company' => 'required|string|max:45',
             'position' => 'required|string|max:45',
             'responsibilities' => 'nullable|string|max:65535',

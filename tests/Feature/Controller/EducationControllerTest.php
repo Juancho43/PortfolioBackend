@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controller;
 
 use App\Models\Education;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,7 +14,6 @@ class EducationControllerTest extends TestCase
 {
     use DatabaseTransactions;
     use WithFaker;
-    protected string $endpoint = '/api/v1/education';
 
     protected User $user;
 
@@ -66,12 +66,14 @@ class EducationControllerTest extends TestCase
     public function test_store_saves_education(): void
     {
 
-        $startDate = $this->faker->date();
+
+        $startDate = now()->subYears(2)->format('Y-m-d');
+        $endDate = now()->subYear()->format('Y-m-d');
         $data = [
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'start_date' => $startDate,
-            'end_date' => $this->faker->date('Y-m-d', $this->faker->dateTimeBetween($startDate, '+5 years')),
+            'end_date' => $endDate,
         ];
 
         $response = $this->actingAs($this->user)->postJson(route('private.education.store'), $data);
@@ -88,6 +90,51 @@ class EducationControllerTest extends TestCase
                     'updated_at',
                     'deleted_at',
                 ]
+            ]);
+    }
+    public function testGetByTag(): void
+    {
+        // Create a tag and education records associated with it
+        $tag = Tag::factory()->create();
+        $educations = Education::factory()->count(2)->create();
+
+        // Attach the tag to the education records
+        foreach ($educations as $education) {
+            $education->tags()->attach($tag->id);
+        }
+
+        // Create another education record without the tag
+        \App\Models\Education::factory()->create();
+
+        // Make the request
+        $response = $this->getJson(route('public.education.byTag', $tag->id));
+
+        // Assert response
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(2, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'description',
+                        'start_date',
+                        'end_date',
+                        'created_at',
+                        'updated_at',
+                    ]
+                ]
+            ]);
+    }
+    public function testGetByTagWithInvalidId(): void
+    {
+        $response = $this->getJson(route('public.education.byTag', 99999));
+
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->assertJsonStructure([
+                'message',
+                'success',
+                'errors'
             ]);
     }
 
