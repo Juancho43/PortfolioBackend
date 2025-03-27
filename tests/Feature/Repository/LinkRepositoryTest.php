@@ -5,13 +5,14 @@ namespace Tests\Feature\Repository;
 use App\Models\Link;
 use App\Repository\V1\LinkRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class LinkRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected LinkRepository $repository;
 

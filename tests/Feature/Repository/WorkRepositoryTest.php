@@ -7,13 +7,14 @@ use App\Models\Tag;
 use App\Models\Work;
 use App\Repository\V1\TagRepository;
 use App\Repository\V1\WorkRepository;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class WorkRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected WorkRepository $repository;
     protected TagRepository $tagRepository;

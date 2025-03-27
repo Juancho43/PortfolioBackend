@@ -8,13 +8,14 @@ use App\Models\Tag;
 use App\Repository\V1\EducationRepository;
 use App\Repository\V1\ProjectRepository;
 use App\Repository\V1\TagRepository;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class ProjectRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected ProjectRepository $repository;
     protected TagRepository $tagRepository;

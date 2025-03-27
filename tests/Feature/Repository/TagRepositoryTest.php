@@ -4,13 +4,14 @@ namespace Tests\Feature\Repository;
 
 use App\Models\Tag;
 use App\Repository\V1\TagRepository;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class TagRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected TagRepository $repository;
 
