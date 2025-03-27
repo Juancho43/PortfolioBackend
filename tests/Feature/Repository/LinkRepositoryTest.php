@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class LinkRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected LinkRepository $repository;
 

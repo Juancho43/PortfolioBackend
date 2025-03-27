@@ -11,6 +11,7 @@ use App\Repository\V1\ProfileRepository;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\JsonResponse;
 use Mockery;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ use Tests\TestCase;
 
 class ProfileRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
     protected ProfileRepository $repository;
     protected User $user;
     protected Profile $profile;

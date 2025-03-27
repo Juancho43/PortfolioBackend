@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class ProjectRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected ProjectRepository $repository;
     protected TagRepository $tagRepository;
