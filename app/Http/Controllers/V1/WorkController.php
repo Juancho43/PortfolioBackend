@@ -67,7 +67,6 @@ class WorkController
         }
     }
 
-
     /**
      * Stores a new work in the database.
      *
@@ -115,6 +114,19 @@ class WorkController
             return $this->errorResponse("Error deleting the work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Get works by tag ID
+     *
+     * Retrieves a collection of works that are associated with the specified tag.
+     * Returns the works wrapped in a WorkResourceCollection as a JSON response.
+     *
+     * @param int $id The ID of the tag to filter works by
+     * @return JsonResponse Returns a JSON response containing:
+     *                      - On success: Collection of works with HTTP 200
+     *                      - On failure: Error message with HTTP 500
+     * @throws Exception When tag not found or error occurs during retrieval
+     */
     public function getByTag(int $id) : JsonResponse
     {
         try{

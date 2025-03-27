@@ -137,6 +137,56 @@ class EducationControllerTest extends TestCase
                 'errors'
             ]);
     }
+    public function testGetByTagReturnsEducationsWithMatchingTag(): void
+    {
+        $tag = Tag::factory()->create();
+        $educations = Education::factory()->count(2)->create();
+        foreach ($educations as $education) {
+            $education->tags()->attach($tag->id);
+        }
+        Education::factory()->create();
 
+        $response = $this->getJson(route('public.education.byTag', $tag->id));
+
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(2, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'description',
+                        'start_date',
+                        'end_date',
+                        'created_at',
+                        'updated_at'
+                    ]
+                ]
+            ]);
+    }
+    public function testGetByTagReturnsEmptyCollectionWhenNoMatches(): void
+    {
+        $tag = Tag::factory()->create();
+        Education::factory()->count(2)->create();
+
+        $response = $this->getJson(route('public.education.byTag', $tag->id));
+
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonCount(0, 'data')
+            ->assertJsonStructure(['data']);
+    }
+    public function testGetByTagThrowsExceptionWithInvalidTagId(): void
+    {
+        $invalidId = 99999;
+
+        $response = $this->getJson(route('public.education.byTag', $invalidId));
+
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->assertJsonStructure([
+                'message',
+                'success',
+                'errors'
+            ]);
+    }
 
 }

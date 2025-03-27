@@ -31,6 +31,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/project/tag/{id}', [ProjectController::class, 'getByTag'])->name('project.byTag');
         Route::get('/education/tag/{id}', [EducationController::class, 'getByTag'])->name('education.byTag');
         Route::get('/work/tag/{id}', [WorkController::class, 'getByTag'])->name('work.byTag');
+
+        Route::get('/tag/project', [TagsController::class, 'getAllProjectTags'])->name('tag.projects');
+        Route::get('/tag/work', [TagsController::class, 'getAllWorkTags'])->name('tag.works');
+        Route::get('/tag/education', [TagsController::class, 'getAllEducationTags'])->name('tag.education');
+
+
+
     });
 
     // Rutas privadas (requieren autenticación)
