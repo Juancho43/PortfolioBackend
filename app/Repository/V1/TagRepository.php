@@ -96,7 +96,7 @@ class TagRepository implements IRepository
         }
     }
 
-    public function allEducationTags() : Collection | Exception
+    public function allEducationTags() : Collection
     {
         $tags = Tag::whereHas('education')
             ->distinct()
@@ -106,7 +106,7 @@ class TagRepository implements IRepository
         }
         return $tags;
     }
-    public function allProjectsTags() : Collection | Exception
+    public function allProjectsTags() : Collection
     {
         $tags = Tag::whereHas('projects')
             ->distinct()
@@ -116,7 +116,7 @@ class TagRepository implements IRepository
         }
         return $tags;
     }
-    public function allWorksTags() : Collection | Exception
+    public function allWorksTags() : Collection
     {
         $tags = Tag::whereHas('works')
             ->distinct()

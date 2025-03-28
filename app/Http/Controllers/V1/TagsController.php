@@ -120,19 +120,20 @@ class TagsController extends Controller
 
     public function getAllEducationTags() : JsonResponse
     {
+
         try {
-            return $this->successResponse(new TagResourceCollection($this->repository->allEducationTags()),null,Response::HTTP_OK);
+            return $this->successResponse(new TagResourceCollection($this->repository->allEducationTags()),"null",Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     public function getAllProjectTags() : JsonResponse
     {
-        try {
+       try {
             return $this->successResponse(new TagResourceCollection($this->repository->allProjectsTags()),null,Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+           return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+       }
     }
 
     public function getAllWorkTags() : JsonResponse
