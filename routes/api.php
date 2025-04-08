@@ -27,15 +27,22 @@ Route::prefix('v1')->group(function () {
         Route::resource('/link', LinkController::class)->only(['index','show'])->names('link');
 
         // Relaciones y filtros
-        Route::get('/project/education/{id}', [ProjectController::class, 'showByEducation'])->name('project.byEducation');
-        Route::get('/project/tag/{id}', [ProjectController::class, 'showByTag'])->name('project.byTag');
-        Route::get('/education/tag/{id}', [EducationController::class, 'showByTag'])->name('education.byTag');
-        Route::get('/work/tag/{id}', [WorkController::class, 'showByTag'])->name('work.byTag');
+        Route::get('/project/education/{id}', [ProjectController::class, 'getByEducation'])->name('project.byEducation');
+        Route::get('/project/tag/{id}', [ProjectController::class, 'getByTag'])->name('project.byTag');
+        Route::get('/education/tag/{id}', [EducationController::class, 'getByTag'])->name('education.byTag');
+        Route::get('/work/tag/{id}', [WorkController::class, 'getByTag'])->name('work.byTag');
+
+        Route::get('/tag/from/project', [TagsController::class, 'getAllProjectTags'])->name('tag.projects');
+        Route::get('/tag/from/work', [TagsController::class, 'getAllWorkTags'])->name('tag.works');
+        Route::get('/tag/from/education', [TagsController::class, 'getAllEducationTags'])->name('tag.education');
+
+
+
     });
 
     // Rutas privadas (requieren autenticación)
     Route::middleware('auth:sanctum')->group(function () {
-        Route::group(['as' => 'private.'], function() {
+        Route::group(['as' => 'private.'], function(){
             Route::resource('/profile/private', ProfileController::class)->only(['store', 'update', 'destroy'])->names('profile');
             Route::resource('/work/private',    WorkController::class)->only(['store', 'update', 'destroy'])->names('work');
             Route::resource('/education/private', EducationController::class)->only(['store', 'update', 'destroy'])->names('education');

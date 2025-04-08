@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Js;
 use Symfony\Component\HttpFoundation\Response;
 /**
  * Class TagRepository
@@ -94,6 +95,39 @@ class TagRepository implements IRepository
             return $this->errorResponse('Error al eliminar el recurso', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function allEducationTags() : Collection
+    {
+        $tags = Tag::whereHas('education')
+            ->distinct()
+            ->get();
+        if ($tags->isEmpty()) {
+            throw new Exception('No tags found for any education records');
+        }
+        return $tags;
+    }
+    public function allProjectsTags() : Collection
+    {
+        $tags = Tag::whereHas('projects')
+            ->distinct()
+            ->get();
+        if ($tags->isEmpty()) {
+            throw new Exception('No tags found for any project records');
+        }
+        return $tags;
+    }
+    public function allWorksTags() : Collection
+    {
+        $tags = Tag::whereHas('works')
+            ->distinct()
+            ->get();
+        if ($tags->isEmpty()) {
+            throw new Exception('No tags found for any project records');
+        }
+        return $tags;
+    }
+
+
 
 
 }

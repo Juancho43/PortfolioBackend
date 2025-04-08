@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkResource extends JsonResource
 {
+    public static $wrap = 'work';
     /**
      * Transform the resource into an array.
      *

@@ -4,7 +4,6 @@ namespace App\Repository\V1;
 use App\Http\Controllers\V1\ApiResponseTrait;
 use App\Models\Profile;
 use App\Models\User;
-use App\Repository\V1\IRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
 use Exception;
@@ -21,7 +20,7 @@ class ProfileRepository implements IRepository
 
     public function find(int $id) : Profile | JsonResponse
     {
-        $Profile = Profile::where('id',$id)->with(['links','works','education','user'])->firstOrFail();
+        $Profile = Profile::where('id',$id)->with('links')->firstOrFail();
         if (!$Profile) {
             throw new Exception('Error al encontrar al recurso ID: ' . $id);
         }
@@ -57,7 +56,7 @@ class ProfileRepository implements IRepository
         try{
             $data->validated();
             $profile = $this->find($id);
-            $profile->update($data);
+            $profile->update($data->all());
 
             if ($data->has('links')) {
                 $profile->links()->sync($data->links);

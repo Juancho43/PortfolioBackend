@@ -18,7 +18,6 @@ use Tests\TestCase;
 
 class ProfileRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
     protected ProfileRepository $repository;
     protected User $user;
     protected Profile $profile;

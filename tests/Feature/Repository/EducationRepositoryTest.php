@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class EducationRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
 
     protected EducationRepository $repository;
     protected TagRepository $tagRepository;
