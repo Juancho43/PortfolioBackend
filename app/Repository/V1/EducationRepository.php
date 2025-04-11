@@ -105,4 +105,12 @@ class EducationRepository implements IRepository
         }
     }
 
+    public function getEducationBySlug(string $slug) : Collection|JsonResponse
+    {
+        try {
+            return Education::where('slug', $slug)->firstOrFail();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

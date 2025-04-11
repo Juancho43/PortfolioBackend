@@ -32,6 +32,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/education/tag/{id}', [EducationController::class, 'getByTag'])->name('education.byTag');
         Route::get('/work/tag/{id}', [WorkController::class, 'getByTag'])->name('work.byTag');
 
+        // Add these routes under the public group
+        Route::get('/education/slug/{slug}', [EducationController::class, 'getBySlug'])->name('education.bySlug');
+        Route::get('/work/slug/{slug}', [WorkController::class, 'getBySlug'])->name('work.bySlug');
+        Route::get('/project/slug/{slug}', [ProjectController::class, 'getBySlug'])->name('project.bySlug');
+
         Route::get('/tag/from/project', [TagsController::class, 'getAllProjectTags'])->name('tag.projects');
         Route::get('/tag/from/work', [TagsController::class, 'getAllWorkTags'])->name('tag.works');
         Route::get('/tag/from/education', [TagsController::class, 'getAllEducationTags'])->name('tag.education');

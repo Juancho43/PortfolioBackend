@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
             $table->string('company', 45);
             $table->string('position', 45);
+            $table->string('slug', 100)->unique();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->text('responsibilities')->nullable();

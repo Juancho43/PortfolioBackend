@@ -128,4 +128,13 @@ class WorkRepository implements IRepository
         }
 
     }
+
+    public function getWorkBySlug(String $slug ): JsonResponse
+    {
+        try {
+            return Work::where('slug', $slug)->first();
+        }catch (Exception $e){
+            return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

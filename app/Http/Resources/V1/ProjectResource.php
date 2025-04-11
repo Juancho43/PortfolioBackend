@@ -20,6 +20,7 @@ class ProjectResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'description' => $this->name,
             'tags' => $this->when(
                 isset($this->tags)&& $this->tags !== null && !$this->tags->isEmpty(),

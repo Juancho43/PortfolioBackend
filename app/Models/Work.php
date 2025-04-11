@@ -14,6 +14,7 @@ class Work extends Model
     protected $fillable=[
         'company',
         'position',
+        'slug',
         'start_date',
         'end_date',
         'responsibilities',

@@ -132,4 +132,13 @@ class EducationController extends Controller
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function getBySlug(string $slug) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new EducationResource($this->repository->getEducationBySlug($slug)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

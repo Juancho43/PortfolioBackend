@@ -18,6 +18,8 @@ class WorkResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
             'company' => $this->company,
             'position' => $this->position,
             'start_date' => $this->start_date,

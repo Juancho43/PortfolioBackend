@@ -136,4 +136,13 @@ class WorkController
         }
     }
 
+    public function getBySlug(string $slug) : JsonResponse
+    {
+        try{
+            return $this->successResponse(new WorkResource($this->repository->getWorkBySlug($slug)),null,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

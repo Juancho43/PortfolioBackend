@@ -149,4 +149,22 @@ class ProjectController extends Controller
             return $this->errorResponse("Error retrieving data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Retrieves a project by its slug.
+     *
+     * @param string $slug Slug of the project to retrieve
+     * @return JsonResponse A JSON response containing:
+     *                     - On success: The project with HTTP 200
+     *                     - On failure: Error message with HTTP 500
+     * @throws Exception When project not found or error occurs during retrieval
+     */
+    public function getBySlug(string $slug) : JsonResponse
+    {
+        try{
+            return $this->successResponse(new ProjectResource($this->repository->getProjectBySlug($slug)),null,Response::HTTP_OK);
+        }catch(Exception $e){
+            return $this->errorResponse("Error retrieving data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

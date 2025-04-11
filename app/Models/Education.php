@@ -13,6 +13,7 @@ class Education extends Model
     protected $fillable = [
         'name',
         'description',
+        'slug',
         'start_date',
         'end_date',
     ];

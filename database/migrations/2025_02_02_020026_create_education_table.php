@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
+            $table->string('slug', 100)->unique();
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date')->nullable();
