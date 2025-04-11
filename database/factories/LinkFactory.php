@@ -18,7 +18,7 @@ class LinkFactory extends Factory
     {
         return [
             'name'=> $this->faker->word(),
-            'link'=> $this->faker->word(),
+            'link'=> $this->faker->url(),
         ];
     }
 }

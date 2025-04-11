@@ -109,7 +109,7 @@ class ProjectRepository implements IRepository
     public function getProjectBySlug(string $slug) : Project | JsonResponse
     {
         try {
-            return Project::where('slug', $slug)->first();
+            return Project::where('slug', $slug)->firstOrFail();
         }catch (Exception $e){
             return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
