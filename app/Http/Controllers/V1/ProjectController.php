@@ -117,16 +117,16 @@ class ProjectController extends Controller
     /**
      * Retrieves all projects associated with a specific tag.
      *
-     * @param int $id ID of the tag to filter projects by
+     * @param string $tag Name of the tag to filter projects by
      * @return JsonResponse A JSON response containing:
      *                     - On success: A collection of projects with HTTP 200
      *                     - On failure: Error message with HTTP 500
      * @throws Exception When tag not found or error occurs during retrieval
      */
-    public function getByTag(int $id) : JsonResponse
+    public function getByTag(string $tag) : JsonResponse
     {
         try{
-            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByTag($id)),null,Response::HTTP_OK);
+            return $this->successResponse(new ProjectResourceCollection($this->repository->getProjectsByTag($tag)),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }

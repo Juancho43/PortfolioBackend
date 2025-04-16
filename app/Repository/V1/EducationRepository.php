@@ -96,16 +96,16 @@ class EducationRepository implements IRepository
 
 
 
-    public function getEducationByTag(int $id) : Collection|JsonResponse
+    public function getEducationByTag(string $name) : Education|JsonResponse
     {
         try {
-            return $this->tagRepository->find($id)->education()->get();
+            return $this->tagRepository->findByName($name)->education()->get();
         }catch (Exception $e){
             return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function getEducationBySlug(string $slug) : Collection|JsonResponse
+    public function getEducationBySlug(string $slug) : Education|JsonResponse
     {
         try {
             return Education::where('slug', $slug)->firstOrFail();

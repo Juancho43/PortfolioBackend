@@ -27,10 +27,10 @@ Route::prefix('v1')->group(function () {
         Route::resource('/link', LinkController::class)->only(['index','show'])->names('link');
 
         // Relaciones y filtros
-        Route::get('/project/education/{id}', [ProjectController::class, 'getByEducation'])->name('project.byEducation');
-        Route::get('/project/tag/{id}', [ProjectController::class, 'getByTag'])->name('project.byTag');
-        Route::get('/education/tag/{id}', [EducationController::class, 'getByTag'])->name('education.byTag');
-        Route::get('/work/tag/{id}', [WorkController::class, 'getByTag'])->name('work.byTag');
+        Route::get('/project/education/{slug}', [ProjectController::class, 'getByEducation'])->name('project.byEducation');
+        Route::get('/project/tag/{tag}', [ProjectController::class, 'getByTag'])->name('project.byTag');
+        Route::get('/education/tag/{tag}', [EducationController::class, 'getByTag'])->name('education.byTag');
+        Route::get('/work/tag/{tag}', [WorkController::class, 'getByTag'])->name('work.byTag');
 
         // Add these routes under the public group
         Route::get('/education/slug/{slug}', [EducationController::class, 'getBySlug'])->name('education.bySlug');

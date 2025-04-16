@@ -86,20 +86,20 @@ class ProjectRepository implements IRepository
         }
     }
 
-    public function getProjectsByEducation(int $educationId) : Collection | JsonResponse
+    public function getProjectsByEducation(string $slug) : Collection | JsonResponse
     {
         try {
-            return $this->educationRepository->find($educationId)->projects()->get();
+            return $this->educationRepository->getEducationBySlug($slug)->projects()->get();
         }catch (Exception $e){
             return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    public function getProjectsByTag(int $id) : Collection|JsonResponse
+    public function getProjectsByTag(string $name) : Collection|JsonResponse
     {
         try {
-            return $this->tagRepository->find($id)->projects()->get();
+            return $this->tagRepository->findByName($name)->projects()->get();
         }catch (Exception $e){
             return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

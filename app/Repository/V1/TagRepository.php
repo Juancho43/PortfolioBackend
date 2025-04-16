@@ -38,9 +38,25 @@ class TagRepository implements IRepository
      * @return Tag Found Tag model
      * @throws Exception When tag is not found
      */
-    public function find(int $id)
+    public function find(int $id) : Tag
     {
-        $tag = Tag::where('id', $id)->first();
+        $tag = Tag::where('id', $id)->firstOrFail();
+        if (!$tag) {
+            throw new Exception('Error al encontrar al recurso tag con ID: ' . $id);
+        }
+        return $tag;
+    }
+
+    /**
+     * Find a tag by its name
+     *
+     * @param string $name Tag name to find
+     * @return Tag Found Tag model
+     * @throws Exception When tag is not found
+     */
+    public function findByName(string $name)  : Tag
+    {
+        $tag = Tag::where('name', $name)->firstOrFail();
         if (!$tag) {
             throw new Exception('Error al encontrar al recurso tag con ID: ' . $id);
         }

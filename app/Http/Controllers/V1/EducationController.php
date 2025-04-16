@@ -120,14 +120,14 @@ class EducationController extends Controller
     /**
      * Get education records by tag ID
      *
-     * @param int $id Tag ID to filter by
+     * @param string $name Tag name to filter by
      * @return JsonResponse Collection of education records with given tag
      * @throws Exception If retrieval fails
      */
-    public function getByTag(int $id) : JsonResponse
+    public function getByTag(string $name) : JsonResponse
     {
         try {
-            return $this->successResponse(new EducationResourceColletion($this->repository->getEducationByTag($id)),null,Response::HTTP_OK);
+            return $this->successResponse(new EducationResourceColletion($this->repository->getEducationByTag($name)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -119,10 +119,10 @@ class WorkRepository implements IRepository
         }
     }
 
-    public function getWorksByTag(int $id) : Collection|JsonResponse
+    public function getWorksByTag(string $id) : Collection|JsonResponse
     {
         try {
-            return $this->tagRepository->find($id)->works()->get();
+            return $this->tagRepository->findByName($id)->works()->get();
         }catch (Exception $e){
             return $this->errorResponse('Repository error.', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

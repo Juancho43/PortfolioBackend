@@ -121,16 +121,16 @@ class WorkController
      * Retrieves a collection of works that are associated with the specified tag.
      * Returns the works wrapped in a WorkResourceCollection as a JSON response.
      *
-     * @param int $id The ID of the tag to filter works by
+     * @param string $name The name of the tag to filter works by
      * @return JsonResponse Returns a JSON response containing:
      *                      - On success: Collection of works with HTTP 200
      *                      - On failure: Error message with HTTP 500
      * @throws Exception When tag not found or error occurs during retrieval
      */
-    public function getByTag(int $id) : JsonResponse
+    public function getByTag(string $name) : JsonResponse
     {
         try{
-            return $this->successResponse(new WorkResourceCollection($this->repository->getWorksByTag($id)),null,Response::HTTP_OK);
+            return $this->successResponse(new WorkResourceCollection($this->repository->getWorksByTag($name)),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving work data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
