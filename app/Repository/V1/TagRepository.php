@@ -58,7 +58,7 @@ class TagRepository implements IRepository
     {
         $tag = Tag::where('name', $name)->firstOrFail();
         if (!$tag) {
-            throw new Exception('Error al encontrar al recurso tag con ID: ' . $id);
+            throw new Exception('Error al encontrar al recurso tag con nombre: ' . $name);
         }
         return $tag;
     }
