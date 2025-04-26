@@ -56,15 +56,17 @@ class AuthController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
             return $this->successResponse($token,'Hi'.$user->name,Response::HTTP_OK);
         }catch(Exception $e){
-            return $this->errorResponse("Error al iniciar sesion",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Login Error",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    public function logout(){
-        Auth::user()->tokens->delete();
-        return[
-            'message' => 'Logout'
-        ];
+    public function logout() : JsonResponse{
+        try{
+            Auth::user()->tokens->delete();
+            return $this->successResponse(null,'Bye',Response::HTTP_OK);
+        }catch (Exception $e){
+            return $this->errorResponse("Logout Error",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
