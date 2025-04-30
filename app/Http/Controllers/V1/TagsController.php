@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Http\Requests\V1\SearchRequest;
 use App\Http\Requests\V1\TagRequest;
-use App\Http\Resources\V1\EducationResourceColletion;
-use App\Http\Resources\V1\ProjectResourceCollection;
+use Illuminate\Http\Client\Request;
 use App\Http\Resources\V1\TagResource;
 use App\Http\Resources\V1\TagResourceCollection;
-use App\Http\Resources\V1\WorkResourceCollection;
+
 use App\Repository\V1\TagRepository;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,6 +140,15 @@ class TagsController extends Controller
     {
         try {
             return $this->successResponse(new TagResourceCollection($this->repository->allWorksTags()),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function search(SearchRequest $request) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new TagResourceCollection($this->repository->search($request)),null,Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }

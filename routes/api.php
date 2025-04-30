@@ -9,7 +9,7 @@ use App\Http\Controllers\V1\LinkController;
 use App\Http\Controllers\V1\WorkController;
 
 use Illuminate\Support\Facades\Route;
-use Pest\Plugins\Only;
+
 
 Route::prefix('v1')->group(function () {
     // Rutas de autenticación
@@ -54,6 +54,9 @@ Route::prefix('v1')->group(function () {
             Route::resource('/project/private', ProjectController::class)->only(['store', 'update', 'destroy'])->names('project');
             Route::resource('/tag/private', TagsController::class)->only(['store', 'update', 'destroy'])->names('tag');
             Route::resource('/link/private', LinkController::class)->only(['store', 'update', 'destroy'])->names('link');
+
+            //Buscadores
+            Route::get('/tag/search/{tag}', [TagsController::class, 'search'])->name('tag.search');
 
             // Gestión de archivos
             Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');

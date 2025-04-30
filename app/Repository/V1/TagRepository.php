@@ -144,6 +144,17 @@ class TagRepository implements IRepository
     }
 
 
+    public function search(FormRequest $request) : Collection
+    {
+        $request->validated();
+        $query = $request->name;
+        $tags = Tag::where('name', 'LIKE', "%$query%")->get();
+        if ($tags->isEmpty()) {
+            throw new Exception('No tags found for the search query: ' . $query);
+        }
+        return $tags;
+    }
+
 
 
 }
