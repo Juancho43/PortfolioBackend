@@ -56,7 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::resource('/link/private', LinkController::class)->only(['store', 'update', 'destroy'])->names('link');
 
             //Buscadores
-            Route::get('/tag/search/{tag}', [TagsController::class, 'search'])->name('tag.search');
+            Route::get('/tag/search', [TagsController::class, 'search'])->name('tag.search');
 
             // Gestión de archivos
             Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
