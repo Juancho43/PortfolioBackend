@@ -63,7 +63,7 @@ class AuthController extends Controller
 
     public function logout() : JsonResponse{
         try{
-            Auth::user()->tokens->delete();
+            Auth::user()->tokens()->delete();
             return $this->successResponse(null,'Bye',Response::HTTP_OK);
         }catch (Exception $e){
             return $this->errorResponse("Logout Error",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
