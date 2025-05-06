@@ -93,7 +93,7 @@ class EducationController extends Controller
     public function update(EducationRequest $request) : JsonResponse
     {
         try{
-            $education = $this->repository->update($request->id,$request->validated());
+            $education = $this->repository->update($request->id,$request);
             return $this->successResponse(new EducationResource($education),"Data updated successfully" , Response::HTTP_CREATED);
         }catch(Exception $e){
             return $this->errorResponse("Error updating data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
