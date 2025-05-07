@@ -23,7 +23,7 @@ class EducationRepository implements IRepository
 
     public function all(): Collection
     {
-        return  Education::with(['tags', 'links'])->orderBy('end_date', 'asc')->get();
+        return  Education::with(['tags', 'links','projects'])->orderBy('end_date', 'asc')->get();
     }
 
     /**
