@@ -19,11 +19,17 @@ Route::prefix('v1')->group(function () {
 
     // Rutas públicas
     Route::group(['as' => 'public.'], function() {
+
+        //Buscadores
+
         Route::resource('/profile', ProfileController::class)->names('profile');
         Route::resource('/education', EducationController::class)->only(['index','show'])->names('education');
-        Route::resource('/project', ProjectController::class)->only(['index','show'])->names('project');
+        Route::resource('/project', ProjectController::class)->only(['index','show'])->names('project')->where(['project' => '[0-9]+']);;
         Route::resource('/work', WorkController::class)->only(['index','show'])->names('work');
-        Route::resource('/tag', TagsController::class)->only(['index','show'])->names('tag');
+        Route::resource('/tag', TagsController::class)
+            ->only(['index','show'])
+            ->names('tag')
+            ->where(['tag' => '[0-9]+']);
         Route::resource('/link', LinkController::class)->only(['index','show'])->names('link');
 
         // Relaciones y filtros
@@ -48,16 +54,15 @@ Route::prefix('v1')->group(function () {
     // Rutas privadas (requieren autenticación)
     Route::middleware('auth:sanctum')->group(function () {
         Route::group(['as' => 'private.'], function(){
+
             Route::resource('/profile/private', ProfileController::class)->only(['store', 'update', 'destroy'])->names('profile');
             Route::resource('/work/private',    WorkController::class)->only(['store', 'update', 'destroy'])->names('work');
             Route::resource('/education/private', EducationController::class)->only(['store', 'update', 'destroy'])->names('education');
             Route::resource('/project/private', ProjectController::class)->only(['store', 'update', 'destroy'])->names('project');
             Route::resource('/tag/private', TagsController::class)->only(['store', 'update', 'destroy'])->names('tag');
             Route::resource('/link/private', LinkController::class)->only(['store', 'update', 'destroy'])->names('link');
-
-            //Buscadores
             Route::get('/tag/search', [TagsController::class, 'search'])->name('tag.search');
-            Route::get('/project/search', [ProjectController::class, 'search'])->name('tag.search');
+            Route::get('/project/search', [ProjectController::class, 'search'])->name('project.search');
             // Gestión de archivos
             Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
             Route::post('/profile/cv/{id}', [ProfileController::class, 'saveCv'])->name('profile.saveCV');
