@@ -29,7 +29,6 @@ class LinkRequest extends FormRequest
             'id' => 'nullable|integer',
             'name' => 'required|string|max:45',
             'link' => 'required|string|max:255',
-            'delete_at' => 'nullable|date',
         ];
     }
 }

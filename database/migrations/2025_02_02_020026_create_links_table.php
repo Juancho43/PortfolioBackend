@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 45)->nullable();
             $table->tinyText('link')->nullable();
             $table->timestamps();
-            $table->date('delete_at')->nullable();
+            $table->softDeletes();
         });
     }
 

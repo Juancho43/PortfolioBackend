@@ -34,7 +34,6 @@ class WorkRequest extends FormRequest
             'responsibilities' => 'nullable|string|max:65535',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
-            'delete_at' => 'nullable|date',
             'tags' => 'nullable|array',
             'tags.*' => 'integer|exists:tags,id',  // Si es un array de IDs de tags
             'links' => 'nullable|array',

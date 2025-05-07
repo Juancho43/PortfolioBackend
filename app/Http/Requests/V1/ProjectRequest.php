@@ -33,7 +33,6 @@ class  ProjectRequest extends FormRequest
             'tags.*' => 'integer|exists:tags,id',  // Si es un array de IDs de tags
             'links' => 'nullable|array',
             'links.*' => 'integer|exists:links,id',
-            'delete_at' => 'nullable|date'
         ];
     }
 }

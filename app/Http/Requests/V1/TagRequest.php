@@ -30,7 +30,6 @@ class TagRequest extends FormRequest
         return [
             'id' => 'nullable|integer',
             'name'=>'required|max:50',
-            'delete_at' => 'nullable|date'
         ];
     }
 }

@@ -57,7 +57,7 @@ Route::prefix('v1')->group(function () {
 
             //Buscadores
             Route::get('/tag/search', [TagsController::class, 'search'])->name('tag.search');
-
+            Route::get('/project/search', [ProjectController::class, 'search'])->name('tag.search');
             // Gestión de archivos
             Route::post('/profile/img/{id}', [ProfileController::class, 'saveImg'])->name('profile.saveImage');
             Route::post('/profile/cv/{id}', [ProfileController::class, 'saveCv'])->name('profile.saveCV');

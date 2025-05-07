@@ -115,5 +115,14 @@ class ProjectRepository implements IRepository
         }
     }
 
-
+    public function search(FormRequest $request) : Collection
+    {
+        $request->validated();
+        $query = $request->name;
+        $project = Project::where('name', 'LIKE', "%$query%")->get();
+        if ($project->isEmpty()) {
+            throw new Exception('No projects found for the search query: ' . $query);
+        }
+        return $project;
+    }
 }

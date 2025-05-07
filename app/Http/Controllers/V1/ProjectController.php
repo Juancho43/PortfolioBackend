@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\V1\ProjectRequest;
+use App\Http\Requests\V1\SearchRequest;
 use Illuminate\Http\JsonResponse;
 use App\Repository\V1\ProjectRepository;
 use App\Http\Resources\V1\ProjectResource;
@@ -165,6 +166,24 @@ class ProjectController extends Controller
             return $this->successResponse(new ProjectResource($this->repository->getProjectBySlug($slug)),null,Response::HTTP_OK);
         }catch(Exception $e){
             return $this->errorResponse("Error retrieving data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Searches for projects based on the provided search criteria.
+     *
+     * @param SearchRequest $request The request containing search parameters.
+     * @return JsonResponse A JSON response containing:
+     *                      - On success: A collection of projects with HTTP 200
+     *                      - On failure: Error message with HTTP 500
+     * @throws Exception When an error occurs during the search process.
+     */
+    public function search(SearchRequest $request) : JsonResponse
+    {
+        try {
+            return $this->successResponse(new ProjectResourceCollection($this->repository->search($request)),null,Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse("Error retrieving data.",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

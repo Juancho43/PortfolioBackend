@@ -36,7 +36,6 @@ class EducationRequest extends FormRequest
             'projects.*' => 'exists:projects,id',
             'links' => 'nullable|array',
             'links.*' => 'exists:links,id',
-            'delete_at' => 'nullable|date',
         ];
     }
 
