@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class EducationRepository implements IRepository
@@ -43,6 +43,7 @@ class EducationRepository implements IRepository
         $data->validated();
         $education = Education::create([
             'name' => $data->name,
+            'slug' => Str::slug($data->name),
             'description' => $data->description,
             'start_date' => $data->start_date,
             'end_date' => $data->end_date,
@@ -66,7 +67,13 @@ class EducationRepository implements IRepository
         try {
             $data->validated();
             $education = $this->find($id);
-            $education->update($data->all());
+            $education->update([
+                'name' => $data->name,
+                'slug' => Str::slug($data->name),
+                'description' => $data->description,
+                'start_date' => $data->start_date,
+                'end_date' => $data->end_date,
+            ]);
 
             if ($data->has('tags')) {
                 $education->tags()->sync($data->tags);
@@ -96,7 +103,7 @@ class EducationRepository implements IRepository
 
 
 
-    public function getEducationByTag(string $name) : Education|JsonResponse
+    public function getEducationByTag(string $name) : Collection|JsonResponse
     {
         try {
             return $this->tagRepository->findByName($name)->education()->get();

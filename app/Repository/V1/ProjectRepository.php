@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProjectRepository implements IRepository
@@ -44,6 +45,7 @@ class ProjectRepository implements IRepository
         $data->validated();
         $project = Project::create([
             'name' => $data->name,
+            'slug' => Str::slug($data->name),
             'description' => $data->description,
         ]);
 
@@ -61,7 +63,11 @@ class ProjectRepository implements IRepository
         try{
             $data->validated();
             $project = $this->find($id);
-            $project->update($data->all());
+            $project->update([
+                'name' => $data->name,
+                'slug' => Str::slug($data->name),
+                'description' => $data->description,
+            ]);
 
             if ($data->has('links')) {
                 $project->links()->sync($data->links);

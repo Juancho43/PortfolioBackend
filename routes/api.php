@@ -19,9 +19,6 @@ Route::prefix('v1')->group(function () {
 
     // Rutas públicas
     Route::group(['as' => 'public.'], function() {
-
-        //Buscadores
-
         Route::resource('/profile', ProfileController::class)->names('profile');
         Route::resource('/education', EducationController::class)->only(['index','show'])->names('education');
         Route::resource('/project', ProjectController::class)->only(['index','show'])->names('project')->where(['project' => '[0-9]+']);;
@@ -47,8 +44,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/tag/from/work', [TagsController::class, 'getAllWorkTags'])->name('tag.works');
         Route::get('/tag/from/education', [TagsController::class, 'getAllEducationTags'])->name('tag.education');
 
-
-
     });
 
     // Rutas privadas (requieren autenticación)
@@ -61,6 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::resource('/project/private', ProjectController::class)->only(['store', 'update', 'destroy'])->names('project');
             Route::resource('/tag/private', TagsController::class)->only(['store', 'update', 'destroy'])->names('tag');
             Route::resource('/link/private', LinkController::class)->only(['store', 'update', 'destroy'])->names('link');
+            //Buscadores
             Route::get('/tag/search', [TagsController::class, 'search'])->name('tag.search');
             Route::get('/project/search', [ProjectController::class, 'search'])->name('project.search');
             // Gestión de archivos

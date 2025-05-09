@@ -92,7 +92,7 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request) : JsonResponse
     {
         try{
-            $proyecto = $this->repository->update($request->id,$request->validated());
+            $proyecto = $this->repository->update($request->id,$request);
             return $this->successResponse(new ProjectResource($proyecto),"Project updated successfully" , Response::HTTP_CREATED);
         }catch(Exception $e){
             return $this->errorResponse("Error updating data",$e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
