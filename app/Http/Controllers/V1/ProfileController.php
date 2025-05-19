@@ -145,28 +145,34 @@ class ProfileController extends Controller
      */
     public function saveCv(Request $request,int $id) : JsonResponse
     {
-        $profile = $this->repository->find($id);
-        if ($request->hasFile('cv')) {
-            $cvLink = $profile->links()->where('name', 'cv')->first();
-            $oldPath = $cvLink ? $cvLink->link : null;
+        try {
+                $profile = $this->repository->find($id);
+                var_dump($request->hasFile('cv'));
+            if ($request->hasFile('cv')) {
+                $cvLink = $profile->links()->where('name', 'cv')->first();
+                $oldPath = $cvLink ? $cvLink->link : null;
 
-            $file = $this->fileProcessor->saveFile($request, 'files', 'cv');
-            $fileUrl = Storage::url($file);
+                $file = $this->fileProcessor->saveFile($request, 'files', 'cv');
+                $fileUrl = Storage::url($file);
 
-            if ($cvLink) {
-                $this->fileProcessor->deleteFile($oldPath);
-                $cvLink->link = $fileUrl;
-                $cvLink->save();
-            } else {
-                $newLink = Link::create([
-                    'name' => 'cv',
-                    'link' => $fileUrl
-                ]);
-                $profile->links()->attach($newLink->id);
+                if ($cvLink) {
+                    $this->fileProcessor->deleteFile($oldPath);
+                    $cvLink->link = $fileUrl;
+                    $cvLink->save();
+                } else {
+                    $newLink = Link::create([
+                        'name' => 'cv',
+                        'link' => $fileUrl
+                    ]);
+                    $profile->links()->attach($newLink->id);
+                }
             }
-            return $this->successResponse($fileUrl, "Post successfully", Response::HTTP_OK);
+                return $this->successResponse($fileUrl, "Post successfully", Response::HTTP_OK);
+        }catch (\Exception $e){
+            return $this->errorResponse("Error al cargar el cv", 'No hay un archivo', Response::HTTP_BAD_REQUEST);
         }
-        return $this->errorResponse("Error al cargar el cv", 'No hay un archivo',Response::HTTP_BAD_REQUEST);
+
+
     }
 
     /**

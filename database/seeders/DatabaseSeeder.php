@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->truncate();
+        //DB::table('users')->truncate();
         User::factory()->create([
             'email' => 'bravojuan43@gmail.com',
             'password' =>  Hash::make('cody')
         ]);
-        DB::statement('SET FOREIGN_KEY_CHECKS=0'); // Desactivar restricciones
+        /*DB::statement('SET FOREIGN_KEY_CHECKS=0'); // Desactivar restricciones
         DB::table('profiles_has_education')->truncate();
         DB::table('profiles_has_works')->truncate();
         DB::table('profiles_has_links')->truncate();
@@ -39,13 +39,14 @@ class DatabaseSeeder extends Seeder
         DB::table('profiles')->truncate();
         DB::table('links')->truncate();
         DB::table('links')->truncate();
+        */
         $profile = Profile::factory()->create([
            'user_id' =>1,
            'name' => 'Bravo, Juan Alé',
-            'rol' => 'Profesional IT',
+            'rol' => 'Full stack Developer',
             'description' => 'Analista programador y técnico informatico profesional y personal.',
        ]);
-
+/*
         Education::factory()->count(3)->create();
         Work::factory()->count(3)->create();
         Project::factory()->count(5)->create();
@@ -59,7 +60,7 @@ class DatabaseSeeder extends Seeder
         $education = Education::all();
         $tags = Tag::all();
         $projects = Project::all();
-
+*/
         $link = Link::create([
              'name' => 'github',
             'link' => 'https://github.com/Juancho43'
@@ -74,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $profile->links()->attach([$link,$link2,$link3]);
-        $profile->works()->attach($works);
+  /*      $profile->works()->attach($works);
         $profile->education()->attach($education);
 
        $works[0]->links()->attach([$links[2],$links[3]]);
@@ -93,5 +94,6 @@ class DatabaseSeeder extends Seeder
        $education[1]->projects()->attach([$projects[2],$projects[3],$projects[4]]);
        $education[0]->tags()->attach([$tags[1],$tags[2],$tags[3]]);
        $education[1]->tags()->attach([$tags[2],$tags[5],$tags[3]]);
+  */
     }
 }
