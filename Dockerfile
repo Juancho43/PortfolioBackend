@@ -48,3 +48,4 @@ CMD ["apache2-foreground"]
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
+RUN php artisan storage:link
