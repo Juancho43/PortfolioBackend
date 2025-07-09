@@ -21,7 +21,7 @@ class ProjectResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => $this->name,
+            'description' => $this->description,
             'tags' => $this->when(
                 isset($this->tags)&& $this->tags !== null && !$this->tags->isEmpty(),
                 TagResource::collection($this->tags)
