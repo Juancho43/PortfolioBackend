@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
     {
         //DB::table('users')->truncate();
         User::factory()->create([
-            'email' => env('ADMIN_MAIL'),
-            'password' =>  Hash::make(env('ADMIN_PASSWORD')),
+            'email' => getenv('ADMIN_EMAIL'),
+            'password' =>  Hash::make(getenv('ADMIN_PASSWORD'))
         ]);
         /*DB::statement('SET FOREIGN_KEY_CHECKS=0'); // Desactivar restricciones
         DB::table('profiles_has_education')->truncate();
