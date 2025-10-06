@@ -6,16 +6,17 @@ import { EducationService } from './education-service/education-service.service'
 import { IdStrategiesModule } from '../id-strategies/id-strategies.module';
 import { CreateEducationController } from './controllers/create-education/create-education.controller';
 import { GetEducationController } from './controllers/get-education/get-education.controller';
+import { EditEducationController } from './controllers/edit-education/edit-education.controller';
+import { DeleteEducationController } from './controllers/delete-education/delete-education.controller';
 
 @Module({
-  imports: [
-
-    IdStrategiesModule,
-  ],
+  imports: [IdStrategiesModule],
   controllers: [
     GetEducationBySlugController,
-    CreateEducationController,
     GetEducationController,
+    CreateEducationController,
+    EditEducationController,
+    DeleteEducationController,
   ],
   providers: [
     EducationService,

@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CreateEducationController } from './education/controllers/create-education/create-education.controller';
 import { IdStrategiesModule } from './id-strategies/id-strategies.module';
 import { GetProfileController } from './profile/get-profile/get-profile.controller';
+import { EditEducationController } from './education/controllers/edit-education/edit-education.controller';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { GetProfileController } from './profile/get-profile/get-profile.controll
     ProfileModule,
     IdStrategiesModule,
   ],
-  controllers: [AppController, GetProfileController ],
+  controllers: [AppController, GetProfileController  ],
   providers: [AppService],
 })
 export class AppModule {}

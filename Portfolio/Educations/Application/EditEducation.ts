@@ -14,6 +14,14 @@ export class EditEducation
   private repository: EducationRepository;
   private getEducationById: GetEducationById;
 
+  constructor(
+    repository: EducationRepository,
+    getEducationById: GetEducationById,
+  ) {
+    this.repository = repository;
+    this.getEducationById = getEducationById;
+  }
+
   async execute(arg: EditEducationRequest): Promise<Education> {
     const education = this.getEducationById.execute(arg.educationId);
     education.title = EducationTitle.create(arg.data.title);

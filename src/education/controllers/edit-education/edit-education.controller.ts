@@ -1,20 +1,21 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Put } from '@nestjs/common';
+import { EditEducationRequest } from '../../../../Portfolio/Educations/Application/DTO/EditEducationRequest';
 import { EducationService } from '../../education-service/education-service.service';
-import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
 import { EducationResponse } from '../../../../Portfolio/Educations/Application/DTO/EducationResponse';
+import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
 
 @Controller('education')
-export class GetEducationBySlugController {
+export class EditEducationController {
   constructor(private readonly service: EducationService) {}
-  @Get('by/:slug')
-  findBySlug(@Param('slug') slug: string) {
-    const response = this.service.execute_getBySlug(slug);
+  @Put('edit')
+  async update(@Body() data: EditEducationRequest) {
+    const response = await this.service.execute_update(data);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return new ApiResponse().generate({
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       data: new EducationResponse().generate(response),
       code: 200,
-      message: 'Education retrieved successfully',
+      message: 'Education updated successfully',
     });
   }
 }

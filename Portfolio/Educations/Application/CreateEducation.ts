@@ -49,7 +49,7 @@ export class CreateEducation
         SoftDelete.no(),
       ),
     );
-    console.log(education.links)
+    console.log(education.links);
     await this.repository.save(education);
     return education;
   }
