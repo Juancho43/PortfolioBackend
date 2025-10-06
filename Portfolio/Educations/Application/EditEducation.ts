@@ -23,7 +23,7 @@ export class EditEducation
   }
 
   async execute(arg: EditEducationRequest): Promise<Education> {
-    const education = this.getEducationById.execute(arg.educationId);
+    const education = await this.getEducationById.execute(arg.educationId);
     education.title = EducationTitle.create(arg.data.title);
     education.slug = EducationSlug.create(arg.data.title);
     education.peridod = EducationPeriod.create(

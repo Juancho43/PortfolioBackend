@@ -6,15 +6,23 @@ import { EducationResponse } from '../../../../Portfolio/Educations/Application/
 @Controller('education')
 export class GetEducationBySlugController {
   constructor(private readonly service: EducationService) {}
-  @Get('by/:slug')
-  findBySlug(@Param('slug') slug: string) {
-    const response = this.service.execute_getBySlug(slug);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new ApiResponse().generate({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data: new EducationResponse().generate(response),
-      code: 200,
-      message: 'Education retrieved successfully',
-    });
+  @Get('get/:slug')
+  async findBySlug(@Param('slug') slug: string) {
+    try {
+      const response = await this.service.execute_getBySlug(slug);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return new ApiResponse().generate({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        data: new EducationResponse().generate(response),
+        code: 200,
+        message: 'Education retrieved successfully',
+      });
+    } catch (e) {
+      return new ApiResponse().generate({
+        data: null,
+        code: 404,
+        message: e.toString(),
+      });
+    }
   }
 }

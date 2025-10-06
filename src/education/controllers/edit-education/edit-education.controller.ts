@@ -9,13 +9,21 @@ export class EditEducationController {
   constructor(private readonly service: EducationService) {}
   @Put('edit')
   async update(@Body() data: EditEducationRequest) {
-    const response = await this.service.execute_update(data);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new ApiResponse().generate({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data: new EducationResponse().generate(response),
-      code: 200,
-      message: 'Education updated successfully',
-    });
+    try {
+      const response = await this.service.execute_update(data);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return new ApiResponse().generate({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        data: new EducationResponse().generate(response),
+        code: 200,
+        message: 'Education updated successfully',
+      });
+    } catch (e) {
+      return new ApiResponse().generate({
+        data: null,
+        code: 400,
+        message: e.toString(),
+      });
+    }
   }
 }

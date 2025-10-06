@@ -37,8 +37,8 @@ export class EducationService {
     this.delete = new DeleteEducation(this.repository, this.getById);
   }
 
-  execute_getBySlug(slug: string): Education {
-    return this.getBySlug.execute(slug);
+  async execute_getBySlug(slug: string): Promise<Education> {
+    return await this.getBySlug.execute(slug);
   }
   async execute_create(data: CreateEducationRequest): Promise<Education> {
     const exampleEducation = new CreateEducationRequest(
@@ -64,7 +64,7 @@ export class EducationService {
   async execute_update(data: EditEducationRequest): Promise<Education> {
     return await this.edit.execute(data);
   }
-  execute_getById(id: string): Education {
-    return this.getById.execute(id);
+  async execute_getById(id: string): Promise<Education> {
+    return await this.getById.execute(id);
   }
 }

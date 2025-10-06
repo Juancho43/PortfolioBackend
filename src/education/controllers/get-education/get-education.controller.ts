@@ -12,12 +12,20 @@ export class GetEducationController {
     @Param('page') page: string,
     @Param('limit') limit: string,
   ) {
-    const response = await this.service.execute_getAll(page, limit);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new ApiResponse().generate({
-      data: new EducationResponseCollection().generate(response),
-      code: 200,
-      message: 'Education retrieved successfully',
-    });
+    try {
+      const response = await this.service.execute_getAll(page, limit);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return new ApiResponse().generate({
+        data: new EducationResponseCollection().generate(response),
+        code: 200,
+        message: 'Education retrieved successfully',
+      });
+    } catch (e) {
+      return new ApiResponse().generate({
+        data: null,
+        code: 400,
+        message: e.toString(),
+      });
+    }
   }
 }
