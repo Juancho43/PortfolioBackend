@@ -13,7 +13,6 @@ import { GetProfileController } from './profile/get-profile/get-profile.controll
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/portfolio'),
     UsersModule,
     EducationModule,
     ProjectsModule,

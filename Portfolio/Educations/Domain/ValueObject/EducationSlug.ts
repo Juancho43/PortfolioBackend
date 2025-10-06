@@ -7,7 +7,7 @@ export class EducationSlug {
     this._value = value;
   }
 
-  static create(value: string){
+  static create(value: string) {
     return new EducationSlug(SlugValueObject.create(value));
   }
 

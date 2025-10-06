@@ -7,15 +7,16 @@ import { Timestamp } from '../../Shared/Domain/Timestamp';
 import { SoftDelete } from '../../Shared/Domain/SoftDelete';
 import { Tag } from '../../Tags/Domain/Tag';
 
+
 export class Project {
-  private id: ProjectId;
-  private title: ProjectTitle;
-  private slug: ProjectSlug;
-  private description: ProjectDescription;
-  private links: Link[];
-  private tags: Tag[];
-  private timestamp: Timestamp;
-  private softdelete: SoftDelete;
+  private _id: ProjectId;
+  private _title: ProjectTitle;
+  private _slug: ProjectSlug;
+  private _description: ProjectDescription;
+  private _links: Link[];
+  private _tags: Tag[];
+  private _timestamp: Timestamp;
+  private _softdelete: SoftDelete;
 
   private constructor(
     id: ProjectId,
@@ -27,14 +28,14 @@ export class Project {
     timestamp: Timestamp,
     softdelete: SoftDelete,
   ) {
-    this.id = id;
-    this.title = title;
-    this.slug = slug;
-    this.description = description;
-    this.links = links;
-    this.tags = tags;
-    this.timestamp = timestamp;
-    this.softdelete = softdelete;
+    this._id = id;
+    this._title = title;
+    this._slug = slug;
+    this._description = description;
+    this._links = links;
+    this._tags = tags;
+    this._timestamp = timestamp;
+    this._softdelete = softdelete;
   }
 
   static Create(
@@ -57,5 +58,69 @@ export class Project {
       timestamp,
       softdelete,
     );
+  }
+
+  get id(): ProjectId {
+    return this._id;
+  }
+
+  set id(value: ProjectId) {
+    this._id = value;
+  }
+
+  get title(): ProjectTitle {
+    return this._title;
+  }
+
+  set title(value: ProjectTitle) {
+    this._title = value;
+  }
+
+  get slug(): ProjectSlug {
+    return this._slug;
+  }
+
+  set slug(value: ProjectSlug) {
+    this._slug = value;
+  }
+
+  get description(): ProjectDescription {
+    return this._description;
+  }
+
+  set description(value: ProjectDescription) {
+    this._description = value;
+  }
+
+  get links(): Link[] {
+    return this._links;
+  }
+
+  set links(value: Link[]) {
+    this._links = value;
+  }
+
+  get tags(): Tag[] {
+    return this._tags;
+  }
+
+  set tags(value: Tag[]) {
+    this._tags = value;
+  }
+
+  get timestamp(): Timestamp {
+    return this._timestamp;
+  }
+
+  set timestamp(value: Timestamp) {
+    this._timestamp = value;
+  }
+
+  get softdelete(): SoftDelete {
+    return this._softdelete;
+  }
+
+  set softdelete(value: SoftDelete) {
+    this._softdelete = value;
   }
 }

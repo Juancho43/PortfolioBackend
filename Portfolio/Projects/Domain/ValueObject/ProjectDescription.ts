@@ -7,7 +7,7 @@ export class ProjectDescription {
     this.value = value;
   }
 
-  static create(value: string){
+  static create(value: string) {
     return new ProjectDescription(StringValueObject.create(value));
   }
 }

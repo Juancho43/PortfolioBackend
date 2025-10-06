@@ -6,7 +6,7 @@ export class ProjectTitle {
   constructor(value: StringValueObject) {
     this.value = value;
   }
-  public static create(value: string){
+  public static create(value: string) {
     return new ProjectTitle(StringValueObject.create(value));
   }
 }

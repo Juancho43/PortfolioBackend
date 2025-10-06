@@ -15,7 +15,6 @@ export class File {
   private _title: FileTitle;
   private _alt: FileAlt;
 
-
   get id(): FileId {
     return this._id;
   }

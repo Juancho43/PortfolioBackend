@@ -9,12 +9,12 @@ import { EducationPeriod } from '../Domain/ValueObject/EducationPeriod';
 import { EducationDescription } from '../Domain/ValueObject/EducationDescription';
 
 export class EditEducation
-  implements IUseCase<EditEducationRequest, Education>
+  implements IUseCase<EditEducationRequest, Promise<Education>>
 {
   private repository: EducationRepository;
   private getEducationById: GetEducationById;
 
-  execute(arg: EditEducationRequest): Education {
+  async execute(arg: EditEducationRequest): Promise<Education> {
     const education = this.getEducationById.execute(arg.educationId);
     education.title = EducationTitle.create(arg.data.title);
     education.slug = EducationSlug.create(arg.data.title);
@@ -24,7 +24,7 @@ export class EditEducation
     );
     education.description = EducationDescription.create(arg.data.description);
 
-    this.repository.save(education);
+    await this.repository.save(education);
     return education;
   }
 }

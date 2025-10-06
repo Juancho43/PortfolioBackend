@@ -4,10 +4,10 @@ import { TagId } from './ValueObject/TagId';
 import { TagTitle } from './ValueObject/TagTitle';
 
 export class Tag {
-  private id: TagId;
-  private title: TagTitle;
-  private timestamp: Timestamp;
-  private softDelete: SoftDelete;
+  private readonly _id: TagId;
+  private _title: TagTitle;
+  private _timestamp: Timestamp;
+  private _softDelete: SoftDelete;
 
   private constructor(
     id: TagId,
@@ -15,10 +15,10 @@ export class Tag {
     timestamp: Timestamp,
     softDelete: SoftDelete,
   ) {
-    this.id = id;
-    this.title = title;
-    this.timestamp = timestamp;
-    this.softDelete = softDelete;
+    this._id = id;
+    this._title = title;
+    this._timestamp = timestamp;
+    this._softDelete = softDelete;
   }
 
   static Create(
@@ -28,5 +28,33 @@ export class Tag {
     softDelete: SoftDelete,
   ) {
     return new Tag(id, title, timestamp, softDelete);
+  }
+
+  get id(): TagId {
+    return this._id;
+  }
+
+  get title(): TagTitle {
+    return this._title;
+  }
+
+  set title(value: TagTitle) {
+    this._title = value;
+  }
+
+  get timestamp(): Timestamp {
+    return this._timestamp;
+  }
+
+  set timestamp(value: Timestamp) {
+    this._timestamp = value;
+  }
+
+  get softDelete(): SoftDelete {
+    return this._softDelete;
+  }
+
+  set softDelete(value: SoftDelete) {
+    this._softDelete = value;
   }
 }

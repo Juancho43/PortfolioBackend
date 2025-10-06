@@ -7,7 +7,7 @@ export class EducationId {
     this._id = id;
   }
 
-  static create(value: string){
+  static create(value: string) {
     return new EducationId(IdValueObject.create(value));
   }
 

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { EducationSchema } from './Mongoose/MongooseEducation';
 import { GetEducationBySlugController } from './controllers/get-education-by-slug-controller/get-education-by-slug-controller.controller';
 import { EDUCATION_REPOSITORY_TOKEN } from './Mongoose/education.constansts';
 import { MongooseEducationRepository } from './Mongoose/MongooseEducationRepository';
@@ -11,9 +9,7 @@ import { GetEducationController } from './controllers/get-education/get-educatio
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: 'Educations', schema: EducationSchema },
-    ]),
+
     IdStrategiesModule,
   ],
   controllers: [

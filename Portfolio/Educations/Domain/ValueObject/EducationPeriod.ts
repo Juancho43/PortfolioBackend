@@ -4,7 +4,6 @@ export class EducationPeriod {
   private readonly _startDate: Date;
   private readonly _endDate: Date;
 
-
   private constructor(startDate: Date, endDate: Date) {
     this._startDate = startDate;
     this._endDate = endDate;

@@ -8,6 +8,7 @@ import type { IdGeneratorStrategy } from '../../../Portfolio/Shared/Domain/IdGen
 import { ID_GENERATOR_TOKEN } from '../../id-strategies/token';
 import { CreateEducationRequest } from '../../../Portfolio/Educations/Application/DTO/CreateEducationRequest';
 import { GetAllEducations } from '../../../Portfolio/Educations/Application/GetAllEducations';
+import { CreateLinkRequest } from '../../../Portfolio/Links/Application/CreateLinkRequest';
 
 @Injectable()
 export class EducationService {
@@ -28,17 +29,17 @@ export class EducationService {
   execute_getBySlug(slug: string): Education {
     return this.getBySlug.execute(slug);
   }
-  execute_create(data: CreateEducationRequest): Education {
+  async execute_create(data: CreateEducationRequest): Promise<Education> {
     const exampleEducation = new CreateEducationRequest(
       'Computer Science Degree',
       'Studied core computer science topics and software engineering.',
       '2018-09-01',
       '2022-06-30',
-      ['https://university.edu/cs'],
-      ['project1', 'project2'],
-      ['engineering', 'bachelor'],
+      [new CreateLinkRequest('hola','https://hola.com'), new CreateLinkRequest('holaaaa','https://holaaaa.com')],
+      [],
+      [],
     );
-    return this.create.execute(exampleEducation);
+    return await this.create.execute(exampleEducation);
   }
   execute_getAll(page: string, limit: string): Promise<Education[]> {
     return this.getAll.execute({

@@ -4,7 +4,7 @@ import { WorkId } from './ValueObject/WorkId';
 import { WorkPosition } from './ValueObject/WorkPosition';
 import { WorkCompany } from './ValueObject/WorkCompany';
 
-export class Work{
+export class Work {
   private readonly id: WorkId;
   private position: WorkPosition;
   private company: WorkCompany;

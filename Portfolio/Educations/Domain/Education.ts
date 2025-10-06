@@ -9,7 +9,6 @@ import { EducationSlug } from './ValueObject/EducationSlug';
 import { EducationPeriod } from './ValueObject/EducationPeriod';
 import { EducationDescription } from './ValueObject/EducationDescription';
 
-
 export class Education {
   private _id: EducationId;
   private _title: EducationTitle;
@@ -143,5 +142,4 @@ export class Education {
   set softdelete(value: SoftDelete) {
     this._softdelete = value;
   }
-
 }

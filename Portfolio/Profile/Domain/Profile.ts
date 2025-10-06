@@ -11,20 +11,21 @@ import { Education } from '../../Educations/Domain/Education';
 import { Image } from '../../Images/Domain/Image';
 import { File } from '../../Files/Domain/File';
 import { Work } from '../../Works/Domain/Work';
+import { timestamp } from 'rxjs';
 
 export class Profile {
-  private id: ProfileId;
-  private user: User;
-  private rol: ProfileRol;
-  private description: ProfileDescription;
-  private bio: ProfileBio;
-  private links: Link[];
-  private works: Work[];
-  private educations: Education[];
-  private photo: Image;
-  private cv: File;
-  private timestamp: Timestamp;
-  private softDelete: SoftDelete;
+  private _id: ProfileId;
+  private _user: User;
+  private _rol: ProfileRol;
+  private _description: ProfileDescription;
+  private _bio: ProfileBio;
+  private _links: Link[];
+  private _works: Work[];
+  private _educations: Education[];
+  private _photo: Image;
+  private _cv: File;
+  private _timestamp: Timestamp;
+  private _softDelete: SoftDelete;
   private constructor(
     id: ProfileId,
     user: User,
@@ -39,18 +40,18 @@ export class Profile {
     timestamp: Timestamp,
     softDelete: SoftDelete,
   ) {
-    this.id = id;
-    this.user = user;
-    this.rol = rol;
-    this.description = description;
-    this.bio = bio;
-    this.links = links;
-    this.works = works;
-    this.educations = educations;
-    this.photo = photo;
-    this.cv = cv;
-    this.timestamp = timestamp;
-    this.softDelete = softDelete;
+    this._id = id;
+    this._user = user;
+    this._rol = rol;
+    this._description = description;
+    this._bio = bio;
+    this._links = links;
+    this._works = works;
+    this._educations = educations;
+    this._photo = photo;
+    this._cv = cv;
+    this._timestamp = timestamp;
+    this._softDelete = softDelete;
   }
 
   /**
@@ -85,4 +86,99 @@ export class Profile {
     );
   }
 
+  get id(): ProfileId {
+    return this._id;
+  }
+
+  set id(value: ProfileId) {
+    this._id = value;
+  }
+
+  get user(): User {
+    return this._user;
+  }
+
+  set user(value: User) {
+    this._user = value;
+  }
+
+  get rol(): ProfileRol {
+    return this._rol;
+  }
+
+  set rol(value: ProfileRol) {
+    this._rol = value;
+  }
+
+  get description(): ProfileDescription {
+    return this._description;
+  }
+
+  set description(value: ProfileDescription) {
+    this._description = value;
+  }
+
+  get bio(): ProfileBio {
+    return this._bio;
+  }
+
+  set bio(value: ProfileBio) {
+    this._bio = value;
+  }
+
+  get links(): Link[] {
+    return this._links;
+  }
+
+  set links(value: Link[]) {
+    this._links = value;
+  }
+
+  get works(): Work[] {
+    return this._works;
+  }
+
+  set works(value: Work[]) {
+    this._works = value;
+  }
+
+  get educations(): Education[] {
+    return this._educations;
+  }
+
+  set educations(value: Education[]) {
+    this._educations = value;
+  }
+
+  get photo(): Image {
+    return this._photo;
+  }
+
+  set photo(value: Image) {
+    this._photo = value;
+  }
+
+  get cv(): File {
+    return this._cv;
+  }
+
+  set cv(value: File) {
+    this._cv = value;
+  }
+
+  get timestamp(): Timestamp {
+    return this._timestamp;
+  }
+
+  set timestamp(value: Timestamp) {
+    this._timestamp = value;
+  }
+
+  get softDelete(): SoftDelete {
+    return this._softDelete;
+  }
+
+  set softDelete(value: SoftDelete) {
+    this._softDelete = value;
+  }
 }

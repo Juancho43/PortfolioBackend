@@ -7,7 +7,7 @@ export class ProjectSlug {
     this.value = value;
   }
 
-  static create(value: SlugValueObject){
+  static create(value: SlugValueObject) {
     return new ProjectSlug(value);
   }
 }
