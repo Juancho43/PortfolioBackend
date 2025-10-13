@@ -9,7 +9,9 @@ describe('GetPinnedProjectsController', () => {
       controllers: [GetPinnedProjectsController],
     }).compile();
 
-    controller = module.get<GetPinnedProjectsController>(GetPinnedProjectsController);
+    controller = module.get<GetPinnedProjectsController>(
+      GetPinnedProjectsController,
+    );
   });
 
   it('should be defined', () => {

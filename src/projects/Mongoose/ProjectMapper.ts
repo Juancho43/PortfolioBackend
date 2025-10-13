@@ -10,17 +10,17 @@ import { ObjectId } from 'mongodb';
 
 export class ProjectMapper {
   public static mapToDomain(data: any): Project {
-     return Project.Create(
-       ProjectId.create(data._id.toString()),
-       ProjectTitle.create(data.title),
-       ProjectSlug.create(data.slug),
-       ProjectDescription.create(data.description),
-       Pinned.create(data.pinned),
-       Timestamp.fromDates(data.createdAt, data.updatedAt),
-       data.softdelete ? SoftDelete.yes() : SoftDelete.no(),
-     );
+    return Project.Create(
+      ProjectId.create(data._id.toString()),
+      ProjectTitle.create(data.title),
+      ProjectSlug.create(data.slug),
+      ProjectDescription.create(data.description),
+      Pinned.create(data.pinned),
+      Timestamp.fromDates(data.createdAt, data.updatedAt),
+      data.softdelete ? SoftDelete.yes() : SoftDelete.no(),
+    );
   }
-  public static buildProjectData(data: Project){
+  public static buildProjectData(data: Project) {
     return {
       title: data.title.getValue(),
       description: data.description.getValue(),

@@ -5,8 +5,7 @@ import { ProjectResponseCollection } from '../../../../Portfolio/Projects/Applic
 
 @Controller('project')
 export class GetProjectsController {
-  constructor(private readonly service: ProjectsService) {
-  }
+  constructor(private readonly service: ProjectsService) {}
   @Get('get/paginated/:page/:limit')
   async get(@Param('page') page: string, @Param('limit') limit: string) {
     try {
@@ -18,7 +17,7 @@ export class GetProjectsController {
         message: 'Projects retrieved successfully',
       });
     } catch (e) {
-      return new ApiResponse().generateErrorResponse(e.toString())
+      return new ApiResponse().generateErrorResponse(e.toString());
     }
   }
 }

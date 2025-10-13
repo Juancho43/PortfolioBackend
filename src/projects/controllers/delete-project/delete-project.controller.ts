@@ -16,7 +16,6 @@ export class DeleteProjectController {
       );
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return new ApiResponse().generate({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         data: new ProjectResponse().generate(result),
         code: 201,
         message: 'Project deleted successfully',
@@ -26,4 +25,3 @@ export class DeleteProjectController {
     }
   }
 }
-

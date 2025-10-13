@@ -12,7 +12,6 @@ export class GetProjectBySlugController {
       const response = await this.service.execute_getBySlug(slug);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return new ApiResponse().generate({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         data: new ProjectResponse().generate(response),
         code: 200,
         message: 'Project retrieved successfully',

@@ -5,8 +5,7 @@ import { ProjectResponseCollection } from '../../../../Portfolio/Projects/Applic
 
 @Controller('project')
 export class GetPinnedProjectsController {
-  constructor(private readonly projectService: ProjectsService) {
-  }
+  constructor(private readonly projectService: ProjectsService) {}
   @Get('get/pinned')
   async getPinnedProjects() {
     try {

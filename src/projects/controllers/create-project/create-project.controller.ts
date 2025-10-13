@@ -13,14 +13,13 @@ export class CreateProjectController {
       const response = await this.service.execute_create(request);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return new ApiResponse().generate({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         data: new ProjectResponse().generate(response),
         code: 201,
         message: 'Education created successfully',
       });
     } catch (e) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return new ApiResponse().generateErrorResponse(e.toString())
+      return new ApiResponse().generateErrorResponse(e.toString());
     }
   }
 }

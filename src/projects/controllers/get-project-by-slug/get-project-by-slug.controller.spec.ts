@@ -9,7 +9,9 @@ describe('GetProjectBySlugController', () => {
       controllers: [GetProjectBySlugController],
     }).compile();
 
-    controller = module.get<GetProjectBySlugController>(GetProjectBySlugController);
+    controller = module.get<GetProjectBySlugController>(
+      GetProjectBySlugController,
+    );
   });
 
   it('should be defined', () => {
