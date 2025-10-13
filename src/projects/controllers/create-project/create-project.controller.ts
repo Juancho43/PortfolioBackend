@@ -8,9 +8,9 @@ import { ProjectResponse } from '../../../../Portfolio/Projects/Application/DTO/
 export class CreateProjectController {
   constructor(private readonly service: ProjectsService) {}
   @Post('create')
-  createProject(@Body() request: CreateProjectRequest) {
+  async createProject(@Body() request: CreateProjectRequest) {
     try {
-      const response = this.service.execute_create(request);
+      const response = await this.service.execute_create(request);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return new ApiResponse().generate({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -20,11 +20,7 @@ export class CreateProjectController {
       });
     } catch (e) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return new ApiResponse().generate({
-        data: null,
-        code: 400,
-        message: e.toString(),
-      });
+      return new ApiResponse().generateErrorResponse(e.toString())
     }
   }
 }

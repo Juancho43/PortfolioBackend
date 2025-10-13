@@ -41,16 +41,7 @@ export class EducationService {
     return await this.getBySlug.execute(slug);
   }
   async execute_create(data: CreateEducationRequest): Promise<Education> {
-    const exampleEducation = new CreateEducationRequest(
-      'Computer Science Degree',
-      'Studied core computer science topics and software engineering.',
-      '2018-09-01',
-      '2022-06-30',
-      [new CreateLinkRequest('hola','https://hola.com'), new CreateLinkRequest('holaaaa','https://holaaaa.com')],
-      [],
-      [],
-    );
-    return await this.create.execute(exampleEducation);
+    return await this.create.execute(data);
   }
   execute_getAll(page: string, limit: string): Promise<Education[]> {
     return this.getAll.execute({

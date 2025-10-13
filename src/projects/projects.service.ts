@@ -31,12 +31,14 @@ export class ProjectsService {
     @Inject(ID_GENERATOR_TOKEN)
     private readonly generator: IdGeneratorStrategy,
   ) {
-    this.create = new CreateProject(this.repository, this.generator);
-    this.getBySlug = new GetProjectBySlug(this.repository);
-    this.getAll = new GetAllProjects(this.repository);
     this.getById = new GetProjectById(this.repository);
+    this.create = new CreateProject(this.repository, this.generator);
     this.edit = new EditProject(this.repository, this.getById);
     this.delete = new DeleteProject(this.repository, this.getById);
+    this.getAll = new GetAllProjects(this.repository);
+    this.getBySlug = new GetProjectBySlug(this.repository);
+    this.getByTag = new GetProjectsByTag(this.repository);
+    this.getPinned = new GetPinnedProjects(this.repository);
   }
 
   execute_getAll(page: string, limit: string) {
