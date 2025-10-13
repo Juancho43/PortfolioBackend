@@ -9,4 +9,7 @@ export class ProjectTitle {
   public static create(value: string) {
     return new ProjectTitle(StringValueObject.create(value));
   }
+   getValue(): string {
+    return this.value.getValue();
+  }
 }

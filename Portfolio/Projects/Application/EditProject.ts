@@ -21,12 +21,12 @@ export class EditProject
   async execute(arg: EditProjectRequest): Promise<Project> {
     const project = await this.getById.execute(arg.projectId);
     project.title = ProjectTitle.create(arg.data.title);
-    project.slug = ProjectSlug.create(SlugValueObject.create(arg.data.title));
+    project.slug = ProjectSlug.create(arg.data.title);
     project.description = ProjectDescription.create(arg.data.description);
     project.links = arg.data.links;
     project.tags = arg.data.tags;
     project.timestamp = project.timestamp.touch();
-    this.repository.save(project);
+    await this.repository.save(project);
     return project;
   }
 }

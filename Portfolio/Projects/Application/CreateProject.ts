@@ -10,8 +10,9 @@ import { ProjectDescription } from '../Domain/ValueObject/ProjectDescription';
 import { ProjectSlug } from '../Domain/ValueObject/ProjectSlug';
 import { CreateProjectRequest } from './DTO/CreateProjectRequest';
 import { IUseCase } from '../../Shared/Application/IUseCase';
+import { Pinned } from '../../Shared/Domain/Pinned';
 
-export class CreateProject implements IUseCase<CreateProjectRequest, Project> {
+export class CreateProject implements IUseCase<CreateProjectRequest, Promise<Project>> {
   private repository: ProjectRepository;
   private idGenerator: IdGeneratorStrategy;
   constructor(repository: ProjectRepository, idStrategy: IdGeneratorStrategy) {
@@ -19,18 +20,17 @@ export class CreateProject implements IUseCase<CreateProjectRequest, Project> {
     this.repository = repository;
   }
 
-  execute(arg: CreateProjectRequest): Project {
+  async execute(arg: CreateProjectRequest): Promise<Project> {
     const project = Project.Create(
       ProjectId.create(this.idGenerator.generate()),
       ProjectTitle.create(arg.title),
-      ProjectSlug.create(SlugValueObject.create(arg.title)),
+      ProjectSlug.create(arg.title),
       ProjectDescription.create(arg.description),
-      arg.links,
-      arg.tags,
+      Pinned.create(arg.pinned),
       Timestamp.now(),
       SoftDelete.no(),
     );
-    this.repository.save(project);
+    await this.repository.save(project);
     return project;
   }
 }

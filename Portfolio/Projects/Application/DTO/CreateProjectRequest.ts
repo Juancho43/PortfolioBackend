@@ -5,7 +5,8 @@ export class CreateProjectRequest {
   constructor(
     public title: string,
     public description: string,
-    public links: Link[],
-    public tags: Tag[],
+    public pinned: boolean = false,
+    public links: Link[] = [],
+    public tags: Tag[] = [],
   ) {}
 }

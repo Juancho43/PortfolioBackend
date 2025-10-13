@@ -3,7 +3,7 @@ export class SlugValueObject {
 
   private constructor(value: string) {
     if (!SlugValueObject.isValid(value)) {
-      throw new Error("Invalid slug format.");
+      throw new Error('Invalid slug format.');
     }
     this.value = value;
   }

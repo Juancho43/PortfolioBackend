@@ -10,4 +10,7 @@ export class ProjectDescription {
   static create(value: string) {
     return new ProjectDescription(StringValueObject.create(value));
   }
+  getValue(): string {
+    return this.value.getValue();
+  }
 }

@@ -6,13 +6,14 @@ import { Link } from '../../Links/Domain/Link';
 import { Timestamp } from '../../Shared/Domain/Timestamp';
 import { SoftDelete } from '../../Shared/Domain/SoftDelete';
 import { Tag } from '../../Tags/Domain/Tag';
-
+import { Pinned } from '../../Shared/Domain/Pinned';
 
 export class Project {
   private _id: ProjectId;
   private _title: ProjectTitle;
   private _slug: ProjectSlug;
   private _description: ProjectDescription;
+  private _isPinned: Pinned;
   private _links: Link[];
   private _tags: Tag[];
   private _timestamp: Timestamp;
@@ -23,8 +24,7 @@ export class Project {
     title: ProjectTitle,
     slug: ProjectSlug,
     description: ProjectDescription,
-    links: Link[],
-    tags: Tag[],
+    pinned: Pinned,
     timestamp: Timestamp,
     softdelete: SoftDelete,
   ) {
@@ -32,8 +32,7 @@ export class Project {
     this._title = title;
     this._slug = slug;
     this._description = description;
-    this._links = links;
-    this._tags = tags;
+    this._isPinned = pinned;
     this._timestamp = timestamp;
     this._softdelete = softdelete;
   }
@@ -43,8 +42,7 @@ export class Project {
     title: ProjectTitle,
     slug: ProjectSlug,
     description: ProjectDescription,
-    links: Link[],
-    tags: Tag[],
+    pinned: Pinned,
     timestamp: Timestamp,
     softdelete: SoftDelete,
   ): Project {
@@ -53,8 +51,7 @@ export class Project {
       title,
       slug,
       description,
-      links,
-      tags,
+      pinned,
       timestamp,
       softdelete,
     );
@@ -122,5 +119,12 @@ export class Project {
 
   set softdelete(value: SoftDelete) {
     this._softdelete = value;
+  }
+  get isPinned(): Pinned {
+    return this._isPinned;
+  }
+
+  set isPinned(value: Pinned) {
+    this._isPinned = value;
   }
 }
