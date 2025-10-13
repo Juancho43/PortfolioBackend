@@ -7,7 +7,7 @@ import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiRespons
 export class GetEducationController {
   constructor(private readonly service: EducationService) {}
 
-  @Get('get/:page/:limit')
+  @Get('get/paginated/:page/:limit')
   async getEducations(
     @Param('page') page: string,
     @Param('limit') limit: string,
@@ -21,11 +21,7 @@ export class GetEducationController {
         message: 'Education retrieved successfully',
       });
     } catch (e) {
-      return new ApiResponse().generate({
-        data: null,
-        code: 400,
-        message: e.toString(),
-      });
+      return new ApiResponse().generateErrorResponse(e.toString());
     }
   }
 }

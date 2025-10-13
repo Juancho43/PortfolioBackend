@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { EducationService } from '../../education-service/education-service.service';
+import { ProjectsService } from '../../projects.service';
+import { ProjectResponse } from '../../../../Portfolio/Projects/Application/DTO/ProjectResponse';
 import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
-import { EducationResponse } from '../../../../Portfolio/Educations/Application/DTO/EducationResponse';
 
-@Controller('education')
-export class GetEducationBySlugController {
-  constructor(private readonly service: EducationService) {}
+@Controller('project')
+export class GetProjectBySlugController {
+  constructor(private readonly service: ProjectsService) {}
   @Get('get/slug/:slug')
   async findBySlug(@Param('slug') slug: string) {
     try {
@@ -13,9 +13,9 @@ export class GetEducationBySlugController {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return new ApiResponse().generate({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        data: new EducationResponse().generate(response),
+        data: new ProjectResponse().generate(response),
         code: 200,
-        message: 'Education retrieved successfully',
+        message: 'Project retrieved successfully',
       });
     } catch (e) {
       return new ApiResponse().generateErrorResponse(e.toString());

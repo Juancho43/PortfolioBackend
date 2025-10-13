@@ -31,7 +31,7 @@ export class EditEducation
       arg.data.endDate,
     );
     education.description = EducationDescription.create(arg.data.description);
-
+    education.timestamp = education.timestamp.touch();
     await this.repository.save(education);
     return education;
   }

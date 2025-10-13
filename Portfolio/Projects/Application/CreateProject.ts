@@ -5,13 +5,13 @@ import { ProjectRepository } from '../Domain/ProjectRepository';
 import { Project } from '../Domain/Project';
 import { SlugValueObject } from '../../Shared/Domain/SlugValueObject';
 import { ProjectId } from '../Domain/ValueObject/ProjectId';
-import { Link } from '../../Links/Domain/Link';
-import { Tag } from '../../Tags/Domain/Tag';
 import { ProjectTitle } from '../Domain/ValueObject/ProjectTitle';
 import { ProjectDescription } from '../Domain/ValueObject/ProjectDescription';
 import { ProjectSlug } from '../Domain/ValueObject/ProjectSlug';
+import { CreateProjectRequest } from './DTO/CreateProjectRequest';
+import { IUseCase } from '../../Shared/Application/IUseCase';
 
-export class CreateProject {
+export class CreateProject implements IUseCase<CreateProjectRequest, Project> {
   private repository: ProjectRepository;
   private idGenerator: IdGeneratorStrategy;
   constructor(repository: ProjectRepository, idStrategy: IdGeneratorStrategy) {
@@ -19,19 +19,14 @@ export class CreateProject {
     this.repository = repository;
   }
 
-  execute(
-    title: string,
-    description: string,
-    links: Link[],
-    tags: Tag[],
-  ): Project {
+  execute(arg: CreateProjectRequest): Project {
     const project = Project.Create(
       ProjectId.create(this.idGenerator.generate()),
-      ProjectTitle.create(title),
-      ProjectSlug.create(SlugValueObject.create(title)),
-      ProjectDescription.create(description),
-      links,
-      tags,
+      ProjectTitle.create(arg.title),
+      ProjectSlug.create(SlugValueObject.create(arg.title)),
+      ProjectDescription.create(arg.description),
+      arg.links,
+      arg.tags,
       Timestamp.now(),
       SoftDelete.no(),
     );

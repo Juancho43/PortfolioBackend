@@ -19,11 +19,7 @@ export class EditEducationController {
         message: 'Education updated successfully',
       });
     } catch (e) {
-      return new ApiResponse().generate({
-        data: null,
-        code: 400,
-        message: e.toString(),
-      });
+      return new ApiResponse().generateErrorResponse(e.toString());
     }
   }
 }
