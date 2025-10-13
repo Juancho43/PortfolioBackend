@@ -3,7 +3,6 @@ import { Timestamp } from '../../Shared/Domain/Timestamp';
 import { SoftDelete } from '../../Shared/Domain/SoftDelete';
 import { ProjectRepository } from '../Domain/ProjectRepository';
 import { Project } from '../Domain/Project';
-import { SlugValueObject } from '../../Shared/Domain/SlugValueObject';
 import { ProjectId } from '../Domain/ValueObject/ProjectId';
 import { ProjectTitle } from '../Domain/ValueObject/ProjectTitle';
 import { ProjectDescription } from '../Domain/ValueObject/ProjectDescription';
@@ -12,7 +11,9 @@ import { CreateProjectRequest } from './DTO/CreateProjectRequest';
 import { IUseCase } from '../../Shared/Application/IUseCase';
 import { Pinned } from '../../Shared/Domain/Pinned';
 
-export class CreateProject implements IUseCase<CreateProjectRequest, Promise<Project>> {
+export class CreateProject
+  implements IUseCase<CreateProjectRequest, Promise<Project>>
+{
   private repository: ProjectRepository;
   private idGenerator: IdGeneratorStrategy;
   constructor(repository: ProjectRepository, idStrategy: IdGeneratorStrategy) {

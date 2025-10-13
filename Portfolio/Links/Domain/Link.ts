@@ -3,7 +3,6 @@ import { LinkTitle } from './ValueObject/LinkTitle';
 import { LinkUrl } from './ValueObject/LinkUrl';
 import { Timestamp } from '../../Shared/Domain/Timestamp';
 import { SoftDelete } from '../../Shared/Domain/SoftDelete';
-import { timestamp } from 'rxjs';
 
 export class Link {
   private readonly _id: LinkId;

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Education } from 'Portfolio/Educations/Domain/Education';
 
-import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
+import { Collection, Db, MongoClient, ObjectId } from 'mongodb';
 import { EducationMapper } from './education-mapper';
 
 @Injectable()

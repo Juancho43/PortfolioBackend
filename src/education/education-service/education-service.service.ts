@@ -8,7 +8,6 @@ import type { IdGeneratorStrategy } from '../../../Portfolio/Shared/Domain/IdGen
 import { ID_GENERATOR_TOKEN } from '../../id-strategies/token';
 import { CreateEducationRequest } from '../../../Portfolio/Educations/Application/DTO/CreateEducationRequest';
 import { GetAllEducations } from '../../../Portfolio/Educations/Application/GetAllEducations';
-import { CreateLinkRequest } from '../../../Portfolio/Links/Application/CreateLinkRequest';
 import { GetEducationById } from '../../../Portfolio/Educations/Application/GetEducationById';
 import { EditEducation } from '../../../Portfolio/Educations/Application/EditEducation';
 import { EditEducationRequest } from '../../../Portfolio/Educations/Application/DTO/EditEducationRequest';

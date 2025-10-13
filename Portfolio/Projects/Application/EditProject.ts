@@ -1,6 +1,5 @@
 import { ProjectRepository } from '../Domain/ProjectRepository';
 import { Project } from '../Domain/Project';
-import { SlugValueObject } from '../../Shared/Domain/SlugValueObject';
 import { ProjectTitle } from '../Domain/ValueObject/ProjectTitle';
 import { ProjectDescription } from '../Domain/ValueObject/ProjectDescription';
 import { ProjectSlug } from '../Domain/ValueObject/ProjectSlug';

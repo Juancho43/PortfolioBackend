@@ -11,6 +11,6 @@ export class ProfileResponse implements IResponse<Profile> {
       bio: data.bio,
       createdAt: data.timestamp.getCreatedAt(),
       updatedAt: data.timestamp.getUpdatedAt(),
-    }
+    };
   }
 }

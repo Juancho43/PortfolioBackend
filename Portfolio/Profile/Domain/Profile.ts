@@ -11,7 +11,6 @@ import { Education } from '../../Educations/Domain/Education';
 import { Image } from '../../Images/Domain/Image';
 import { File } from '../../Files/Domain/File';
 import { Work } from '../../Works/Domain/Work';
-import { timestamp } from 'rxjs';
 
 export class Profile {
   private _id: ProfileId;

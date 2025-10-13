@@ -9,7 +9,7 @@ export class LinkTitle {
   constructor(value: StringValueObject) {
     this._value = value;
   }
-  static create(value: string){
+  static create(value: string) {
     return new LinkTitle(StringValueObject.create(value));
   }
 }
