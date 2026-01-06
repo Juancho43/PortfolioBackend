@@ -3,7 +3,9 @@ import { EditEducationRequest } from '../../../../Portfolio/Educations/Applicati
 import { EducationService } from '../../education-service/education-service.service';
 import { EducationResponse } from '../../../../Portfolio/Educations/Application/DTO/EducationResponse';
 import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Education')
 @Controller('education')
 export class EditEducationController {
   constructor(private readonly service: EducationService) {}

@@ -1,8 +1,8 @@
-import { UploadFileRequest } from '../../../Files/Application/DTO/UploadFileRequest';
+import { UploadImageRequest } from '../../../Images/Application/DTO/UploadImageRequest';
 
-export class UploadCvRequest {
+export class UploadPhotoRequest {
   constructor(
     public readonly profileId: string,
-    public readonly file: UploadFileRequest,
+    public readonly image: UploadImageRequest,
   ) {}
 }

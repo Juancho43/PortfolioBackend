@@ -3,7 +3,9 @@ import { ProjectsService } from '../../projects.service';
 import { CreateProjectRequest } from '../../../../Portfolio/Projects/Application/DTO/CreateProjectRequest';
 import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
 import { ProjectResponse } from '../../../../Portfolio/Projects/Application/DTO/ProjectResponse';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Project')
 @Controller('project')
 export class CreateProjectController {
   constructor(private readonly service: ProjectsService) {}

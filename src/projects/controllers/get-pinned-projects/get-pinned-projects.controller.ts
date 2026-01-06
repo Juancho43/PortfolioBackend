@@ -2,7 +2,9 @@ import { Controller, Get } from '@nestjs/common';
 import { ProjectsService } from '../../projects.service';
 import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
 import { ProjectResponseCollection } from '../../../../Portfolio/Projects/Application/DTO/ProjectResponseCollection';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Project')
 @Controller('project')
 export class GetPinnedProjectsController {
   constructor(private readonly projectService: ProjectsService) {}

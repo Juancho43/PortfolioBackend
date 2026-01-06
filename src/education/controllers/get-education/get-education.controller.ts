@@ -2,7 +2,9 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { EducationService } from '../../education-service/education-service.service';
 import { EducationResponseCollection } from '../../../../Portfolio/Educations/Application/DTO/EducationResponseCollection';
 import { ApiResponse } from '../../../../Portfolio/Shared/Application/ApiResponse';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Education')
 @Controller('education')
 export class GetEducationController {
   constructor(private readonly service: EducationService) {}

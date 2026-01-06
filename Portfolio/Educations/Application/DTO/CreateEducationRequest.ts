@@ -1,4 +1,4 @@
-import { CreateLinkRequest } from '../../../Links/Application/CreateLinkRequest';
+import { CreateLinkRequest } from '../../../Links/Application/DTO/CreateLinkRequest';
 import { CreateProjectRequest } from '../../../Projects/Application/DTO/CreateProjectRequest';
 import { CreateTagRequest } from '../../../Tags/Application/DTO/CreateTagRequest';
 

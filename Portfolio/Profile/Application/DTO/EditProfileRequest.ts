@@ -1,8 +1,8 @@
-export class CreateProfileDTO {
+import { CreateProfileRequest } from './CreateProfileRequest';
+
+export class EditProfileRequest {
   constructor(
-    public name: string,
-    public role: string,
-    public description: string,
-    public bio: string,
+    public readonly id: string,
+    public readonly data: CreateProfileRequest,
   ) {}
 }

@@ -10,8 +10,9 @@ import { ObjectId } from 'mongodb';
 
 export class ProjectMapper {
   public static mapToDomain(data: any): Project {
+
     return Project.Create(
-      ProjectId.create(data._id.toString()),
+      ProjectId.create(data._id),
       ProjectTitle.create(data.title),
       ProjectSlug.create(data.slug),
       ProjectDescription.create(data.description),
@@ -22,6 +23,7 @@ export class ProjectMapper {
   }
   public static buildProjectData(data: Project) {
     return {
+      _id: new ObjectId(),
       title: data.title.getValue(),
       description: data.description.getValue(),
       slug: data.slug.value.getValue(),

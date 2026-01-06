@@ -1,5 +1,5 @@
-import { IResponse } from '../../Shared/Application/IResponse';
-import { Link } from '../Domain/Link';
+import { IResponse } from '../../../Shared/Application/IResponse';
+import { Link } from '../../Domain/Link';
 import { LinkResponse } from './LinkResponse';
 
 export class LinkResponseCollection implements IResponse<Link[]> {

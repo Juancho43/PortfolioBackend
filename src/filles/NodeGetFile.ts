@@ -1,4 +1,4 @@
-import { GetFileStorage } from '../Domain/Storage/GetFileStorage';
+import { GetFileStorage } from '../../Portfolio/Files/Domain/Storage/GetFileStorage';
 import { promises as fs } from 'node:fs';
 import { join } from 'path';
 

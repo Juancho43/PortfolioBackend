@@ -13,7 +13,7 @@ export class MongooseEducationRepository implements EducationRepository {
 
   constructor() {
     // Inicializar conexión
-    this.initConnection().then();
+    //this.initConnection().then();
   }
 
   private async initConnection() {

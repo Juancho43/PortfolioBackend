@@ -1,5 +1,5 @@
-import { IResponse } from '../../Shared/Application/IResponse';
-import { Link } from '../Domain/Link';
+import { IResponse } from '../../../Shared/Application/IResponse';
+import { Link } from '../../Domain/Link';
 
 export class LinkResponse implements IResponse<Link> {
   generate(data: Link): any {

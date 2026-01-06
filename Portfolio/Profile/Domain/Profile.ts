@@ -1,6 +1,6 @@
 import { User } from '../../User/Domain/User';
 import { ProfileId } from './ValueObjects/ProfileId';
-import { ProfileRol } from './ValueObjects/ProfileRol';
+import { ProfileRole } from './ValueObjects/ProfileRol';
 import { ProfileDescription } from './ValueObjects/ProfileDescription';
 import { ProfileBio } from './ValueObjects/ProfileBio';
 import { Timestamp } from '../../Shared/Domain/Timestamp';
@@ -11,77 +11,56 @@ import { Education } from '../../Educations/Domain/Education';
 import { Image } from '../../Images/Domain/Image';
 import { File } from '../../Files/Domain/File';
 import { Work } from '../../Works/Domain/Work';
+import { ProfileName } from './ValueObjects/ProfileName';
 
 export class Profile {
   private _id: ProfileId;
-  private _user: User;
-  private _rol: ProfileRol;
+  private _name: ProfileName;
+  private _rol: ProfileRole;
   private _description: ProfileDescription;
   private _bio: ProfileBio;
-  private _links: Link[];
-  private _works: Work[];
-  private _educations: Education[];
+  private _links: Link[] = [];
+  private _works: Work[] = [];
+  private _educations: Education[] = [];
   private _photo: Image;
   private _cv: File;
   private _timestamp: Timestamp;
   private _softDelete: SoftDelete;
   private constructor(
     id: ProfileId,
-    user: User,
-    rol: ProfileRol,
+    name: ProfileName,
+    rol: ProfileRole,
     description: ProfileDescription,
     bio: ProfileBio,
-    links: Link[],
-    works: Work[],
-    educations: Education[],
-    photo: Image,
-    cv: File,
     timestamp: Timestamp,
     softDelete: SoftDelete,
   ) {
     this._id = id;
-    this._user = user;
+    this._name = name;
     this._rol = rol;
     this._description = description;
     this._bio = bio;
-    this._links = links;
-    this._works = works;
-    this._educations = educations;
-    this._photo = photo;
-    this._cv = cv;
     this._timestamp = timestamp;
     this._softDelete = softDelete;
   }
 
-  /**
-   * Static factory method to create a new Profile instance.
-   * This is the only way to create a Profile.
-   */
   public static create(
     id: ProfileId,
-    user: User,
-    rol: ProfileRol,
-    description: ProfileDescription,
+    name: ProfileName,
+    rol: ProfileRole,
     bio: ProfileBio,
-    links: Link[],
-    works: Work[],
-    educations: Education[],
-    photo: Image,
-    cv: File,
+    description: ProfileDescription,
+    timestamp: Timestamp,
+    softDelete: SoftDelete,
   ): Profile {
     return new Profile(
       id,
-      user,
+      name,
       rol,
       description,
       bio,
-      links,
-      works,
-      educations,
-      photo,
-      cv,
-      Timestamp.now(),
-      SoftDelete.no(),
+      timestamp,
+      softDelete,
     );
   }
 
@@ -92,20 +71,17 @@ export class Profile {
   set id(value: ProfileId) {
     this._id = value;
   }
-
-  get user(): User {
-    return this._user;
+  get name(): ProfileName {
+    return this._name;
   }
-
-  set user(value: User) {
-    this._user = value;
+  set name(value: ProfileName) {
+    this._name = value;
   }
-
-  get rol(): ProfileRol {
+  get rol(): ProfileRole {
     return this._rol;
   }
 
-  set rol(value: ProfileRol) {
+  set rol(value: ProfileRole) {
     this._rol = value;
   }
 

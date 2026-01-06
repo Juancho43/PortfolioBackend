@@ -1,0 +1,16 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testRegex": "PortfolioTest/.*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": ["Portfolio/**/*.(t|j)s"],
+  "coverageDirectory": "./coverage-portfolio",
+  "testEnvironment": "node",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1",
+    "^@faker-js/faker$": "@faker-js/faker"
+  },
+  "transformIgnorePatterns": ["node_modules/(?!(@faker-js/faker)/)"]
+}

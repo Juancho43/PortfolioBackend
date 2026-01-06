@@ -7,7 +7,6 @@ import { ProjectsModule } from './projects/projects.module';
 import { WorksModule } from './works/works.module';
 import { ProfileModule } from './profile/profile.module';
 import { IdStrategiesModule } from './id-strategies/id-strategies.module';
-import { GetProfileController } from './profile/get-profile/get-profile.controller';
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ import { GetProfileController } from './profile/get-profile/get-profile.controll
     ProfileModule,
     IdStrategiesModule,
   ],
-  controllers: [AppController, GetProfileController],
+  controllers: [AppController,],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

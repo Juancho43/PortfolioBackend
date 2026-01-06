@@ -1,7 +1,7 @@
 import { Education } from '../../Domain/Education';
 import { IResponse } from '../../../Shared/Application/IResponse';
 import { TagResponseCollection } from '../../../Tags/Application/DTO/TagResponseCollection';
-import { LinkResponseCollection } from '../../../Links/Application/LinkResponseCollection';
+import { LinkResponseCollection } from '../../../Links/Application/DTO/LinkResponseCollection';
 import { ProjectResponseCollection } from '../../../Projects/Application/DTO/ProjectResponseCollection';
 
 export class EducationResponse implements IResponse<Education> {

@@ -7,13 +7,36 @@ import { FileId } from './ValueObject/FileId';
 import { FileAlt } from './ValueObject/FileAlt';
 
 export class File {
-  private _id: FileId;
-  private _name: FileName;
-  private _size: FileSize;
-  private _type: FileType;
-  private _path: FilePath;
-  private _title: FileTitle;
-  private _alt: FileAlt;
+  private constructor(
+    private _id: FileId,
+    private _name: FileName,
+    private _size: FileSize,
+    private _type: FileType,
+    private _path: FilePath,
+    private _title: FileTitle,
+    private _alt: FileAlt,
+    private _buffer?: Buffer,
+  ) {}
+
+  public static create(
+    id: FileId,
+    name: FileName,
+    size: FileSize,
+    type: FileType,
+    path: FilePath,
+    title: FileTitle,
+    alt: FileAlt,
+  ): File {
+    return new File(id, name, size, type, path, title, alt);
+  }
+
+  get buffer(): Buffer | undefined {
+    return this._buffer;
+  }
+
+  set buffer(buffer: Buffer) {
+    this._buffer = buffer;
+  }
 
   get id(): FileId {
     return this._id;

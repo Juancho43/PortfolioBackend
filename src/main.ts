@@ -6,13 +6,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   const config = new DocumentBuilder()
-    .setTitle('API')
-    .setDescription('API description')
+    .setTitle('Portfolio API')
+    .setDescription('Portfolio API description')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('Portfolio')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/docs', app, document);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

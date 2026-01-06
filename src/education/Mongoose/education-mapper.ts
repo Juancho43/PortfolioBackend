@@ -15,6 +15,7 @@ import { LinkUrl } from '../../../Portfolio/Links/Domain/ValueObject/LinkUrl';
 export class EducationMapper {
   public static buildEducationData(education: Education) {
     return {
+      id: education.id.id.getValue(),
       title: education.title.value.getValue(),
       description: education.description.value.getValue(),
       slug: education.slug.value.getValue(),

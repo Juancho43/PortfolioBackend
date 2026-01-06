@@ -10,7 +10,7 @@ export class MongooseProjectRepository implements ProjectRepository {
 
   constructor() {
     // Inicializar conexión
-    this.initConnection().then();
+    //this.initConnection().then();
   }
 
   private async initConnection() {
