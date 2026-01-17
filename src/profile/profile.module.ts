@@ -13,8 +13,12 @@ import { EditProfileService } from './services/edit-profile/edit-profile.service
 import { UploadCvService } from './services/upload-cv/upload-cv.service';
 import { UploadPhotoService } from './services/upload-photo/upload-photo.service';
 import { AddLinksService } from './services/add-links/add-links.service';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { ProfileEntity } from './profile.entity';
+import { EntityManager } from '@mikro-orm/core';
 
 @Module({
+  imports: [MikroOrmModule.forFeature([ProfileEntity])],
   controllers: [
     GetProfileController,
     CreateProfileController,
@@ -24,6 +28,7 @@ import { AddLinksService } from './services/add-links/add-links.service';
     AddLinksController,
   ],
   providers: [
+
     CreateProfileService,
     {
       provide: 'SaveProfileRepository',

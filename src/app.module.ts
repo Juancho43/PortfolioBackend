@@ -7,9 +7,11 @@ import { ProjectsModule } from './projects/projects.module';
 import { WorksModule } from './works/works.module';
 import { ProfileModule } from './profile/profile.module';
 import { IdStrategiesModule } from './id-strategies/id-strategies.module';
-
+import config from './mikro-orm.config';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 @Module({
   imports: [
+    MikroOrmModule.forRoot(config),
     UsersModule,
     EducationModule,
     ProjectsModule,
@@ -17,7 +19,7 @@ import { IdStrategiesModule } from './id-strategies/id-strategies.module';
     ProfileModule,
     IdStrategiesModule,
   ],
-  controllers: [AppController,],
+  controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
