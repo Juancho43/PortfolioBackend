@@ -4,7 +4,7 @@ import { ProfileEntity } from './profile/profile.entity';
 import { SqliteDriver } from '@mikro-orm/sqlite';
 
 export default defineConfig({
-  dbName: 'portfolio.sqlite',
+  dbName: './src/portfolio.sqlite',
   driver: SqliteDriver,
   // 🔑 PASO CLAVE 1: Apuntar las Entidades al directorio compilado (JS)
   // Reemplaza esto con un path a los archivos JS compilados si estás en modo compilado.
@@ -20,12 +20,10 @@ export default defineConfig({
   extensions: [Migrator],
 
   migrations: {
-    // 🔑 PASO CLAVE 2: Solo deja 'path' apuntando a la ubicación de los archivos JS compilados.
-    path: './dist/migrations', // La ruta donde están los archivos JS de las migraciones
-
-    // pathTs: './src/migrations', // <-- ELIMINAR O CONDICIONAR para el entorno compilado
-
-    glob: '!(*.d).js', // Asegúrate de buscar SOLO archivos JS en la carpeta 'dist'
+    // Si estás ejecutando con ts-node o en desarrollo:
+    path: './src/migrations',
+    pathTs: './src/migrations',
+    glob: '!(*.d).{js,ts}', // Que busque tanto JS como TS
     transactional: true,
     disableForeignKeys: false,
   },

@@ -1,7 +1,7 @@
 // src/users/user.entity.ts
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
-@Entity()
+@Entity({ tableName: 'profiles' })
 export class ProfileEntity {
   @PrimaryKey()
   id!: string;

@@ -15,7 +15,6 @@ import { UploadPhotoService } from './services/upload-photo/upload-photo.service
 import { AddLinksService } from './services/add-links/add-links.service';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ProfileEntity } from './profile.entity';
-import { EntityManager } from '@mikro-orm/core';
 
 @Module({
   imports: [MikroOrmModule.forFeature([ProfileEntity])],

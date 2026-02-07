@@ -17,6 +17,9 @@ export class CreateProfile
   constructor(private readonly saveProfileRepository: SaveProfileRepository) {}
 
   async execute(arg: CreateProfileRequest): Promise<Profile> {
+    console.log('CreateProfile executed:', arg);
+    try {
+
     const profile = Profile.create(
       ProfileId.create(randomUUID().toString()),
       ProfileName.create(arg.name),
@@ -26,7 +29,12 @@ export class CreateProfile
       Timestamp.now(),
       SoftDelete.no(),
     );
+    console.log('Created Profile entity:', profile.bio.bio.getValue());
     await this.saveProfileRepository.execute(profile);
     return profile;
+    }catch (e) {
+      throw new Error(e.toString());
+      console.error('Error creating profile:', e);
+    }
   }
 }
